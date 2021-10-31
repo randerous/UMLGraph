@@ -3,7 +3,6 @@
   <packageImport xmi:type="uml:PackageImport" xmi:id="_U3yhMDS-Eey-M5sR4JaDcA">
     <importedPackage xmi:type="uml:Model" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#_0"/>
   </packageImport>
-  <packagedElement xmi:type="uml:Activity" xmi:id="_U25JUDS-Eey-M5sR4JaDcA" name="Activity1"/>
   <packagedElement xmi:type="uml:Artifact" xmi:id="_iZwZUDUqEeyox4ICi4L1bw" name="Card Reader"/>
   <packagedElement xmi:type="uml:Artifact" xmi:id="_kolBUDUqEeyox4ICi4L1bw" name="Display"/>
   <packagedElement xmi:type="uml:Artifact" xmi:id="_luJiQDUqEeyox4ICi4L1bw" name="Net Interface"/>
@@ -16,16 +15,16 @@
 			&quot;VulunerabilityID&quot;: 2,&#xD;
 			&quot;name&quot;: &quot;example1&quot;,&#xD;
 			&quot;damage&quot;: 3,&#xD;
-			&quot;PreCondtion&quot;: &quot;user&quot;,&#xD;
-			&quot;PostCondtion&quot;: &quot;root&quot;,&#xD;
+			&quot;PreCondition&quot;: &quot;user&quot;,&#xD;
+			&quot;PostCondition&quot;: &quot;root&quot;,&#xD;
 			&quot;Complexity&quot;: 5&#xD;
 		},&#xD;
 		{&#xD;
 			&quot;VulunerabilityID&quot;: 3,&#xD;
-			&quot;name&quot;: &quot;example1&quot;,&#xD;
+			&quot;name&quot;: &quot;example2&quot;,&#xD;
 			&quot;damage&quot;: 3,&#xD;
-			&quot;PreCondtion &quot;: &quot;NULL &quot;,&#xD;
-			&quot;PostCondtion&quot;: &quot;user&quot;,&#xD;
+			&quot;PreCondition &quot;: &quot;NULL &quot;,&#xD;
+			&quot;PostCondition&quot;: &quot;user&quot;,&#xD;
 			&quot;Complexity&quot;: 3&#xD;
 		}&#xD;
 	]&#xD;
@@ -81,16 +80,16 @@
 			&quot;VulunerabilityID&quot;: 2,&#xD;
 			&quot;name&quot;: &quot;example1&quot;,&#xD;
 			&quot;damage&quot;: 3,&#xD;
-			&quot;PreCondtion&quot;: &quot;user&quot;,&#xD;
-			&quot;PostCondtion&quot;: &quot;root&quot;,&#xD;
+			&quot;PreCondition&quot;: &quot;user&quot;,&#xD;
+			&quot;PostCondition&quot;: &quot;root&quot;,&#xD;
 			&quot;Complexity&quot;: 5&#xD;
 		},&#xD;
 		{&#xD;
 			&quot;VulunerabilityID&quot;: 3,&#xD;
-			&quot;name&quot;: &quot;example1&quot;,&#xD;
+			&quot;name&quot;: &quot;example2&quot;,&#xD;
 			&quot;damage&quot;: 3,&#xD;
-			&quot;PreCondtion &quot;: &quot;NULL &quot;,&#xD;
-			&quot;PostCondtion&quot;: &quot;user&quot;,&#xD;
+			&quot;PreCondition &quot;: &quot;NULL &quot;,&#xD;
+			&quot;PostCondition&quot;: &quot;user&quot;,&#xD;
 			&quot;Complexity&quot;: 3&#xD;
 		}&#xD;
 	]&#xD;

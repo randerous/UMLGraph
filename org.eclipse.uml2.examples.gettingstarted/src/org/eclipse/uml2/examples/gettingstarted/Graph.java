@@ -1,48 +1,37 @@
 package org.eclipse.uml2.examples.gettingstarted;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Graph {
-	public ArrayList<Vertex> vertexes;
+ 
+	public Map<String,Vertex> vertexes;
 	
 	public Graph()
 	{
-		vertexes = new ArrayList<Vertex>();
+		vertexes = new HashMap();
 		 
 	}
 	
-//	public void Check()
-//	{
-//		System.out.println("fasd");
-//	}
-	
 	public void addElem(Vertex v) {
-		vertexes.add(v);
+		vertexes.put(v.itself.id, v);
 	}
 	
 	public void showInfo()
 	{
 		System.out.printf("Vertex nums: %d\n", vertexes.size());
-		for(Vertex v : vertexes)
+		for(Map.Entry<String, Vertex> v : vertexes.entrySet())
 		{
-			v.showInfo();
+			v.getValue().showInfo();
 		}
 	}
 	
 	public void addEdge(String sourceID, String targetID)
 	{
-		for(Vertex vi : vertexes)
-		{
-			if(vi.itself.id.equals(sourceID) ) {
-				for(Vertex vj : vertexes)
-				{
-					if(vj.itself.id.equals(targetID)) {
-						vi.next_vertexes.add(vj.itself);
-						break;
-					}
-				}
-				break;
-			}
+		if(vertexes.containsKey(sourceID) && vertexes.containsKey(targetID)) {
+			vertexes.get(sourceID).next_vertexes.
+			add((vertexes.get(targetID).itself));	
 		}
 	}
 }

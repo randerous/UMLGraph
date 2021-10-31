@@ -11,4 +11,11 @@ public class Surface extends Node{
 	public void setPort(String port) {
 		this.exposure_port = port;
 	}
+	
+	public void showNodeInfo()
+	{
+		System.out.printf("exposure: %s\n", exposure_port);
+		super.showNodeInfo();
+	}
+	
 }

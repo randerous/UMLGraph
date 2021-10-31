@@ -75,8 +75,8 @@ public class GettingStartedWithUML2 {
 		level = 0;
 		G = new Graph();
 		 
-		URI uri = URI.createFileURI("E:/papyrus-2021-09-5.2.0-win64/Papyrus/workspace/test/test.uml");
-		
+		URI uri = URI.createFileURI("D:/桌面/华为/proj/UMLGraph/test/test.uml");
+//		URI uri = URI.createFileURI("D:/桌面/a3.uml");
 		Package p = parseUML(uri);
 		
 		processComponent(p);
@@ -86,7 +86,6 @@ public class GettingStartedWithUML2 {
 	}
 	
 	protected static Package parseUML(URI uri) {
-		
 		// get the root package (a model).
 		ResourceSetImpl RESOURCE_SET = new ResourceSetImpl();
 		UMLResourcesUtil.init(RESOURCE_SET);
@@ -103,8 +102,10 @@ public class GettingStartedWithUML2 {
 		for (NamedElement i : p.getMembers()) {
 			if (i instanceof Component) {
 				Component instance = (Component) i;
+//				instance.getProvideds();
 				processComponentNode(instance);
-			} 
+			}
+			
 		}
 		
 		
@@ -171,13 +172,14 @@ public class GettingStartedWithUML2 {
 					if(j instanceof JSONObject)
 					{
 						JSONObject temp = (JSONObject) j;
-						int id = temp.getIntValue("VulunerabilityID");
-						String name = temp.getString("name");
-						int damage = temp.getIntValue("damage");
-						String precondition = temp.getString("PreCondition");
-						String postcondition = temp.getString("PostCondition");
-						int complexity = temp.getIntValue("Complexity");
-						Vulnerability v  = new Vulnerability(id, name, damage, precondition, postcondition,complexity);
+						Vulnerability v  = new Vulnerability(
+								temp.getIntValue("VulunerabilityID"), 
+								temp.getString("name"), 
+								temp.getIntValue("damage"), 
+								temp.getString("PreCondition"),
+								temp.getString("PostCondition"),
+								temp.getIntValue("Complexity"));
+//						v.showInfo();
 						n.addVunlerability(v);
 					}
 				}			

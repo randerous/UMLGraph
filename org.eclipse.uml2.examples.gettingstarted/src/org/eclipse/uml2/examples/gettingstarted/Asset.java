@@ -11,4 +11,9 @@ public class Asset extends Node{
 		this.Value = value;
 	}
 	
+	public void showNodeInfo() {
+		System.out.printf("Asset Value:%d\n",Value);
+		super.showNodeInfo();
+    }
+	
 }
