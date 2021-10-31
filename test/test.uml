@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<uml:Model xmi:version="20131001" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML" xmi:id="_U2JicDS-Eey-M5sR4JaDcA" name="test">
+  <packageImport xmi:type="uml:PackageImport" xmi:id="_U3yhMDS-Eey-M5sR4JaDcA">
+    <importedPackage xmi:type="uml:Model" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#_0"/>
+  </packageImport>
+  <packagedElement xmi:type="uml:Activity" xmi:id="_U25JUDS-Eey-M5sR4JaDcA" name="Activity1"/>
+  <packagedElement xmi:type="uml:Artifact" xmi:id="_iZwZUDUqEeyox4ICi4L1bw" name="Card Reader"/>
+  <packagedElement xmi:type="uml:Artifact" xmi:id="_kolBUDUqEeyox4ICi4L1bw" name="Display"/>
+  <packagedElement xmi:type="uml:Artifact" xmi:id="_luJiQDUqEeyox4ICi4L1bw" name="Net Interface"/>
+  <packagedElement xmi:type="uml:Artifact" xmi:id="_pjifcDUqEeyox4ICi4L1bw" name="Reciept Printer"/>
+  <packagedElement xmi:type="uml:Artifact" xmi:id="_so_0gDUqEeyox4ICi4L1bw" name="Cash Dispenser"/>
+  <packagedElement xmi:type="uml:Artifact" xmi:id="_uLPqYDUqEeyox4ICi4L1bw" name="KeyPad" fileName="">
+    <ownedComment xmi:type="uml:Comment" xmi:id="_nwwDcDodEey2Z-i74Vi8KQ">
+      <body>{&#xD;
+	&quot;vulnerabilities&quot;: [{&#xD;
+			&quot;VulunerabilityID&quot;: 2,&#xD;
+			&quot;name&quot;: &quot;example1&quot;,&#xD;
+			&quot;damage&quot;: 3,&#xD;
+			&quot;PreCondtion&quot;: &quot;user&quot;,&#xD;
+			&quot;PostCondtion&quot;: &quot;root&quot;,&#xD;
+			&quot;Complexity&quot;: 5&#xD;
+		},&#xD;
+		{&#xD;
+			&quot;VulunerabilityID&quot;: 3,&#xD;
+			&quot;name&quot;: &quot;example1&quot;,&#xD;
+			&quot;damage&quot;: 3,&#xD;
+			&quot;PreCondtion &quot;: &quot;NULL &quot;,&#xD;
+			&quot;PostCondtion&quot;: &quot;user&quot;,&#xD;
+			&quot;Complexity&quot;: 3&#xD;
+		}&#xD;
+	]&#xD;
+}</body>
+    </ownedComment>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Device" xmi:id="_vciTIDUqEeyox4ICi4L1bw" name="ATM Client"/>
+  <packagedElement xmi:type="uml:Device" xmi:id="_xHmGwDUqEeyox4ICi4L1bw" name="ATM Service"/>
+  <packagedElement xmi:type="uml:Artifact" xmi:id="_zyQWMDUqEeyox4ICi4L1bw" name="Bank Database">
+    <ownedComment xmi:type="uml:Comment" xmi:id="_ri5fYDodEey2Z-i74Vi8KQ">
+      <body>{&#xD;
+&quot;value&quot; : 3&#xD;
+}</body>
+    </ownedComment>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Dependency" xmi:id="_69vsgDUqEeyox4ICi4L1bw" name="use" client="_vciTIDUqEeyox4ICi4L1bw" supplier="_luJiQDUqEeyox4ICi4L1bw"/>
+  <packagedElement xmi:type="uml:Dependency" xmi:id="_82rkEDUqEeyox4ICi4L1bw" client="_vciTIDUqEeyox4ICi4L1bw" supplier="_uLPqYDUqEeyox4ICi4L1bw"/>
+  <packagedElement xmi:type="uml:Dependency" xmi:id="_9q-HwDUqEeyox4ICi4L1bw" client="_U2JicDS-Eey-M5sR4JaDcA" supplier="_pjifcDUqEeyox4ICi4L1bw"/>
+  <packagedElement xmi:type="uml:Dependency" xmi:id="_-XKfYDUqEeyox4ICi4L1bw" client="_vciTIDUqEeyox4ICi4L1bw" supplier="_kolBUDUqEeyox4ICi4L1bw"/>
+  <packagedElement xmi:type="uml:Dependency" xmi:id="__BbkYDUqEeyox4ICi4L1bw" client="_vciTIDUqEeyox4ICi4L1bw" supplier="_U2JicDS-Eey-M5sR4JaDcA"/>
+  <packagedElement xmi:type="uml:Dependency" xmi:id="_Hv8zsDUrEeyox4ICi4L1bw" client="_vciTIDUqEeyox4ICi4L1bw" supplier="_so_0gDUqEeyox4ICi4L1bw"/>
+  <packagedElement xmi:type="uml:Dependency" xmi:id="_Im8tIDUrEeyox4ICi4L1bw" name="use" client="_xHmGwDUqEeyox4ICi4L1bw" supplier="_luJiQDUqEeyox4ICi4L1bw"/>
+  <packagedElement xmi:type="uml:Dependency" xmi:id="_JEXB4DUrEeyox4ICi4L1bw" client="_U2JicDS-Eey-M5sR4JaDcA" supplier="_zyQWMDUqEeyox4ICi4L1bw"/>
+  <packagedElement xmi:type="uml:Component" xmi:id="_lyJX4DlQEey2Z-i74Vi8KQ" name="CardReader">
+    <packagedElement xmi:type="uml:Dependency" xmi:id="_YdJ3QDlREey2Z-i74Vi8KQ" name="send information" client="_lyJX4DlQEey2Z-i74Vi8KQ" supplier="_naVdsDlQEey2Z-i74Vi8KQ"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Component" xmi:id="_naVdsDlQEey2Z-i74Vi8KQ" name="Screen">
+    <ownedComment xmi:type="uml:Comment" xmi:id="_zc9K4DooEey2Z-i74Vi8KQ">
+      <body>{&quot;exposure&quot;:true}</body>
+    </ownedComment>
+    <packagedElement xmi:type="uml:Dependency" xmi:id="_Kiq5YDlREey2Z-i74Vi8KQ" client="_naVdsDlQEey2Z-i74Vi8KQ" supplier="_5lyhgDlQEey2Z-i74Vi8KQ"/>
+    <packagedElement xmi:type="uml:Dependency" xmi:id="_MTNp8DlREey2Z-i74Vi8KQ" client="_naVdsDlQEey2Z-i74Vi8KQ" supplier="_79q-4DlQEey2Z-i74Vi8KQ"/>
+    <packagedElement xmi:type="uml:Dependency" xmi:id="_M-ZU8DlREey2Z-i74Vi8KQ" client="_naVdsDlQEey2Z-i74Vi8KQ" supplier="_-tgpQDlQEey2Z-i74Vi8KQ"/>
+    <packagedElement xmi:type="uml:Dependency" xmi:id="_XfCpMDlREey2Z-i74Vi8KQ" client="_naVdsDlQEey2Z-i74Vi8KQ" supplier="_um7nQDlQEey2Z-i74Vi8KQ"/>
+    <packagedElement xmi:type="uml:Dependency" xmi:id="_cK8XoDlREey2Z-i74Vi8KQ" client="_naVdsDlQEey2Z-i74Vi8KQ" supplier="_tbo40DlQEey2Z-i74Vi8KQ"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Component" xmi:id="_tbo40DlQEey2Z-i74Vi8KQ" name="Exit">
+    <packagedElement xmi:type="uml:Dependency" xmi:id="_afcfIDlREey2Z-i74Vi8KQ" name="output card" client="_tbo40DlQEey2Z-i74Vi8KQ" supplier="_lyJX4DlQEey2Z-i74Vi8KQ"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Component" xmi:id="_um7nQDlQEey2Z-i74Vi8KQ" name="CheckPassword"/>
+  <packagedElement xmi:type="uml:Component" xmi:id="_xRd64DlQEey2Z-i74Vi8KQ" name="InsertMoney">
+    <packagedElement xmi:type="uml:Dependency" xmi:id="_VCqGUDlREey2Z-i74Vi8KQ" client="_xRd64DlQEey2Z-i74Vi8KQ" supplier="_AYVMUDlREey2Z-i74Vi8KQ"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Component" xmi:id="_zzS-cDlQEey2Z-i74Vi8KQ" name="OutputMoney"/>
+  <packagedElement xmi:type="uml:Component" xmi:id="_5lyhgDlQEey2Z-i74Vi8KQ" name="ShowBalance"/>
+  <packagedElement xmi:type="uml:Component" xmi:id="_79q-4DlQEey2Z-i74Vi8KQ" name="WithdrawMoney">
+    <packagedElement xmi:type="uml:Dependency" xmi:id="_OvyaEDlREey2Z-i74Vi8KQ" client="_79q-4DlQEey2Z-i74Vi8KQ" supplier="_AYVMUDlREey2Z-i74Vi8KQ"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Component" xmi:id="_-tgpQDlQEey2Z-i74Vi8KQ" name="SaveMoney">
+    <ownedComment xmi:type="uml:Comment" xmi:id="_hWf-ADo3Eey2Z-i74Vi8KQ">
+      <body>{&#xD;
+	&quot;vulnerabilities&quot;: [{&#xD;
+			&quot;VulunerabilityID&quot;: 2,&#xD;
+			&quot;name&quot;: &quot;example1&quot;,&#xD;
+			&quot;damage&quot;: 3,&#xD;
+			&quot;PreCondtion&quot;: &quot;user&quot;,&#xD;
+			&quot;PostCondtion&quot;: &quot;root&quot;,&#xD;
+			&quot;Complexity&quot;: 5&#xD;
+		},&#xD;
+		{&#xD;
+			&quot;VulunerabilityID&quot;: 3,&#xD;
+			&quot;name&quot;: &quot;example1&quot;,&#xD;
+			&quot;damage&quot;: 3,&#xD;
+			&quot;PreCondtion &quot;: &quot;NULL &quot;,&#xD;
+			&quot;PostCondtion&quot;: &quot;user&quot;,&#xD;
+			&quot;Complexity&quot;: 3&#xD;
+		}&#xD;
+	]&#xD;
+}</body>
+    </ownedComment>
+    <packagedElement xmi:type="uml:Dependency" xmi:id="_PmLPgDlREey2Z-i74Vi8KQ" client="_-tgpQDlQEey2Z-i74Vi8KQ" supplier="_AYVMUDlREey2Z-i74Vi8KQ"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Component" xmi:id="_AYVMUDlREey2Z-i74Vi8KQ" name="MoneyMachine">
+    <packagedElement xmi:type="uml:Dependency" xmi:id="_Qr3sQDlREey2Z-i74Vi8KQ" client="_AYVMUDlREey2Z-i74Vi8KQ" supplier="_HB8koDlREey2Z-i74Vi8KQ"/>
+    <packagedElement xmi:type="uml:Dependency" xmi:id="_V-W5kDlREey2Z-i74Vi8KQ" client="_AYVMUDlREey2Z-i74Vi8KQ" supplier="_zzS-cDlQEey2Z-i74Vi8KQ"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Component" xmi:id="_HB8koDlREey2Z-i74Vi8KQ" name="DataBase">
+    <ownedComment xmi:type="uml:Comment" xmi:id="_A51nwDoeEey2Z-i74Vi8KQ">
+      <body>{&#xD;
+&quot;value&quot;:2&#xD;
+}</body>
+    </ownedComment>
+    <packagedElement xmi:type="uml:Dependency" xmi:id="_SFhm0DlREey2Z-i74Vi8KQ" name="update information" client="_HB8koDlREey2Z-i74Vi8KQ" supplier="_naVdsDlQEey2Z-i74Vi8KQ"/>
+  </packagedElement>
+</uml:Model>
