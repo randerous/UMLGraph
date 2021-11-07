@@ -1,6 +1,19 @@
 # UMLGraph
-## test
+## preface
+### test
 ATM实例的UML图
 
-## org.eclipse.uml2.examples.gettingstarted
-连通图生成代码，图相关数据定义在/src/org/eclipse/uml2/examples/gettingstarted/中
+### AttackPathGenerator
+连通图生成代码，图相关数据定义在/src/AttackPathGenerator/中
+
+## 三个算法
+
+### 提取
+提了组件图，只提取了组件类型作为节点，依赖作为连接，连接件connector等都没提
+
+
+### 合并和简化
+还没做，包图不太会用
+
+### 路径生成
+完成了一个简化版的dfs
