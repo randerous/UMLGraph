@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<uml:Model xmi:version="20131001" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML" xmi:id="_U2JicDS-Eey-M5sR4JaDcA" name="test">
+<uml:Model xmi:version="20131001" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML" xmi:id="_U2JicDS-Eey-M5sR4JaDcA" name="test">
   <packageImport xmi:type="uml:PackageImport" xmi:id="_U3yhMDS-Eey-M5sR4JaDcA">
     <importedPackage xmi:type="uml:Model" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#_0"/>
   </packageImport>
   <packagedElement xmi:type="uml:Artifact" xmi:id="_iZwZUDUqEeyox4ICi4L1bw" name="Card Reader"/>
   <packagedElement xmi:type="uml:Artifact" xmi:id="_kolBUDUqEeyox4ICi4L1bw" name="Display"/>
-  <packagedElement xmi:type="uml:Artifact" xmi:id="_luJiQDUqEeyox4ICi4L1bw" name="Net Interface"/>
+  <packagedElement xmi:type="uml:Artifact" xmi:id="_luJiQDUqEeyox4ICi4L1bw" name="Net Interface">
+    <elementImport xmi:type="uml:ElementImport" xmi:id="_9bi0gD_GEeyWfbBrjmv4Dw" importedElement="_HB8koDlREey2Z-i74Vi8KQ"/>
+  </packagedElement>
   <packagedElement xmi:type="uml:Artifact" xmi:id="_pjifcDUqEeyox4ICi4L1bw" name="Reciept Printer"/>
   <packagedElement xmi:type="uml:Artifact" xmi:id="_so_0gDUqEeyox4ICi4L1bw" name="Cash Dispenser"/>
   <packagedElement xmi:type="uml:Artifact" xmi:id="_uLPqYDUqEeyox4ICi4L1bw" name="KeyPad" fileName="">
@@ -32,13 +34,16 @@
     </ownedComment>
   </packagedElement>
   <packagedElement xmi:type="uml:Device" xmi:id="_vciTIDUqEeyox4ICi4L1bw" name="ATM Client"/>
-  <packagedElement xmi:type="uml:Device" xmi:id="_xHmGwDUqEeyox4ICi4L1bw" name="ATM Service"/>
+  <packagedElement xmi:type="uml:Device" xmi:id="_xHmGwDUqEeyox4ICi4L1bw" name="ATM Service">
+    <deployment xmi:type="uml:Deployment" xmi:id="_dJvyAD_PEeyWfbBrjmv4Dw" name="nnm" client="_xHmGwDUqEeyox4ICi4L1bw" supplier="_zyQWMDUqEeyox4ICi4L1bw" deployedArtifact="_zyQWMDUqEeyox4ICi4L1bw"/>
+  </packagedElement>
   <packagedElement xmi:type="uml:Artifact" xmi:id="_zyQWMDUqEeyox4ICi4L1bw" name="Bank Database">
     <ownedComment xmi:type="uml:Comment" xmi:id="_ri5fYDodEey2Z-i74Vi8KQ">
       <body>{&#xD;
 &quot;value&quot; : 3&#xD;
 }</body>
     </ownedComment>
+    <elementImport xmi:type="uml:ElementImport" xmi:id="_9R9RID-6EeyWfbBrjmv4Dw" importedElement="_xRd64DlQEey2Z-i74Vi8KQ"/>
   </packagedElement>
   <packagedElement xmi:type="uml:Dependency" xmi:id="_69vsgDUqEeyox4ICi4L1bw" name="use" client="_vciTIDUqEeyox4ICi4L1bw" supplier="_luJiQDUqEeyox4ICi4L1bw"/>
   <packagedElement xmi:type="uml:Dependency" xmi:id="_82rkEDUqEeyox4ICi4L1bw" client="_vciTIDUqEeyox4ICi4L1bw" supplier="_uLPqYDUqEeyox4ICi4L1bw"/>
@@ -51,6 +56,7 @@
   <packagedElement xmi:type="uml:Component" xmi:id="_lyJX4DlQEey2Z-i74Vi8KQ" name="CardReader">
     <packagedElement xmi:type="uml:Dependency" xmi:id="_YdJ3QDlREey2Z-i74Vi8KQ" name="send information" client="_lyJX4DlQEey2Z-i74Vi8KQ" supplier="_naVdsDlQEey2Z-i74Vi8KQ"/>
     <packagedElement xmi:type="uml:Dependency" xmi:id="_kGFWAD-jEeynVNBqZbkRtw" client="_lyJX4DlQEey2Z-i74Vi8KQ" supplier="_HB8koDlREey2Z-i74Vi8KQ"/>
+    <packagedElement xmi:type="uml:Dependency" xmi:id="_qRvtkD_QEeyWfbBrjmv4Dw" client="_lyJX4DlQEey2Z-i74Vi8KQ" supplier="_gboagD_EEeyWfbBrjmv4Dw"/>
   </packagedElement>
   <packagedElement xmi:type="uml:Component" xmi:id="_naVdsDlQEey2Z-i74Vi8KQ" name="Screen">
     <ownedComment xmi:type="uml:Comment" xmi:id="_zc9K4DooEey2Z-i74Vi8KQ">
@@ -70,7 +76,9 @@
     <packagedElement xmi:type="uml:Dependency" xmi:id="_VCqGUDlREey2Z-i74Vi8KQ" client="_xRd64DlQEey2Z-i74Vi8KQ" supplier="_AYVMUDlREey2Z-i74Vi8KQ"/>
   </packagedElement>
   <packagedElement xmi:type="uml:Component" xmi:id="_zzS-cDlQEey2Z-i74Vi8KQ" name="OutputMoney"/>
-  <packagedElement xmi:type="uml:Component" xmi:id="_5lyhgDlQEey2Z-i74Vi8KQ" name="ShowBalance"/>
+  <packagedElement xmi:type="uml:Component" xmi:id="_5lyhgDlQEey2Z-i74Vi8KQ" name="ShowBalance">
+    <ownedAttribute xmi:type="uml:Port" xmi:id="_r60TQD_HEeyWfbBrjmv4Dw" name="Port1" aggregation="composite"/>
+  </packagedElement>
   <packagedElement xmi:type="uml:Component" xmi:id="_79q-4DlQEey2Z-i74Vi8KQ" name="WithdrawMoney">
     <packagedElement xmi:type="uml:Dependency" xmi:id="_OvyaEDlREey2Z-i74Vi8KQ" client="_79q-4DlQEey2Z-i74Vi8KQ" supplier="_AYVMUDlREey2Z-i74Vi8KQ"/>
   </packagedElement>
@@ -109,5 +117,31 @@
 }</body>
     </ownedComment>
     <packagedElement xmi:type="uml:Dependency" xmi:id="_SFhm0DlREey2Z-i74Vi8KQ" name="update information" client="_HB8koDlREey2Z-i74Vi8KQ" supplier="_naVdsDlQEey2Z-i74Vi8KQ"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Component" xmi:id="_gboagD_EEeyWfbBrjmv4Dw" name="testInherit">
+    <generalization xmi:type="uml:Generalization" xmi:id="_i-4aYD_EEeyWfbBrjmv4Dw" general="_HB8koDlREey2Z-i74Vi8KQ"/>
+    <packagedElement xmi:type="uml:Abstraction" xmi:id="_tWNlID_FEeyWfbBrjmv4Dw" client="_gboagD_EEeyWfbBrjmv4Dw" supplier="_lyJX4DlQEey2Z-i74Vi8KQ"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Package" xmi:id="_gcU2sD_HEeyWfbBrjmv4Dw" name="Package31">
+    <packageImport xmi:type="uml:PackageImport" xmi:id="_hKQTsD_HEeyWfbBrjmv4Dw" importedPackage="_gtrscD_HEeyWfbBrjmv4Dw"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Package" xmi:id="_gtrscD_HEeyWfbBrjmv4Dw" name="Package32">
+    <packagedElement xmi:type="uml:Realization" xmi:id="_LBID8D_IEeyWfbBrjmv4Dw" client="_gtrscD_HEeyWfbBrjmv4Dw" supplier="_iZwZUDUqEeyox4ICi4L1bw"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Class" xmi:id="_yQzoID_LEeyWfbBrjmv4Dw" name="Class33"/>
+  <packagedElement xmi:type="uml:Component" xmi:id="_yhqHkD_LEeyWfbBrjmv4Dw" name="Component34"/>
+  <packagedElement xmi:type="uml:Association" xmi:id="_0DnCgD_LEeyWfbBrjmv4Dw" memberEnd="_0DtJID_LEeyWfbBrjmv4Dw _0DtwMD_LEeyWfbBrjmv4Dw">
+    <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_0Dr7AD_LEeyWfbBrjmv4Dw" source="org.eclipse.papyrus">
+      <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_0Dr7AT_LEeyWfbBrjmv4Dw" key="nature" value="UML_Nature"/>
+    </eAnnotations>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_0DtJID_LEeyWfbBrjmv4Dw" name="class33" type="_yQzoID_LEeyWfbBrjmv4Dw" association="_0DnCgD_LEeyWfbBrjmv4Dw"/>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_0DtwMD_LEeyWfbBrjmv4Dw" name="component34" type="_yhqHkD_LEeyWfbBrjmv4Dw" association="_0DnCgD_LEeyWfbBrjmv4Dw"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:CommunicationPath" xmi:id="_IZYW4D_OEeyWfbBrjmv4Dw" name="k" memberEnd="_IZY98j_OEeyWfbBrjmv4Dw _IZZlAD_OEeyWfbBrjmv4Dw">
+    <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_IZY98D_OEeyWfbBrjmv4Dw" source="org.eclipse.papyrus">
+      <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_IZY98T_OEeyWfbBrjmv4Dw" key="nature" value="UML_Nature"/>
+    </eAnnotations>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_IZY98j_OEeyWfbBrjmv4Dw" name="atm client" type="_vciTIDUqEeyox4ICi4L1bw" association="_IZYW4D_OEeyWfbBrjmv4Dw"/>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_IZZlAD_OEeyWfbBrjmv4Dw" name="atm service" type="_xHmGwDUqEeyox4ICi4L1bw" association="_IZYW4D_OEeyWfbBrjmv4Dw"/>
   </packagedElement>
 </uml:Model>

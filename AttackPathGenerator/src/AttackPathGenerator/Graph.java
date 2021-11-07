@@ -27,6 +27,15 @@ public class Graph {
 		}
 	}
 	
+	public void showDetailInfo()
+	{
+		System.out.printf("Vertex nums: %d\n", vertexes.size());
+		for(Map.Entry<String, Vertex> v : vertexes.entrySet())
+		{
+			v.getValue().showDetailInfo();
+		}
+	}
+	
 	public void addEdge(String sourceID, String targetID)
 	{
 		if(vertexes.containsKey(sourceID) && vertexes.containsKey(targetID)) {

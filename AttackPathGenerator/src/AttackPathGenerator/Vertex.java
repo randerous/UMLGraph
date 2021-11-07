@@ -22,10 +22,11 @@ public class Vertex {
     
     public void showDetailInfo() {
     	System.out.printf("type: %d\n", type);
-    	itself.showNodeInfo();
+    	itself.showDetailNodeInfo();
+    	System.out.printf("edge nums: %d\n", next_vertexes.size());
     	for(Vertex n: next_vertexes) {
     		System.out.printf("edge end: \n");
-    		n.itself.showNodeInfo();
+    		n.itself.showDetailNodeInfo();
     	}
     	System.out.println();
     }

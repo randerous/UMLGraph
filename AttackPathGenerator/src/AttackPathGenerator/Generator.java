@@ -25,23 +25,31 @@ import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.uml2.common.util.UML2Util;
 import org.eclipse.uml2.uml.AggregationKind;
+import org.eclipse.uml2.uml.Artifact;
 import org.eclipse.uml2.uml.Association;
 import org.eclipse.uml2.uml.Classifier;
 import org.eclipse.uml2.uml.Comment;
+import org.eclipse.uml2.uml.CommunicationPath;
 import org.eclipse.uml2.uml.Component;
 import org.eclipse.uml2.uml.Dependency;
+import org.eclipse.uml2.uml.Deployment;
+import org.eclipse.uml2.uml.Device;
 import org.eclipse.uml2.uml.Enumeration;
 import org.eclipse.uml2.uml.EnumerationLiteral;
+import org.eclipse.uml2.uml.ExecutionEnvironment;
 import org.eclipse.uml2.uml.Generalization;
+import org.eclipse.uml2.uml.Interface;
 import org.eclipse.uml2.uml.LiteralUnlimitedNatural;
 import org.eclipse.uml2.uml.Model;
 import org.eclipse.uml2.uml.NamedElement;
 import org.eclipse.uml2.uml.PrimitiveType;
 import org.eclipse.uml2.uml.Property;
+import org.eclipse.uml2.uml.Relationship;
 import org.eclipse.uml2.uml.Stereotype;
 import org.eclipse.uml2.uml.Type;
 import org.eclipse.uml2.uml.UMLFactory;
 import org.eclipse.uml2.uml.UMLPackage;
+import org.eclipse.uml2.uml.internal.impl.DependencyImpl;
 import org.eclipse.uml2.uml.resource.UMLResource;
 import org.eclipse.uml2.uml.resources.util.UMLResourcesUtil;
 import org.eclipse.uml2.uml.Package;
@@ -73,7 +81,10 @@ public class Generator {
 //		URI uri = URI.createFileURI("D:/×ÀÃæ/a3.uml");
 		Package p = parseUML(uri);
 		
-		processComponent(p);
+		
+		
+		processNode(p);
+		processEdge(p);
 		
 //		G.showInfo();
 		AttackPath paths = new AttackPath();
@@ -97,25 +108,132 @@ public class Generator {
 	
 	
 	//parse component diagram
-	protected static void processComponent(Package p) {
+	protected static void processNode(Package p) {
+		
 		//get all vertexes
- 
 		for (NamedElement i : p.getMembers()) {
+			
 			if (i instanceof Component) {
-				Component instance = (Component) i;
-//				instance.getProvideds();
+				Component instance = (Component) i; 
 				processComponentNode(instance);
 			}
 			
+			if (i instanceof Interface)
+			{
+				Interface instance = (Interface) i;
+				createNode(instance.getOwnedComments(), getId(instance.toString()), instance.getName(), level);
+			}
+			
+			if(i instanceof Package) 
+			{
+				Package instance = (Package) i;
+				createNode(instance.getOwnedComments(), getId(instance.toString()), instance.getName(), level);
+			}
+			
+			if(i instanceof Model) 
+			{
+				Model instance = (Model) i;
+				createNode(instance.getOwnedComments(), getId(instance.toString()), instance.getName(), level);
+			}
+			
+			if(i instanceof org.eclipse.uml2.uml.Node)
+			{
+				org.eclipse.uml2.uml.Node instance = (org.eclipse.uml2.uml.Node) i;
+				createNode(instance.getOwnedComments(), getId(instance.toString()), instance.getName(), level);
+			}
+			
+			if(i instanceof Device) 
+			{
+				Device instance = (Device) i;
+				createNode(instance.getOwnedComments(), getId(instance.toString()), instance.getName(), level);
+			}
+			
+			if(i instanceof ExecutionEnvironment) 
+			{
+				ExecutionEnvironment instance = (ExecutionEnvironment) i;
+				createNode(instance.getOwnedComments(), getId(instance.toString()), instance.getName(), level);
+			}
+			
+			if(i instanceof Artifact) 
+			{
+				Artifact instance = (Artifact) i;
+				createNode(instance.getOwnedComments(), getId(instance.toString()), instance.getName(), level);
+			}
+			
 		}
+	}
+	
+	protected static void processEdge(Package p) {
 		
-		
+ 
+	
+//		processCommunicationPath(p.)
 		//get all edge
+		
 		for (NamedElement i : p.getMembers()) {
 			if (i instanceof Component) {
-				Component instance = (Component) i;
-				processComponentEdge(instance);
+				Component instance = (Component) i; 
+				processDependency(instance.getClientDependencies());
+				processGeneralization(getId(instance.toString()),instance.getGeneralizations());
+				processAssociation(instance.getAssociations());
+			} 
+			
+			if (i instanceof Interface) {
+				Interface instance = (Interface) i; 
+				processDependency(instance.getClientDependencies());
+				processGeneralization(getId(instance.toString()),instance.getGeneralizations());
+				processAssociation(instance.getAssociations());
 			}  
+			
+			if (i instanceof Package) {
+				Package instance = (Package) i; 
+				processDependency(instance.getClientDependencies());
+			}  
+			
+			if (i instanceof Model) {
+				Model instance = (Model) i; 
+				processDependency(instance.getClientDependencies()); 
+			}
+			
+			if(i instanceof org.eclipse.uml2.uml.Node)
+			{
+				org.eclipse.uml2.uml.Node instance = (org.eclipse.uml2.uml.Node) i;
+				processDependency(instance.getClientDependencies());
+				processGeneralization(getId(instance.toString()),instance.getGeneralizations());
+				processAssociation(instance.getAssociations());
+				processCommunicationPath(instance.getCommunicationPaths());
+				processDeployment(getId(instance.toString()),instance.getDeployments());
+			}
+			
+			
+			if(i instanceof Device) 
+			{
+				Device instance = (Device) i; 
+				processDependency(instance.getClientDependencies());
+				processGeneralization(getId(instance.toString()),instance.getGeneralizations());
+				processAssociation(instance.getAssociations());
+				processCommunicationPath(instance.getCommunicationPaths());
+				processDeployment(getId(instance.toString()),instance.getDeployments());
+			}
+			
+			if(i instanceof ExecutionEnvironment) 
+			{
+				ExecutionEnvironment instance = (ExecutionEnvironment) i;
+				processDependency(instance.getClientDependencies());
+				processGeneralization(getId(instance.toString()),instance.getGeneralizations());
+				processAssociation(instance.getAssociations());
+				processCommunicationPath(instance.getCommunicationPaths());
+				processDeployment(getId(instance.toString()),instance.getDeployments());
+			}
+			
+			if(i instanceof Artifact) 
+			{
+				Artifact instance = (Artifact) i; 	 
+				processDependency(instance.getClientDependencies());
+				processGeneralization(getId(instance.toString()),instance.getGeneralizations());
+				processAssociation(instance.getAssociations()); 
+			}
+			
 	 
 		}
 		
@@ -124,54 +242,111 @@ public class Generator {
 	
 	
 	//parse connections in Component diagram
-	protected static void processComponentEdge(Component instance)
+	protected static void processDependency(EList<Dependency> dependencies)
 	{
-		for(Dependency den : instance.getClientDependencies())
+		for(Dependency i : dependencies)
 		{
-			String sourceID = getId(den.getClients().get(0).toString());
-			String supplierID = getId(den.getSuppliers().get(0).toString());
-			
-			G.addEdge(sourceID, supplierID);
+			String sourceID = getId(i.getClients().get(0).toString());
+			String destID = getId(i.getSuppliers().get(0).toString());			
+			G.addEdge(sourceID, destID);
 		}
 	}
+	
+	protected static void processGeneralization(String sourceID, EList<Generalization> generalizations)
+	{
+		for(Generalization i : generalizations)
+		{ 
+			String  destID = getId(i.getGeneral().toString());			
+			G.addEdge(sourceID, destID);
+			G.addEdge(destID, sourceID);
+		}
+	}
+	
+	protected static void processAssociation(EList<Association> associations)
+	{
+		for(Association i : associations)
+		{ 
+			String sourceID = getId(i.getMembers().get(0).toString());
+			String destID = getId(i.getMembers().get(1).toString());			
+			G.addEdge(sourceID, destID);
+			G.addEdge(destID, sourceID);
+		}
+	}
+	
+	protected static void processCommunicationPath(EList<CommunicationPath> communicationPaths)
+	{
+		for(CommunicationPath i : communicationPaths)
+		{			
+			String sourceID = getId(i.getMembers().get(0).toString());
+			String destID = getId(i.getMembers().get(1).toString());			
+			G.addEdge(sourceID, destID);
+			G.addEdge(destID, sourceID);
+		}
+	}
+	
+	protected static void processDeployment(String sourceID,EList<Deployment> deployments)
+	{
+		for(Deployment i : deployments)
+		{			
+			String destID = getId(i.getTargets().get(0).toString());			
+			G.addEdge(sourceID, destID);
+			G.addEdge(destID, sourceID);
+		}
+	}
+	
+	
 	
 	
 	//parse Nodes in component diagram
 	protected static void processComponentNode(Component instance)
 	{
-		//check annotation
-		instance.getClientDependencies();
+		//check annotation		
+		 createNode(instance.getOwnedComments(), getId(instance.toString()), instance.getName(), level);
+
 		
-		Node n;
-		if (instance.getOwnedComments().size() > 0)
+	}
+	
+	
+	protected void buildGraph() {
+//		Node n = new Node();
+//		Vertex v = new Vertex();
+//		G.AddElem(v);
+	}
+	
+	
+	
+	//parse comments to create Node
+	protected static void createNode(EList<Comment> comments, String id, String name, int level)
+	{
+		Node node;
+		if (comments.size() > 0)
 		{
-			String info = instance.getOwnedComments().get(0).getBody();
+			String info = comments.get(0).getBody();
 //			out(info);
 			JSONObject obj = JSON.parseObject(info);
 			
 			//Create Node
 			if(info.contains("exposure"))
 			{ 
-				 n = new Surface(getId(instance.toString()), instance.getName(), level);
-				 ((Surface)n).setPort(instance.getName());
+				 node = new Surface(id, name, level); 
+				 ((Surface)node).setPort(name);
 			}
 			else if(info.contains("value")) 
 			{
 //				out(info); 
 				int value  = obj.getIntValue("value");
-				n = new Asset(getId(instance.toString()), instance.getName(), level);
-				((Asset)n).SetValue(value);
+				node = new Asset(id, name, level);
+				((Asset)node).SetValue(value);
 			}else
 			{
-				 n = new Node(getId(instance.toString()), instance.getName(), level);
+				 node = new Node(id, name, level);
 			}
 			
 			
 			//add vulnerability info
 			if(info.contains("vulnerabilities"))
 			{
-//				System.out.println(obj.getJSONArray("vulnerabilities").size());
-				
+//				System.out.println(obj.getJSONArray("vulnerabilities").size());	
 				for(Object j: obj.getJSONArray("vulnerabilities")) {
 					if(j instanceof JSONObject)
 					{
@@ -184,34 +359,26 @@ public class Generator {
 								temp.getString("PostCondition"),
 								temp.getIntValue("Complexity"));
 //						v.showInfo();
-						n.addVunlerability(v);
+						node.addVunlerability(v);
 					}
 				}			
 			}	
 		}else {
-			n = new Node(getId(instance.toString()), instance.getName(), level);
+			node = new Node(id, name, level);
 		}
-		 
-//		n.showNodeInfo();
+		
 		//type :  0: surface, 1: Node, 2: Asset
 		Vertex v;
-		if(n instanceof Surface) {	
-		    v = new Vertex(0);
-		}else if(n instanceof Asset)
-		{
-			v = new Vertex(2);
-		}else v = new Vertex(1);
-		v.itself = n;
-		G.addElem(v);
+				if(node instanceof Surface) {	
+				    v = new Vertex(0);
+				}else if(node instanceof Asset)
+				{
+					v = new Vertex(2);
+				}else v = new Vertex(1);
+				v.itself = node;
+				G.addElem(v);
+ 
 	}
-	
-	
-	protected void buildGraph() {
-//		Node n = new Node();
-//		Vertex v = new Vertex();
-//		G.AddElem(v);
-	}
-	
 	
 	//general iterator for EMF
 	protected void iterator(Resource resource) {
