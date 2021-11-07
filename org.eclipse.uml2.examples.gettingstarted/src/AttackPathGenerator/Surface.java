@@ -1,4 +1,4 @@
-package org.eclipse.uml2.examples.gettingstarted;
+package AttackPathGenerator;
 
 public class Surface extends Node{
 	public Surface(String id, String name, int level) {

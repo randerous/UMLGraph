@@ -11,7 +11,7 @@
  *   Kenn Hussey - 535301
  *
  */
-package org.eclipse.uml2.examples.gettingstarted;
+package AttackPathGenerator;
 
 import java.io.File;
 import java.io.IOException;
@@ -21,7 +21,6 @@ import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
-import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.uml2.common.util.UML2Util;
@@ -55,7 +54,7 @@ import com.alibaba.fastjson.JSONObject;
  * 
  * @see http://wiki.eclipse.org/MDT/UML2/Getting_Started_with_UML2
  */
-public class GettingStartedWithUML2 {
+public class Generator {
 
 	public static boolean DEBUG = true;
 
@@ -65,26 +64,26 @@ public class GettingStartedWithUML2 {
 	
 	private static int level;
 
-	/**
-	 * The main program. It expects one argument, which is the local filesystem path
-	 * of a directory in which to create the <tt>ExtendedPO2.uml</tt> file.
-	 * 
-	 * @param the program arguments, which must consist of a single filesystem path
-	 */
+ 
 	public static void main(String[] args) throws Exception {
 		level = 0;
 		G = new Graph();
 		 
-		URI uri = URI.createFileURI("D:/桌面/华为/proj/UMLGraph/test/test.uml");
+		URI uri = URI.createFileURI("C:/Users/randerous/Desktop/华为/UMLGraph/test/test.uml");
 //		URI uri = URI.createFileURI("D:/桌面/a3.uml");
 		Package p = parseUML(uri);
 		
 		processComponent(p);
 		
-		G.showInfo();
+//		G.showInfo();
+		AttackPath paths = new AttackPath();
+		paths.genPath(G);
+		paths.showInfo();
+				
 
 	}
 	
+	// parse UML to get root package
 	protected static Package parseUML(URI uri) {
 		// get the root package (a model).
 		ResourceSetImpl RESOURCE_SET = new ResourceSetImpl();
@@ -95,7 +94,9 @@ public class GettingStartedWithUML2 {
 		Package p = (Package) EcoreUtil.getObjectByType(resource.getContents(), UMLPackage.Literals.PACKAGE);
 		return p;
 	}
-
+	
+	
+	//parse component diagram
 	protected static void processComponent(Package p) {
 		//get all vertexes
  
@@ -121,6 +122,8 @@ public class GettingStartedWithUML2 {
 
 	}
 	
+	
+	//parse connections in Component diagram
 	protected static void processComponentEdge(Component instance)
 	{
 		for(Dependency den : instance.getClientDependencies())
@@ -133,6 +136,7 @@ public class GettingStartedWithUML2 {
 	}
 	
 	
+	//parse Nodes in component diagram
 	protected static void processComponentNode(Component instance)
 	{
 		//check annotation
@@ -201,12 +205,15 @@ public class GettingStartedWithUML2 {
 		G.addElem(v);
 	}
 	
+	
 	protected void buildGraph() {
 //		Node n = new Node();
 //		Vertex v = new Vertex();
 //		G.AddElem(v);
 	}
-
+	
+	
+	//general iterator for EMF
 	protected void iterator(Resource resource) {
 		for (TreeIterator<EObject> i = resource.getAllContents(); i.hasNext();) {
 
@@ -221,11 +228,13 @@ public class GettingStartedWithUML2 {
 
 	}
 	
+	//tools for parse identifier for Node
 	protected static String getId(String str) {		
 		String s = str.substring(str.indexOf("@")+1,str.indexOf(" ")); 
 		return s;
 	}
-
+	
+	//tools to simplify system.out, & for debug
 	protected static void out(String format, Object... args) {
 		if (DEBUG) {
 			System.out.printf(format, args);

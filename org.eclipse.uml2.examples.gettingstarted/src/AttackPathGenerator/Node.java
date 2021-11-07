@@ -1,4 +1,4 @@
-package org.eclipse.uml2.examples.gettingstarted;
+package AttackPathGenerator;
 
 import java.util.ArrayList;
 
@@ -20,6 +20,10 @@ public class Node {
     }
     
     public void showNodeInfo() {
+    	System.out.printf("Node:\nid: %s\nname : %s\nlevel: %d\n\r", id, name, level);
+    }
+    
+    public void showDetailNodeInfo() {
     	System.out.printf("Node:\nid: %s\nname : %s\nlevel: %d\n\r", id, name, level);
     	if(vulnerabilities.size() > 0) {
     		for(Vulnerability v: vulnerabilities) {

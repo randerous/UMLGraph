@@ -50,6 +50,7 @@
   <packagedElement xmi:type="uml:Dependency" xmi:id="_JEXB4DUrEeyox4ICi4L1bw" client="_U2JicDS-Eey-M5sR4JaDcA" supplier="_zyQWMDUqEeyox4ICi4L1bw"/>
   <packagedElement xmi:type="uml:Component" xmi:id="_lyJX4DlQEey2Z-i74Vi8KQ" name="CardReader">
     <packagedElement xmi:type="uml:Dependency" xmi:id="_YdJ3QDlREey2Z-i74Vi8KQ" name="send information" client="_lyJX4DlQEey2Z-i74Vi8KQ" supplier="_naVdsDlQEey2Z-i74Vi8KQ"/>
+    <packagedElement xmi:type="uml:Dependency" xmi:id="_kGFWAD-jEeynVNBqZbkRtw" client="_lyJX4DlQEey2Z-i74Vi8KQ" supplier="_HB8koDlREey2Z-i74Vi8KQ"/>
   </packagedElement>
   <packagedElement xmi:type="uml:Component" xmi:id="_naVdsDlQEey2Z-i74Vi8KQ" name="Screen">
     <ownedComment xmi:type="uml:Comment" xmi:id="_zc9K4DooEey2Z-i74Vi8KQ">

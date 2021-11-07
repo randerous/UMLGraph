@@ -1,4 +1,4 @@
-package org.eclipse.uml2.examples.gettingstarted;
+package AttackPathGenerator;
 
 public class Asset extends Node{
 	int Value;

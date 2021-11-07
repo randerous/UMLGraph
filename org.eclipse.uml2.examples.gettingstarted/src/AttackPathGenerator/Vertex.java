@@ -1,32 +1,37 @@
-package org.eclipse.uml2.examples.gettingstarted;
+package AttackPathGenerator;
 
 import java.util.ArrayList;
 
 public class Vertex {
     int type; // 0: surface, 1: Node, 2: Asset
     Node itself;// keep current Node info
-    ArrayList<Node> next_vertexes;
+    ArrayList<Vertex> next_vertexes;
     
     public Vertex(int type) {
     	this.type = type;
-    	next_vertexes = new ArrayList<Node>();
+    	next_vertexes = new ArrayList<Vertex>();
     }
     
     public void setSelfNode(Node n) {
     	this.itself = n;
     }
     
-    public void addNode(Node n) {
+    public void addNode(Vertex n) {
     	this.next_vertexes.add(n);
+    }
+    
+    public void showDetailInfo() {
+    	System.out.printf("type: %d\n", type);
+    	itself.showNodeInfo();
+    	for(Vertex n: next_vertexes) {
+    		System.out.printf("edge end: \n");
+    		n.itself.showNodeInfo();
+    	}
+    	System.out.println();
     }
     
     public void showInfo() {
     	System.out.printf("type: %d\n", type);
-    	itself.showNodeInfo();
-    	for(Node n: next_vertexes) {
-    		System.out.printf("edge end: \n");
-    		n.showNodeInfo();
-    	}
-    	System.out.println();
+    	itself.showNodeInfo(); 
     }
 }

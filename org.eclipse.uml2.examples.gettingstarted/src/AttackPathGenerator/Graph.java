@@ -1,4 +1,4 @@
-package org.eclipse.uml2.examples.gettingstarted;
+package AttackPathGenerator;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -31,7 +31,7 @@ public class Graph {
 	{
 		if(vertexes.containsKey(sourceID) && vertexes.containsKey(targetID)) {
 			vertexes.get(sourceID).next_vertexes.
-			add((vertexes.get(targetID).itself));	
+			add((vertexes.get(targetID)));	
 		}
 	}
 }

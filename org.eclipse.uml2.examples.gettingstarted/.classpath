@@ -7,6 +7,6 @@
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
 	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="lib" path="D:/桌面/google_download/fastjson-1.2.78.jar"/>
+	<classpathentry kind="lib" path="E:/google_download/fastjson-1.2.78.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
