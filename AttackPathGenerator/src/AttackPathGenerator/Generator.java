@@ -87,6 +87,7 @@ public class Generator {
 		processEdge(p);
 		
 //		G.showInfo();
+//		G.showDetailInfo();
 		AttackPath paths = new AttackPath();
 		paths.genPath(G);
 		paths.showInfo();
@@ -276,9 +277,9 @@ public class Generator {
 	protected static void processCommunicationPath(EList<CommunicationPath> communicationPaths)
 	{
 		for(CommunicationPath i : communicationPaths)
-		{			
-			String sourceID = getId(i.getMembers().get(0).toString());
-			String destID = getId(i.getMembers().get(1).toString());			
+		{		
+			String sourceID = getId(i.getEndTypes().get(0).toString());
+			String destID = getId(i.getEndTypes().get(1).toString());			
 			G.addEdge(sourceID, destID);
 			G.addEdge(destID, sourceID);
 		}
@@ -288,7 +289,8 @@ public class Generator {
 	{
 		for(Deployment i : deployments)
 		{			
-			String destID = getId(i.getTargets().get(0).toString());			
+			String destID = getId(i.getTargets().get(0).toString());
+//			out(i.getTargets().get(0).toString());
 			G.addEdge(sourceID, destID);
 			G.addEdge(destID, sourceID);
 		}

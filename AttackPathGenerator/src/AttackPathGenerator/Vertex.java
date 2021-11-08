@@ -1,15 +1,17 @@
 package AttackPathGenerator;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 public class Vertex {
     int type; // 0: surface, 1: Node, 2: Asset
     Node itself;// keep current Node info
-    ArrayList<Vertex> next_vertexes;
+    Set<Vertex> next_vertexes;
     
     public Vertex(int type) {
     	this.type = type;
-    	next_vertexes = new ArrayList<Vertex>();
+    	next_vertexes = new HashSet<Vertex>();
     }
     
     public void setSelfNode(Node n) {

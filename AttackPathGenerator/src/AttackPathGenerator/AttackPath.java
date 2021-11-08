@@ -2,19 +2,21 @@ package AttackPathGenerator;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 import java.util.Stack;
 
 public class AttackPath {
 	public ArrayList <ArrayList<Vertex>> pathSet;
 	Stack<Vertex> path;
-	public Map<String,Boolean> visit;
+	public Set<String> visit;
 	
 	public AttackPath()
 	{
 		pathSet = new ArrayList();
 		path = new Stack();
-		visit = new HashMap();
+		visit = new HashSet<String>();
 				
 	}
 	
@@ -31,15 +33,17 @@ public class AttackPath {
 	private void dfs(Vertex cur, Vertex dest)
 	{
 		if(cur.itself.id.equals(dest.itself.id)) {
+			path.add(cur);
 			addPath(path);
+			path.remove(cur);
 			return;
 		}
-		visit.put(cur.itself.id, true);
+		visit.add(cur.itself.id);
 		path.add(cur);
 		
 		for(Vertex v: cur.next_vertexes)
 		{
-			if(!visit.containsKey(v.itself.id))
+			if(!visit.contains(v.itself.id))
 			{
 				dfs(v,dest);
 			}
@@ -55,9 +59,17 @@ public class AttackPath {
 		for(Map.Entry<String, Vertex> v : p.vertexes.entrySet())
 		{
 			if(v.getValue().type == 0)
+			{
 				source.add(v.getValue());
+//				System.out.println(v.getValue().itself.name);
+			}
+				
 			if(v.getValue().type == 2)
+			{
+//				System.out.println(v.getValue().itself.name);
 				destination.add(v.getValue());
+			}
+				
 		}
 		
 		if(!source.isEmpty() && !destination.isEmpty())
@@ -66,8 +78,9 @@ public class AttackPath {
 			{
 				for(Vertex dest: destination)
 				{
-					dfs(cur, dest);
+					dfs(cur, dest); 
 				}
+				
 			}
 		}
 	}

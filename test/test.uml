@@ -1,9 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <uml:Model xmi:version="20131001" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML" xmi:id="_U2JicDS-Eey-M5sR4JaDcA" name="test">
+  <ownedComment xmi:type="uml:Comment" xmi:id="_KmDkMEBaEey2g6kh0vE4zg">
+    <body>{&#xD;
+&quot;exposure&quot;:true&#xD;
+}</body>
+  </ownedComment>
   <packageImport xmi:type="uml:PackageImport" xmi:id="_U3yhMDS-Eey-M5sR4JaDcA">
     <importedPackage xmi:type="uml:Model" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#_0"/>
   </packageImport>
-  <packagedElement xmi:type="uml:Artifact" xmi:id="_iZwZUDUqEeyox4ICi4L1bw" name="Card Reader"/>
+  <packagedElement xmi:type="uml:Artifact" xmi:id="_iZwZUDUqEeyox4ICi4L1bw" name="Card Reader">
+    <ownedComment xmi:type="uml:Comment" xmi:id="_-2NccEBaEey2g6kh0vE4zg">
+      <body>{&quot;exposure&quot;:true}</body>
+    </ownedComment>
+  </packagedElement>
   <packagedElement xmi:type="uml:Artifact" xmi:id="_kolBUDUqEeyox4ICi4L1bw" name="Display"/>
   <packagedElement xmi:type="uml:Artifact" xmi:id="_luJiQDUqEeyox4ICi4L1bw" name="Net Interface">
     <elementImport xmi:type="uml:ElementImport" xmi:id="_9bi0gD_GEeyWfbBrjmv4Dw" importedElement="_HB8koDlREey2Z-i74Vi8KQ"/>
@@ -33,11 +42,13 @@
 }</body>
     </ownedComment>
   </packagedElement>
-  <packagedElement xmi:type="uml:Device" xmi:id="_vciTIDUqEeyox4ICi4L1bw" name="ATM Client"/>
+  <packagedElement xmi:type="uml:Device" xmi:id="_vciTIDUqEeyox4ICi4L1bw" name="ATM Client">
+    <deployment xmi:type="uml:Deployment" xmi:id="_GHcD0EBaEey2g6kh0vE4zg" client="_vciTIDUqEeyox4ICi4L1bw" supplier="_iZwZUDUqEeyox4ICi4L1bw" deployedArtifact="_iZwZUDUqEeyox4ICi4L1bw"/>
+  </packagedElement>
   <packagedElement xmi:type="uml:Device" xmi:id="_xHmGwDUqEeyox4ICi4L1bw" name="ATM Service">
     <deployment xmi:type="uml:Deployment" xmi:id="_dJvyAD_PEeyWfbBrjmv4Dw" name="nnm" client="_xHmGwDUqEeyox4ICi4L1bw" supplier="_zyQWMDUqEeyox4ICi4L1bw" deployedArtifact="_zyQWMDUqEeyox4ICi4L1bw"/>
   </packagedElement>
-  <packagedElement xmi:type="uml:Artifact" xmi:id="_zyQWMDUqEeyox4ICi4L1bw" name="Bank Database">
+  <packagedElement xmi:type="uml:Artifact" xmi:id="_zyQWMDUqEeyox4ICi4L1bw" name="Bank Database" fileName="">
     <ownedComment xmi:type="uml:Comment" xmi:id="_ri5fYDodEey2Z-i74Vi8KQ">
       <body>{&#xD;
 &quot;value&quot; : 3&#xD;
@@ -49,10 +60,8 @@
   <packagedElement xmi:type="uml:Dependency" xmi:id="_82rkEDUqEeyox4ICi4L1bw" client="_vciTIDUqEeyox4ICi4L1bw" supplier="_uLPqYDUqEeyox4ICi4L1bw"/>
   <packagedElement xmi:type="uml:Dependency" xmi:id="_9q-HwDUqEeyox4ICi4L1bw" client="_U2JicDS-Eey-M5sR4JaDcA" supplier="_pjifcDUqEeyox4ICi4L1bw"/>
   <packagedElement xmi:type="uml:Dependency" xmi:id="_-XKfYDUqEeyox4ICi4L1bw" client="_vciTIDUqEeyox4ICi4L1bw" supplier="_kolBUDUqEeyox4ICi4L1bw"/>
-  <packagedElement xmi:type="uml:Dependency" xmi:id="__BbkYDUqEeyox4ICi4L1bw" client="_vciTIDUqEeyox4ICi4L1bw" supplier="_U2JicDS-Eey-M5sR4JaDcA"/>
   <packagedElement xmi:type="uml:Dependency" xmi:id="_Hv8zsDUrEeyox4ICi4L1bw" client="_vciTIDUqEeyox4ICi4L1bw" supplier="_so_0gDUqEeyox4ICi4L1bw"/>
   <packagedElement xmi:type="uml:Dependency" xmi:id="_Im8tIDUrEeyox4ICi4L1bw" name="use" client="_xHmGwDUqEeyox4ICi4L1bw" supplier="_luJiQDUqEeyox4ICi4L1bw"/>
-  <packagedElement xmi:type="uml:Dependency" xmi:id="_JEXB4DUrEeyox4ICi4L1bw" client="_U2JicDS-Eey-M5sR4JaDcA" supplier="_zyQWMDUqEeyox4ICi4L1bw"/>
   <packagedElement xmi:type="uml:Component" xmi:id="_lyJX4DlQEey2Z-i74Vi8KQ" name="CardReader">
     <packagedElement xmi:type="uml:Dependency" xmi:id="_YdJ3QDlREey2Z-i74Vi8KQ" name="send information" client="_lyJX4DlQEey2Z-i74Vi8KQ" supplier="_naVdsDlQEey2Z-i74Vi8KQ"/>
     <packagedElement xmi:type="uml:Dependency" xmi:id="_kGFWAD-jEeynVNBqZbkRtw" client="_lyJX4DlQEey2Z-i74Vi8KQ" supplier="_HB8koDlREey2Z-i74Vi8KQ"/>
