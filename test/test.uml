@@ -61,7 +61,7 @@
   <packagedElement xmi:type="uml:Dependency" xmi:id="_9q-HwDUqEeyox4ICi4L1bw" client="_U2JicDS-Eey-M5sR4JaDcA" supplier="_pjifcDUqEeyox4ICi4L1bw"/>
   <packagedElement xmi:type="uml:Dependency" xmi:id="_-XKfYDUqEeyox4ICi4L1bw" client="_vciTIDUqEeyox4ICi4L1bw" supplier="_kolBUDUqEeyox4ICi4L1bw"/>
   <packagedElement xmi:type="uml:Dependency" xmi:id="_Hv8zsDUrEeyox4ICi4L1bw" client="_vciTIDUqEeyox4ICi4L1bw" supplier="_so_0gDUqEeyox4ICi4L1bw"/>
-  <packagedElement xmi:type="uml:Dependency" xmi:id="_Im8tIDUrEeyox4ICi4L1bw" name="use" client="_xHmGwDUqEeyox4ICi4L1bw" supplier="_luJiQDUqEeyox4ICi4L1bw"/>
+  <packagedElement xmi:type="uml:Dependency" xmi:id="_Im8tIDUrEeyox4ICi4L1bw" name="i" client="_xHmGwDUqEeyox4ICi4L1bw" supplier="_luJiQDUqEeyox4ICi4L1bw"/>
   <packagedElement xmi:type="uml:Component" xmi:id="_lyJX4DlQEey2Z-i74Vi8KQ" name="CardReader">
     <packagedElement xmi:type="uml:Dependency" xmi:id="_YdJ3QDlREey2Z-i74Vi8KQ" name="send information" client="_lyJX4DlQEey2Z-i74Vi8KQ" supplier="_naVdsDlQEey2Z-i74Vi8KQ"/>
     <packagedElement xmi:type="uml:Dependency" xmi:id="_kGFWAD-jEeynVNBqZbkRtw" client="_lyJX4DlQEey2Z-i74Vi8KQ" supplier="_HB8koDlREey2Z-i74Vi8KQ"/>
@@ -134,9 +134,6 @@
   <packagedElement xmi:type="uml:Package" xmi:id="_gcU2sD_HEeyWfbBrjmv4Dw" name="Package31">
     <packageImport xmi:type="uml:PackageImport" xmi:id="_hKQTsD_HEeyWfbBrjmv4Dw" importedPackage="_gtrscD_HEeyWfbBrjmv4Dw"/>
   </packagedElement>
-  <packagedElement xmi:type="uml:Package" xmi:id="_gtrscD_HEeyWfbBrjmv4Dw" name="Package32">
-    <packagedElement xmi:type="uml:Realization" xmi:id="_LBID8D_IEeyWfbBrjmv4Dw" client="_gtrscD_HEeyWfbBrjmv4Dw" supplier="_iZwZUDUqEeyox4ICi4L1bw"/>
-  </packagedElement>
   <packagedElement xmi:type="uml:Class" xmi:id="_yQzoID_LEeyWfbBrjmv4Dw" name="Class33"/>
   <packagedElement xmi:type="uml:Component" xmi:id="_yhqHkD_LEeyWfbBrjmv4Dw" name="Component34"/>
   <packagedElement xmi:type="uml:Association" xmi:id="_0DnCgD_LEeyWfbBrjmv4Dw" memberEnd="_0DtJID_LEeyWfbBrjmv4Dw _0DtwMD_LEeyWfbBrjmv4Dw">
@@ -153,4 +150,27 @@
     <ownedEnd xmi:type="uml:Property" xmi:id="_IZY98j_OEeyWfbBrjmv4Dw" name="atm client" type="_vciTIDUqEeyox4ICi4L1bw" association="_IZYW4D_OEeyWfbBrjmv4Dw"/>
     <ownedEnd xmi:type="uml:Property" xmi:id="_IZZlAD_OEeyWfbBrjmv4Dw" name="atm service" type="_xHmGwDUqEeyox4ICi4L1bw" association="_IZYW4D_OEeyWfbBrjmv4Dw"/>
   </packagedElement>
+  <packagedElement xmi:type="uml:Model" xmi:id="_vJKGAEVCEey4_LPUk-fe5Q" name="Model36">
+    <packagedElement xmi:type="uml:Package" xmi:id="_gtrscD_HEeyWfbBrjmv4Dw" name="Package32">
+      <packagedElement xmi:type="uml:Realization" xmi:id="_LBID8D_IEeyWfbBrjmv4Dw" client="_gtrscD_HEeyWfbBrjmv4Dw" supplier="_iZwZUDUqEeyox4ICi4L1bw"/>
+    </packagedElement>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Package" xmi:id="_GK4YYEVHEey4_LPUk-fe5Q" name="Package34"/>
+  <packagedElement xmi:type="uml:Model" xmi:id="_YFVLwEVHEey4_LPUk-fe5Q" name="Model37">
+    <packagedElement xmi:type="uml:Package" xmi:id="_Y7mscEVHEey4_LPUk-fe5Q" name="Package1"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Model" xmi:id="_YeHfMEVHEey4_LPUk-fe5Q" name="Model38">
+    <packagedElement xmi:type="uml:Package" xmi:id="_ZVmg0EVHEey4_LPUk-fe5Q" name="Package1"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Component" xmi:id="_xrdRYEVHEey4_LPUk-fe5Q" name="Component39">
+    <ownedAttribute xmi:type="uml:Port" xmi:id="_1yexIEVHEey4_LPUk-fe5Q" name="Portfather" aggregation="composite"/>
+    <ownedConnector xmi:type="uml:Connector" xmi:id="_JiNEEEVIEey4_LPUk-fe5Q" name="Connector3">
+      <end xmi:type="uml:ConnectorEnd" xmi:id="_JiO5QEVIEey4_LPUk-fe5Q" role="_1yexIEVHEey4_LPUk-fe5Q"/>
+      <end xmi:type="uml:ConnectorEnd" xmi:id="_JiPgUEVIEey4_LPUk-fe5Q" role="_GAyLwEVIEey4_LPUk-fe5Q"/>
+    </ownedConnector>
+    <packagedElement xmi:type="uml:Component" xmi:id="_EkOuMEVIEey4_LPUk-fe5Q" name="Component2">
+      <ownedAttribute xmi:type="uml:Port" xmi:id="_GAyLwEVIEey4_LPUk-fe5Q" name="portsub" aggregation="composite"/>
+    </packagedElement>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Model" xmi:id="_CRZI4EVIEey4_LPUk-fe5Q" name="Model40"/>
 </uml:Model>
