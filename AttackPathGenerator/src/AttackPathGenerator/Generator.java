@@ -30,6 +30,8 @@ import org.eclipse.uml2.uml.Association;
 import org.eclipse.uml2.uml.Comment;
 import org.eclipse.uml2.uml.CommunicationPath;
 import org.eclipse.uml2.uml.Component;
+import org.eclipse.uml2.uml.Connector;
+import org.eclipse.uml2.uml.ConnectorEnd;
 import org.eclipse.uml2.uml.Dependency;
 import org.eclipse.uml2.uml.Deployment;
 import org.eclipse.uml2.uml.Device; 
@@ -38,10 +40,13 @@ import org.eclipse.uml2.uml.Generalization;
 import org.eclipse.uml2.uml.Interface;
  
 import org.eclipse.uml2.uml.Model;
-import org.eclipse.uml2.uml.NamedElement; 
+import org.eclipse.uml2.uml.NamedElement;
+import org.eclipse.uml2.uml.Namespace;
 import org.eclipse.uml2.uml.UMLPackage; 
 import org.eclipse.uml2.uml.resources.util.UMLResourcesUtil;
 import org.eclipse.uml2.uml.Package;
+import org.eclipse.uml2.uml.Port;
+
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 /**
@@ -56,12 +61,11 @@ public class Generator {
 	public static boolean DEBUG = true;
 	private static Graph G;
 	private static int global_id;
-	
-	private static int level;
+	 
 
  
 	public static void main(String[] args) throws Exception {
-		level = 0;
+ 
 		global_id = 0;
 		G = new Graph();
 		 
@@ -72,18 +76,18 @@ public class Generator {
 		
 		
 		//generator graph
-		processNode(p);
+		processNode(p,0);
 		processEdge(p);
 		
 		
 		//simplify graph;
 		G = simplify(G);
 		
-//		G.showInfo(); 
+		G.showInfo();
 //		G.showDetailInfo();
 		AttackPath paths = new AttackPath();
 		paths.genPath(G);
-		paths.showInfo();
+//		paths.showInfo();
 		
 		
 				
@@ -99,11 +103,15 @@ public class Generator {
 	
 	public static  Graph simplifyNode(Graph G)
 	{
+		//simplified node and simplified graph
 		ArrayList<SimplifyNode> nodes = new ArrayList <SimplifyNode>();
 		ArrayList<Equivalence> equivalence = new ArrayList <Equivalence>();
-		Map <String, Integer> idCon = new HashMap <String, Integer>();
 		
+		//for bi-convert between string and int for id 
+		Map <String, Integer> idCon = new HashMap <String, Integer>();
 		Map <Integer, String> idCon2 = new HashMap <Integer, String>();
+		
+		//create node
 		for(Map.Entry<String, Vertex> v : G.vertexes.entrySet())
 		{
 			Vertex node = v.getValue();
@@ -119,6 +127,7 @@ public class Generator {
 		}
 		
 		
+		//create edges
 		for(Map.Entry<String, Vertex> v : G.vertexes.entrySet())
 		{
 			Vertex node = v.getValue();
@@ -133,11 +142,10 @@ public class Generator {
 		}
 		
 		
+		//sort preparation for simplification
 		for(SimplifyNode node : nodes)
 		{
 			node.sortNodes();
-//			System.out.println(G.vertexes.get(idCon2.get( node.id)).itself.name);
-//			node.showInfo();
 		}
 	 
 		Collections.sort(nodes, new Comparator<SimplifyNode>() {
@@ -177,6 +185,9 @@ public class Generator {
 			}
 		});
 		
+		
+		
+		//simplification 
 		int i = 1;
 		if(nodes.size() > 2)
 		{
@@ -261,62 +272,33 @@ public class Generator {
 	
 	
 	//parse component diagram
-	protected static void processNode(Package p) {
+	protected static void processNode(Namespace p, int level) {
 		
 		//get all vertexes
 		for (NamedElement i : p.getMembers()) {
 			
-			if (i instanceof Component) {
-				Component instance = (Component) i; 
-				processComponentNode(instance);
-			}
-			
-			if (i instanceof Interface)
+			if(i instanceof Component ||
+			   i instanceof Interface ||
+			   i instanceof Package ||
+			   i instanceof Model ||
+			   i instanceof org.eclipse.uml2.uml.Node ||
+			   i instanceof Device ||
+			   i instanceof ExecutionEnvironment ||
+			   i instanceof Artifact ||
+			   i instanceof  Port)
 			{
-				Interface instance = (Interface) i;
-				createNode(instance.getOwnedComments(), getId(instance.toString()),  instance.getName(), level);
+				createNode(i.getOwnedComments(),   getId(i.toString()), i.getName(), level);
+				if(i instanceof Namespace && ((Namespace)i).getMembers().size() > 0)
+				{
+					processNode(((Namespace)i),level+1);
+				}
 			}
-			
-			if(i instanceof Package) 
-			{
-				Package instance = (Package) i;
-				createNode(instance.getOwnedComments(),  getId(instance.toString()), instance.getName(), level);
-			}
-			
-			if(i instanceof Model) 
-			{
-				Model instance = (Model) i;
-				createNode(instance.getOwnedComments(),   getId(instance.toString()), instance.getName(), level);
-			}
-			
-			if(i instanceof org.eclipse.uml2.uml.Node)
-			{
-				org.eclipse.uml2.uml.Node instance = (org.eclipse.uml2.uml.Node) i;
-				createNode(instance.getOwnedComments(),   getId(instance.toString()), instance.getName(), level);
-			}
-			
-			if(i instanceof Device) 
-			{
-				Device instance = (Device) i;
-				createNode(instance.getOwnedComments(),   getId(instance.toString()), instance.getName(), level);
-			}
-			
-			if(i instanceof ExecutionEnvironment) 
-			{
-				ExecutionEnvironment instance = (ExecutionEnvironment) i;
-				createNode(instance.getOwnedComments(),   getId(instance.toString()),  instance.getName(), level);
-			}
-			
-			if(i instanceof Artifact) 
-			{
-				Artifact instance = (Artifact) i;
-				createNode(instance.getOwnedComments(),   getId(instance.toString()), instance.getName(), level);
-			}
+
 			
 		}
 	}
 	
-	protected static void processEdge(Package p) {
+	protected static void processEdge(Namespace p) {
 		
 //		processCommunicationPath(p.)
 		//get all edge
@@ -324,31 +306,52 @@ public class Generator {
 		for (NamedElement i : p.getMembers()) {
 			if (i instanceof Component) {
 				Component instance = (Component) i; 
+				if(instance.getMembers().size() > 0)
+				{
+					processEdge(instance);
+				}
+				processConnector(instance.getOwnedConnectors());
 				processDependency(instance.getClientDependencies());
 				processGeneralization(getId(instance.toString()),instance.getGeneralizations());
 				processAssociation(instance.getAssociations());
 			} 
 			
 			if (i instanceof Interface) {
-				Interface instance = (Interface) i; 
+				Interface instance = (Interface) i;
+				if(instance.getMembers().size() > 0)
+				{
+					processEdge(instance);
+				}
 				processDependency(instance.getClientDependencies());
 				processGeneralization(getId(instance.toString()),instance.getGeneralizations());
 				processAssociation(instance.getAssociations());
 			}  
 			
 			if (i instanceof Package) {
-				Package instance = (Package) i; 
+				Package instance = (Package) i;
+				if(instance.getMembers().size() > 0)
+				{
+					processEdge(instance);
+				}
 				processDependency(instance.getClientDependencies());
 			}  
 			
 			if (i instanceof Model) {
 				Model instance = (Model) i; 
+				if(instance.getMembers().size() > 0)
+				{
+					processEdge(instance);
+				}
 				processDependency(instance.getClientDependencies()); 
 			}
 			
 			if(i instanceof org.eclipse.uml2.uml.Node)
 			{
 				org.eclipse.uml2.uml.Node instance = (org.eclipse.uml2.uml.Node) i;
+				if(instance.getMembers().size() > 0)
+				{
+					processEdge(instance);
+				}
 				processDependency(instance.getClientDependencies());
 				processGeneralization(getId(instance.toString()),instance.getGeneralizations());
 				processAssociation(instance.getAssociations());
@@ -360,6 +363,10 @@ public class Generator {
 			if(i instanceof Device) 
 			{
 				Device instance = (Device) i; 
+				if(instance.getMembers().size() > 0)
+				{
+					processEdge(instance);
+				}
 				processDependency(instance.getClientDependencies());
 				processGeneralization(getId(instance.toString()),instance.getGeneralizations());
 				processAssociation(instance.getAssociations());
@@ -370,6 +377,10 @@ public class Generator {
 			if(i instanceof ExecutionEnvironment) 
 			{
 				ExecutionEnvironment instance = (ExecutionEnvironment) i;
+				if(instance.getMembers().size() > 0)
+				{
+					processEdge(instance);
+				}
 				processDependency(instance.getClientDependencies());
 				processGeneralization(getId(instance.toString()),instance.getGeneralizations());
 				processAssociation(instance.getAssociations());
@@ -379,7 +390,11 @@ public class Generator {
 			
 			if(i instanceof Artifact) 
 			{
-				Artifact instance = (Artifact) i; 	 
+				Artifact instance = (Artifact) i; 	
+				if(instance.getMembers().size() > 0)
+				{
+					processEdge(instance);
+				}
 				processDependency(instance.getClientDependencies());
 				processGeneralization(getId(instance.toString()),instance.getGeneralizations());
 				processAssociation(instance.getAssociations()); 
@@ -391,6 +406,16 @@ public class Generator {
 
 	}
 	
+	protected static void processConnector(EList<Connector> connectors)
+	{
+		for(Connector i : connectors)
+		{
+			String sourceID = getId(i.getEnds().get(0).getRole().toString());
+			String destID = getId(i.getEnds().get(1).getRole().toString());			
+			G.addEdge(sourceID, destID);
+			G.addEdge(destID, sourceID);
+		}
+	}
 	
 	//parse connections in Component diagram
 	protected static void processDependency(EList<Dependency> dependencies)
@@ -449,14 +474,14 @@ public class Generator {
 	
 	
 	
-	//parse Nodes in component diagram
-	protected static void processComponentNode(Component instance)
-	{
-		//check annotation		
-		 createNode(instance.getOwnedComments(), getId(instance.toString()), instance.getName(), level);
-
-		
-	}
+//	//parse Nodes in component diagram
+//	protected static void processComponentNode(Component instance)
+//	{
+//		//check annotation		
+//		 createNode(instance.getOwnedComments(), getId(instance.toString()), instance.getName(), level);
+//
+//		
+//	}
 	
 	
 	protected void buildGraph() {
