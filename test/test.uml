@@ -80,11 +80,19 @@
   <packagedElement xmi:type="uml:Component" xmi:id="_tbo40DlQEey2Z-i74Vi8KQ" name="Exit">
     <packagedElement xmi:type="uml:Dependency" xmi:id="_afcfIDlREey2Z-i74Vi8KQ" name="output card" client="_tbo40DlQEey2Z-i74Vi8KQ" supplier="_lyJX4DlQEey2Z-i74Vi8KQ"/>
   </packagedElement>
-  <packagedElement xmi:type="uml:Component" xmi:id="_um7nQDlQEey2Z-i74Vi8KQ" name="CheckPassword"/>
+  <packagedElement xmi:type="uml:Component" xmi:id="_um7nQDlQEey2Z-i74Vi8KQ" name="CheckPassword">
+    <ownedComment xmi:type="uml:Comment" xmi:id="_w4rIkEVSEey4_LPUk-fe5Q">
+      <body>{&quot;exposure&quot;:true}</body>
+    </ownedComment>
+  </packagedElement>
   <packagedElement xmi:type="uml:Component" xmi:id="_xRd64DlQEey2Z-i74Vi8KQ" name="InsertMoney">
     <packagedElement xmi:type="uml:Dependency" xmi:id="_VCqGUDlREey2Z-i74Vi8KQ" client="_xRd64DlQEey2Z-i74Vi8KQ" supplier="_AYVMUDlREey2Z-i74Vi8KQ"/>
   </packagedElement>
-  <packagedElement xmi:type="uml:Component" xmi:id="_zzS-cDlQEey2Z-i74Vi8KQ" name="OutputMoney"/>
+  <packagedElement xmi:type="uml:Component" xmi:id="_zzS-cDlQEey2Z-i74Vi8KQ" name="OutputMoney">
+    <ownedComment xmi:type="uml:Comment" xmi:id="_y3j3IEVSEey4_LPUk-fe5Q">
+      <body>{&quot;exposure&quot;:true}</body>
+    </ownedComment>
+  </packagedElement>
   <packagedElement xmi:type="uml:Component" xmi:id="_5lyhgDlQEey2Z-i74Vi8KQ" name="ShowBalance">
     <ownedAttribute xmi:type="uml:Port" xmi:id="_r60TQD_HEeyWfbBrjmv4Dw" name="Port1" aggregation="composite"/>
   </packagedElement>

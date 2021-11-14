@@ -16,7 +16,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.TreeIterator;
@@ -61,7 +63,8 @@ public class Generator {
 	public static boolean DEBUG = true;
 	private static Graph G;
 	private static int global_id;
-	 
+	
+
 
  
 	public static void main(String[] args) throws Exception {
@@ -81,23 +84,23 @@ public class Generator {
 		
 		
 		//simplify graph;
+//		G.showInfo();
 		G = simplify(G);
-		
 		G.showInfo();
+
 //		G.showDetailInfo();
 		AttackPath paths = new AttackPath();
 		paths.genPath(G);
-//		paths.showInfo();
-		
-		
-				
+//		paths.showInfo();		
 
 	}
 	
 	public static  Graph simplify(Graph G)
 	{
-//		simplifyExposure(G);
-		return simplifyNode(G);
+		Graph newG =simplifyNode(G);
+				
+		newG = simplifyExposure(newG);
+		return newG;
 		
 	}
 	
@@ -236,7 +239,7 @@ public class Generator {
 			{
 				if(newG.vertexes.containsKey(
 							v.itself.id
-						))
+				 ))
 				{
 					newG.addEdge(sourceID, v.itself.id);
 				}
@@ -245,17 +248,143 @@ public class Generator {
 		}
 		
 		return newG;
-		
-		
-		
 
 	}
 	
-	public static  void simplifyExposure(Graph G)
+	public static  Graph simplifyExposure(Graph G)
 	{
+		ArrayList<Vertex> surfaces = new ArrayList<Vertex> (); 
+		Map<Vertex,Integer > idCon = new HashMap< Vertex,Integer>();
+		int i = 0;
+		for(Map.Entry<String, Vertex> entry: G.vertexes.entrySet())
+		{
+			Vertex v = entry.getValue();
+			if(v.type == 0)
+			{
+				idCon.put(v, i++);
+				surfaces.add(v);
+//				System.out.println(v.itself.name);
+				
+			}
+		}
+		//get connected sub graph		 
+		int parent[] = new int[surfaces.size()];
+		for(int j = 0; j < surfaces.size(); j++)
+			parent[j] = j;
+		
+		for(Vertex v: surfaces)
+		{
+			for(Vertex v1: v.next_vertexes)
+			{
+				if(v1.type == 0)
+				{
+					int pa = getParent(parent, idCon.get(v));
+					int pb = getParent(parent, idCon.get(v1));
+					if(pa != pb)
+						parent[pb] = parent[pa];
+				}
+			}
+		}
+		Map<Integer, Set<Vertex>> res = new HashMap<Integer, Set<Vertex>>();
+		for(int j = 0; j < surfaces.size(); j++)
+		{
+			if(res.containsKey(parent[j]))
+			{
+				res.get(parent[j]).add(surfaces.get(j));
+			}else
+			{
+				Set<Vertex> s = new HashSet<Vertex>();
+				s.add(surfaces.get(j));
+				res.put(parent[j], s);
+			}
+		}
+//		System.out.println(res.size());
+		
+		
+		//create new Graph
+		Graph newG = new Graph();
+				
+	   //Create Node
+	      for( Map.Entry<Integer, Set<Vertex>> e: res.entrySet())
+		 { 
+	    	  Set<Vertex> s = e.getValue();
+			  int level = 999;
+	    	  Vertex oldv = null ;
+			  for(Vertex v: s)
+			  {
+				  if(v.itself.level < level) 
+					  oldv = v;  
+			  }
+			  if(oldv != null)
+			  {
+				  Vertex v = new Vertex(oldv.type);
+				  v.itself = oldv.itself;
+				  newG.addElem(v); 
+			  }
+			  
+		  } 
+	      for(  Map.Entry<String, Vertex> e: G.vertexes.entrySet())
+			 { 
+		    	  Vertex oldv =  e.getValue();
+		    	  if(oldv.type != 0)
+		    	  {
+		    		  Vertex v = new Vertex(oldv.type);
+					  v.itself = oldv.itself;
+					  newG.addElem(v); 
+		    	  }
+				  
+			  }
+				
+				//Create Edge
+				for( Map.Entry<String, Vertex> e: G.vertexes.entrySet() )
+				{ 
+					Vertex oldv = e.getValue();
+					if(oldv.type != 0)
+					{
+						for(Vertex v : oldv.next_vertexes)
+						{
+							if(newG.vertexes.containsKey(
+										v.itself.id
+							 ))
+							{
+								newG.addEdge(oldv.itself.id, v.itself.id);
+							}
+						}
+					}		 
+				}
+				
+				for( Map.Entry<Integer, Set<Vertex>> e: res.entrySet())
+				{ 
+					Set<Vertex> s = e.getValue();
+					
+					 for(Vertex v: s)
+					  {
+						 for(Vertex v1 : v.next_vertexes)
+						 {
+							 if(newG.vertexes.containsKey(
+										v1.itself.id
+							 ))
+							 {
+								 newG.addEdge(v.itself.id, v1.itself.id);
+							 }
+						 }
+					  }
+					 
+				}
+				
+				return newG;
 		
 	}
 	
+	
+	private static int getParent(int parent[], int index) {
+		if(index == parent[index])
+			return index;
+		return index == parent[index] ? index : (parent[index] = getParent(parent, parent[index]));
+	}
+	
+	 
+		
 	
 	
 	// parse UML to get root package
@@ -399,8 +528,6 @@ public class Generator {
 				processGeneralization(getId(instance.toString()),instance.getGeneralizations());
 				processAssociation(instance.getAssociations()); 
 			}
-			
-	 
 		}
 		
 
