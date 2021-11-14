@@ -1,7 +1,6 @@
 package AttackPathGenerator;
 
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.ArrayList; 
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -14,15 +13,15 @@ public class AttackPath {
 	
 	public AttackPath()
 	{
-		pathSet = new ArrayList();
-		path = new Stack();
+		pathSet = new ArrayList<ArrayList<Vertex>>();
+		path = new Stack<Vertex>();
 		visit = new HashSet<String>();
 				
 	}
 	
 	public void addPath(Stack <Vertex> p)
 	{
-		ArrayList<Vertex> path = new ArrayList();
+		ArrayList<Vertex> path = new ArrayList<Vertex>();
 		for(Vertex v: p) {
 			path.add(v);
 		}
@@ -32,13 +31,13 @@ public class AttackPath {
 	
 	private void dfs(Vertex cur, Vertex dest)
 	{
-		if(cur.itself.id.equals(dest.itself.id)) {
+		if(cur.itself.id == dest.itself.id) {
 			path.add(cur);
 			addPath(path);
 			path.remove(cur);
 			return;
 		}
-		visit.add(cur.itself.id);
+		visit.add( cur.itself.id);
 		path.add(cur);
 		
 		for(Vertex v: cur.next_vertexes)
@@ -48,14 +47,14 @@ public class AttackPath {
 				dfs(v,dest);
 			}
 		}
-		visit.remove(cur.itself.id);
+		visit.remove( cur.itself.id);
 		path.remove(cur);		
 	}
 	
 	public void genPath(Graph p)
 	{
-		ArrayList<Vertex> source = new ArrayList();
-		ArrayList<Vertex> destination = new ArrayList();
+		ArrayList<Vertex> source = new ArrayList<Vertex>();
+		ArrayList<Vertex> destination = new ArrayList<Vertex>();
 		for(Map.Entry<String, Vertex> v : p.vertexes.entrySet())
 		{
 			if(v.getValue().type == 0)

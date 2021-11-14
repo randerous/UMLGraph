@@ -12,9 +12,11 @@
  *
  */
 package AttackPathGenerator;
-
-import java.io.File;
-import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.TreeIterator;
@@ -22,35 +24,22 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
-import org.eclipse.emf.ecore.util.EcoreUtil;
-import org.eclipse.uml2.common.util.UML2Util;
-import org.eclipse.uml2.uml.AggregationKind;
+import org.eclipse.emf.ecore.util.EcoreUtil; 
 import org.eclipse.uml2.uml.Artifact;
-import org.eclipse.uml2.uml.Association;
-import org.eclipse.uml2.uml.Classifier;
+import org.eclipse.uml2.uml.Association; 
 import org.eclipse.uml2.uml.Comment;
 import org.eclipse.uml2.uml.CommunicationPath;
 import org.eclipse.uml2.uml.Component;
 import org.eclipse.uml2.uml.Dependency;
 import org.eclipse.uml2.uml.Deployment;
-import org.eclipse.uml2.uml.Device;
-import org.eclipse.uml2.uml.Enumeration;
-import org.eclipse.uml2.uml.EnumerationLiteral;
+import org.eclipse.uml2.uml.Device; 
 import org.eclipse.uml2.uml.ExecutionEnvironment;
 import org.eclipse.uml2.uml.Generalization;
 import org.eclipse.uml2.uml.Interface;
-import org.eclipse.uml2.uml.LiteralUnlimitedNatural;
+ 
 import org.eclipse.uml2.uml.Model;
-import org.eclipse.uml2.uml.NamedElement;
-import org.eclipse.uml2.uml.PrimitiveType;
-import org.eclipse.uml2.uml.Property;
-import org.eclipse.uml2.uml.Relationship;
-import org.eclipse.uml2.uml.Stereotype;
-import org.eclipse.uml2.uml.Type;
-import org.eclipse.uml2.uml.UMLFactory;
-import org.eclipse.uml2.uml.UMLPackage;
-import org.eclipse.uml2.uml.internal.impl.DependencyImpl;
-import org.eclipse.uml2.uml.resource.UMLResource;
+import org.eclipse.uml2.uml.NamedElement; 
+import org.eclipse.uml2.uml.UMLPackage; 
 import org.eclipse.uml2.uml.resources.util.UMLResourcesUtil;
 import org.eclipse.uml2.uml.Package;
 import com.alibaba.fastjson.JSON;
@@ -65,35 +54,198 @@ import com.alibaba.fastjson.JSONObject;
 public class Generator {
 
 	public static boolean DEBUG = true;
-
-	private static File outputDir;
-	
 	private static Graph G;
+	private static int global_id;
 	
 	private static int level;
 
  
 	public static void main(String[] args) throws Exception {
 		level = 0;
+		global_id = 0;
 		G = new Graph();
 		 
-		URI uri = URI.createFileURI("C:/Users/randerous/Desktop/华为/UMLGraph/test/test.uml");
+//		URI uri = URI.createFileURI("C:/Users/randerous/Desktop/华为/UMLGraph/test/test.uml");
 //		URI uri = URI.createFileURI("D:/桌面/a3.uml");
+		URI uri = URI.createFileURI("D:/桌面/华为/proj/UMLGraph/UMLGraph/test/test.uml");
 		Package p = parseUML(uri);
 		
 		
-		
+		//generator graph
 		processNode(p);
 		processEdge(p);
 		
-//		G.showInfo();
+		
+		//simplify graph;
+		G = simplify(G);
+		
+//		G.showInfo(); 
 //		G.showDetailInfo();
 		AttackPath paths = new AttackPath();
 		paths.genPath(G);
 		paths.showInfo();
+		
+		
 				
 
 	}
+	
+	public static  Graph simplify(Graph G)
+	{
+//		simplifyExposure(G);
+		return simplifyNode(G);
+		
+	}
+	
+	public static  Graph simplifyNode(Graph G)
+	{
+		ArrayList<SimplifyNode> nodes = new ArrayList <SimplifyNode>();
+		ArrayList<Equivalence> equivalence = new ArrayList <Equivalence>();
+		Map <String, Integer> idCon = new HashMap <String, Integer>();
+		
+		Map <Integer, String> idCon2 = new HashMap <Integer, String>();
+		for(Map.Entry<String, Vertex> v : G.vertexes.entrySet())
+		{
+			Vertex node = v.getValue();
+			idCon.put(node.itself.id , global_id);
+			idCon2.put(global_id, node.itself.id  );
+
+			
+			SimplifyNode snode = new SimplifyNode( global_id);
+			nodes.add(snode);
+			
+			global_id++;	
+			
+		}
+		
+		
+		for(Map.Entry<String, Vertex> v : G.vertexes.entrySet())
+		{
+			Vertex node = v.getValue();
+			int source_id = idCon.get(node.itself.id);
+			for(Vertex i : node.next_vertexes)
+			{
+				int tar_id = idCon.get(i.itself.id);
+				(nodes.get(source_id)).addPostNode(tar_id);
+				(nodes.get(tar_id)).addPreNode(source_id);
+			}
+			 
+		}
+		
+		
+		for(SimplifyNode node : nodes)
+		{
+			node.sortNodes();
+//			System.out.println(G.vertexes.get(idCon2.get( node.id)).itself.name);
+//			node.showInfo();
+		}
+	 
+		Collections.sort(nodes, new Comparator<SimplifyNode>() {
+			
+			public int compare(SimplifyNode n1, SimplifyNode n2) {
+				if(n1.preNodes.equals(n2.preNodes) && n1.postNodes.equals(n2.postNodes) )
+					return 0;
+				int i = 0;
+				while(i < n1.preNodes.size() && i < n2.preNodes.size())
+				{
+					if(n1.preNodes.get(i) < n2.preNodes.get(i))
+						return -1;
+					else if(n1.preNodes.get(i) > n2.preNodes.get(i))
+						return 1;
+					i++;
+				}
+				if( n1.preNodes.size()  != n2.preNodes.size())
+				{
+					if(i == n1.preNodes.size()) return -1;
+					else return 1;
+				}
+				i = 0;
+				while(i < n1.postNodes.size() && i < n2.postNodes.size())
+				{
+					if(n1.postNodes.get(i) < n2.postNodes.get(i))
+						return -1;
+					else if(n1.postNodes.get(i) > n2.postNodes.get(i))
+						return 1;
+					i++;
+				}
+				if( n1.postNodes.size()  != n2.postNodes.size())
+				{
+					if(i == n1.postNodes.size()) return -1;
+					else return 1;
+				}
+				return 0;
+			}
+		});
+		
+		int i = 1;
+		if(nodes.size() > 2)
+		{
+			Equivalence eq = new Equivalence(nodes.get(0).id);
+	
+			SimplifyNode preNode = nodes.get(0);
+			while(i <  nodes.size())
+			{
+				SimplifyNode n1 = nodes.get(i); 
+				
+				if(n1.preNodes.equals(preNode.preNodes) &&  n1.postNodes.equals(preNode.postNodes) && !n1.preNodes.isEmpty() && !n1.postNodes.isEmpty())
+				{
+					eq.vertexes.add(n1.id);
+				}else
+				{
+					equivalence.add(eq);
+					eq = new Equivalence(n1.id); 
+					preNode = n1;
+				}
+				i++;	 
+			}
+			equivalence.add(eq);
+		}
+		
+		
+		
+		//create new Graph
+		Graph newG = new Graph();
+		
+		//Create Node
+		for(  Equivalence e: equivalence )
+		{ 
+			Vertex oldv =  G.vertexes.get(idCon2.get(e.id));
+			Vertex v = new Vertex(oldv.type);
+			v.itself = oldv.itself;
+			newG.addElem(v); 
+		}
+		
+		//Create Edge
+		for(  Equivalence e: equivalence )
+		{ 
+			String sourceID = idCon2.get(e.id);
+			Vertex oldv =  G.vertexes.get(sourceID);
+			
+			for(Vertex v : oldv.next_vertexes)
+			{
+				if(newG.vertexes.containsKey(
+							v.itself.id
+						))
+				{
+					newG.addEdge(sourceID, v.itself.id);
+				}
+			}
+ 
+		}
+		
+		return newG;
+		
+		
+		
+
+	}
+	
+	public static  void simplifyExposure(Graph G)
+	{
+		
+	}
+	
+	
 	
 	// parse UML to get root package
 	protected static Package parseUML(URI uri) {
@@ -122,43 +274,43 @@ public class Generator {
 			if (i instanceof Interface)
 			{
 				Interface instance = (Interface) i;
-				createNode(instance.getOwnedComments(), getId(instance.toString()), instance.getName(), level);
+				createNode(instance.getOwnedComments(), getId(instance.toString()),  instance.getName(), level);
 			}
 			
 			if(i instanceof Package) 
 			{
 				Package instance = (Package) i;
-				createNode(instance.getOwnedComments(), getId(instance.toString()), instance.getName(), level);
+				createNode(instance.getOwnedComments(),  getId(instance.toString()), instance.getName(), level);
 			}
 			
 			if(i instanceof Model) 
 			{
 				Model instance = (Model) i;
-				createNode(instance.getOwnedComments(), getId(instance.toString()), instance.getName(), level);
+				createNode(instance.getOwnedComments(),   getId(instance.toString()), instance.getName(), level);
 			}
 			
 			if(i instanceof org.eclipse.uml2.uml.Node)
 			{
 				org.eclipse.uml2.uml.Node instance = (org.eclipse.uml2.uml.Node) i;
-				createNode(instance.getOwnedComments(), getId(instance.toString()), instance.getName(), level);
+				createNode(instance.getOwnedComments(),   getId(instance.toString()), instance.getName(), level);
 			}
 			
 			if(i instanceof Device) 
 			{
 				Device instance = (Device) i;
-				createNode(instance.getOwnedComments(), getId(instance.toString()), instance.getName(), level);
+				createNode(instance.getOwnedComments(),   getId(instance.toString()), instance.getName(), level);
 			}
 			
 			if(i instanceof ExecutionEnvironment) 
 			{
 				ExecutionEnvironment instance = (ExecutionEnvironment) i;
-				createNode(instance.getOwnedComments(), getId(instance.toString()), instance.getName(), level);
+				createNode(instance.getOwnedComments(),   getId(instance.toString()),  instance.getName(), level);
 			}
 			
 			if(i instanceof Artifact) 
 			{
 				Artifact instance = (Artifact) i;
-				createNode(instance.getOwnedComments(), getId(instance.toString()), instance.getName(), level);
+				createNode(instance.getOwnedComments(),   getId(instance.toString()), instance.getName(), level);
 			}
 			
 		}
@@ -166,8 +318,6 @@ public class Generator {
 	
 	protected static void processEdge(Package p) {
 		
- 
-	
 //		processCommunicationPath(p.)
 		//get all edge
 		
@@ -318,8 +468,8 @@ public class Generator {
 	
 	
 	//parse comments to create Node
-	protected static void createNode(EList<Comment> comments, String id, String name, int level)
-	{
+	protected static void createNode(EList<Comment> comments, String id,String name, int level)
+	{ 
 		Node node;
 		if (comments.size() > 0)
 		{

@@ -1,6 +1,6 @@
 package AttackPathGenerator;
 
-import java.util.ArrayList;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -10,12 +10,12 @@ public class Graph {
 	
 	public Graph()
 	{
-		vertexes = new HashMap();
+		vertexes = new HashMap<String, Vertex>();
 		 
 	}
 	
 	public void addElem(Vertex v) {
-		vertexes.put(v.itself.id, v);
+		vertexes.put( v.itself.id, v);
 	}
 	
 	public void showInfo()
@@ -43,4 +43,6 @@ public class Graph {
 			add((vertexes.get(targetID)));	
 		}
 	}
+	
+
 }
