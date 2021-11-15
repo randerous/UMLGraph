@@ -4,7 +4,7 @@
 1 papyrus，直接搜官网可下载
  2 jdk 11
  3 为papyrus安装支持uml识别的插件，教程见 https://wiki.eclipse.org/MDT/UML2/Getting_Started_with_UML2
- 
+ 4 需要导入一个额外的jar包用于识别JSON，fastjson-1.2.78.jar，右键项目AttackPathGenerator->properties->Java Build Path ->Libraries->Add External JARS
 ### test
 ATM实例的UML图
 
