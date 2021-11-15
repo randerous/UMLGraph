@@ -74,7 +74,7 @@ public class Generator {
 		 
 //		URI uri = URI.createFileURI("C:/Users/randerous/Desktop/华为/UMLGraph/test/test.uml");
 //		URI uri = URI.createFileURI("D:/桌面/a3.uml");
-		URI uri = URI.createFileURI("D:/桌面/华为/proj/UMLGraph/UMLGraph/test/test.uml");
+		URI uri = URI.createFileURI("../test/test.uml");
 		Package p = parseUML(uri);
 		
 		
