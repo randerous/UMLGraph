@@ -15,5 +15,9 @@ public class Asset extends Node{
 		System.out.printf("Asset Value:%d\n",Value);
 		super.showNodeInfo();
     }
+	public int getValue()
+	{
+		return this.Value;
+	}
 	
 }

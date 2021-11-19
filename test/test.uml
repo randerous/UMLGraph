@@ -164,21 +164,4 @@
     </packagedElement>
   </packagedElement>
   <packagedElement xmi:type="uml:Package" xmi:id="_GK4YYEVHEey4_LPUk-fe5Q" name="Package34"/>
-  <packagedElement xmi:type="uml:Model" xmi:id="_YFVLwEVHEey4_LPUk-fe5Q" name="Model37">
-    <packagedElement xmi:type="uml:Package" xmi:id="_Y7mscEVHEey4_LPUk-fe5Q" name="Package1"/>
-  </packagedElement>
-  <packagedElement xmi:type="uml:Model" xmi:id="_YeHfMEVHEey4_LPUk-fe5Q" name="Model38">
-    <packagedElement xmi:type="uml:Package" xmi:id="_ZVmg0EVHEey4_LPUk-fe5Q" name="Package1"/>
-  </packagedElement>
-  <packagedElement xmi:type="uml:Component" xmi:id="_xrdRYEVHEey4_LPUk-fe5Q" name="Component39">
-    <ownedAttribute xmi:type="uml:Port" xmi:id="_1yexIEVHEey4_LPUk-fe5Q" name="Portfather" aggregation="composite"/>
-    <ownedConnector xmi:type="uml:Connector" xmi:id="_JiNEEEVIEey4_LPUk-fe5Q" name="Connector3">
-      <end xmi:type="uml:ConnectorEnd" xmi:id="_JiO5QEVIEey4_LPUk-fe5Q" role="_1yexIEVHEey4_LPUk-fe5Q"/>
-      <end xmi:type="uml:ConnectorEnd" xmi:id="_JiPgUEVIEey4_LPUk-fe5Q" role="_GAyLwEVIEey4_LPUk-fe5Q"/>
-    </ownedConnector>
-    <packagedElement xmi:type="uml:Component" xmi:id="_EkOuMEVIEey4_LPUk-fe5Q" name="Component2">
-      <ownedAttribute xmi:type="uml:Port" xmi:id="_GAyLwEVIEey4_LPUk-fe5Q" name="portsub" aggregation="composite"/>
-    </packagedElement>
-  </packagedElement>
-  <packagedElement xmi:type="uml:Model" xmi:id="_CRZI4EVIEey4_LPUk-fe5Q" name="Model40"/>
 </uml:Model>

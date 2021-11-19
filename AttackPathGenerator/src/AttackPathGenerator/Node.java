@@ -8,6 +8,26 @@ public class Node {
     int level;// arch level
     ArrayList<Vulnerability> vulnerabilities;
     
+    public String getID()
+    {
+    	return this.id;
+    }
+    
+    public String getName()
+    {
+    	return this.name;
+    }
+    
+    public int getLevel()
+    {
+    	return this.level;
+    }
+    
+    public  ArrayList<Vulnerability> getVulnerabilities()
+    {
+    	return this.vulnerabilities;
+    }
+    
     public Node(String id, String name, int level)
     {
     	this.id = id;

@@ -11,7 +11,11 @@ public class Graph {
 	public Graph()
 	{
 		vertexes = new HashMap<String, Vertex>();
-		 
+	}
+	
+	public Map<String,Vertex> getVertexes()
+	{
+		return this.vertexes;
 	}
 	
 	public void addElem(Vertex v) {
@@ -39,8 +43,8 @@ public class Graph {
 	public void addEdge(String sourceID, String targetID)
 	{
 		if(vertexes.containsKey(sourceID) && vertexes.containsKey(targetID)) {
-			vertexes.get(sourceID).next_vertexes.
-			add((vertexes.get(targetID)));	
+			vertexes.get(sourceID).addNode(vertexes.get(targetID));
+			vertexes.get(targetID).addPreNode(vertexes.get(sourceID));
 		}
 	}
 	
