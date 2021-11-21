@@ -140,7 +140,7 @@
     <packagedElement xmi:type="uml:Abstraction" xmi:id="_tWNlID_FEeyWfbBrjmv4Dw" client="_gboagD_EEeyWfbBrjmv4Dw" supplier="_lyJX4DlQEey2Z-i74Vi8KQ"/>
   </packagedElement>
   <packagedElement xmi:type="uml:Package" xmi:id="_gcU2sD_HEeyWfbBrjmv4Dw" name="Package31">
-    <packageImport xmi:type="uml:PackageImport" xmi:id="_hKQTsD_HEeyWfbBrjmv4Dw" importedPackage="_gtrscD_HEeyWfbBrjmv4Dw"/>
+    <packageImport xmi:type="uml:PackageImport" xmi:id="_QD1gQEqGEeyKLuZHrVol0g" importedPackage="_gtrscD_HEeyWfbBrjmv4Dw"/>
   </packagedElement>
   <packagedElement xmi:type="uml:Class" xmi:id="_yQzoID_LEeyWfbBrjmv4Dw" name="Class33"/>
   <packagedElement xmi:type="uml:Component" xmi:id="_yhqHkD_LEeyWfbBrjmv4Dw" name="Component34"/>
@@ -159,9 +159,8 @@
     <ownedEnd xmi:type="uml:Property" xmi:id="_IZZlAD_OEeyWfbBrjmv4Dw" name="atm service" type="_xHmGwDUqEeyox4ICi4L1bw" association="_IZYW4D_OEeyWfbBrjmv4Dw"/>
   </packagedElement>
   <packagedElement xmi:type="uml:Model" xmi:id="_vJKGAEVCEey4_LPUk-fe5Q" name="Model36">
-    <packagedElement xmi:type="uml:Package" xmi:id="_gtrscD_HEeyWfbBrjmv4Dw" name="Package32">
-      <packagedElement xmi:type="uml:Realization" xmi:id="_LBID8D_IEeyWfbBrjmv4Dw" client="_gtrscD_HEeyWfbBrjmv4Dw" supplier="_iZwZUDUqEeyox4ICi4L1bw"/>
-    </packagedElement>
+    <packagedElement xmi:type="uml:Package" xmi:id="_gtrscD_HEeyWfbBrjmv4Dw" name="Package32"/>
   </packagedElement>
   <packagedElement xmi:type="uml:Package" xmi:id="_GK4YYEVHEey4_LPUk-fe5Q" name="Package34"/>
+  <packagedElement xmi:type="uml:Device" xmi:id="_MUOJAEqIEeyKLuZHrVol0g" name="Device37"/>
 </uml:Model>

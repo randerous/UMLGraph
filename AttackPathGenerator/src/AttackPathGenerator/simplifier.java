@@ -8,20 +8,27 @@ import java.util.Set;
 
 /*
  * all simplify method implementation.
+ * ----attention!!!
+ * asset shouldn't be merge
  */
 public class simplifier {
-	
-	public  Graph simplify(Graph G) {
-		Graph newG = simplifyNode(G);
-		newG = simplifyExposure(newG);
-		return newG;
+
+	public Graph simplify(Graph G) {
+		G = simplifyConcurrentNode(G);
+		G = simplifySeqNode(G);
+		G = simplifyExposure(G);
+		return G;
 	}
-	
+
 	/*
 	 * mergeNode for sequence
 	 */
-	
+
 	public void mergeSeqNode(Graph G, Vertex v) {
+		// can't merge asset
+		if (v.getType() == 2)
+			return;
+
 		for (Vertex pre : v.getPreV()) {
 			pre.rmNextNode(v);
 			for (Vertex tmp : v.getNextV()) {
@@ -42,6 +49,10 @@ public class simplifier {
 	 * mergeNode for concurrent
 	 */
 	public void mergeConcurrentNode(Graph G, Vertex v) {
+		// can't merge asset
+		if (v.getType() == 2)
+			return;
+		
 		for (Vertex pre : v.getPreV()) {
 			pre.rmNextNode(v);
 		}
@@ -49,39 +60,43 @@ public class simplifier {
 		for (Vertex next : v.getNextV()) {
 			next.rmPreNode(v);
 		}
-		G.rmElem(v); 
+		G.rmElem(v);
 	}
-	
+
 	/*
 	 * 
 	 * mergeNode for exposure
 	 */
-	public void mergeExposureNode(Graph G, Vertex v)
-	{
+	public void mergeExposureNode(Graph G, Vertex v) {
 		mergeSeqNode(G, v);
 	}
 	
-	public boolean cmpSet(Set<Vertex> s1, Set<Vertex> s2)
-	{
-		for(Vertex v: s1)
-		{
-			if(!s2.contains(v)){
+	/*
+	 * check two set if they have same elems
+	 */
+	public boolean cmpSet(Set<Vertex> s1, Set<Vertex> s2) {
+		for (Vertex v : s1) {
+			if (!s2.contains(v)) {
 				return false;
 			}
 			s2.remove(v);
 		}
-		if(s2.size() > 0) return false;
+		if (s2.size() > 0)
+			return false;
 		return true;
 	}
+	
+	/*
+	 * check two node if they have same pre and next nodes 
+	 */
 	public boolean cmpVertex(Vertex v1, Vertex v2) {
-		
+
 		Set<Vertex> pre1 = new HashSet<Vertex>(v1.getPreV());
 		Set<Vertex> pre2 = new HashSet<Vertex>(v2.getPreV());
 		Set<Vertex> next1 = new HashSet<Vertex>(v1.getNextV());
 		Set<Vertex> next2 = new HashSet<Vertex>(v2.getNextV());
-		
-		
-		boolean res =  cmpSet(pre1, pre2) && cmpSet(next1, next2);
+
+		boolean res = cmpSet(pre1, pre2) && cmpSet(next1, next2);
 //		if(res)
 //		{
 //			out("--start--");
@@ -104,8 +119,27 @@ public class simplifier {
 //		}
 		return res;
 	}
+	
+	public Graph simplifySeqNode(Graph G)
+	{
+		ArrayList<Vertex> modifiedV = new ArrayList<Vertex>();
+		for (Map.Entry<String, Vertex> v : G.getVertexes().entrySet()) {
+			Vertex node = v.getValue(); 
+			if(node.getPreV().size() == 1)
+			{
+				modifiedV.add(node);
+			}
+		}
+		for(Vertex node : modifiedV)
+		{
+			mergeSeqNode(G, node);
+		}
 
-	public Graph simplifyNode(Graph G) {
+		return G;
+	}
+	
+	
+	public Graph simplifyConcurrentNode(Graph G) {
 		unionSetUtil unionSetUtil = new unionSetUtil();
 		int parent[] = new int[G.getVertexes().size()];
 		unionSetUtil.initParent(parent);
@@ -114,52 +148,46 @@ public class simplifier {
 		Map<Vertex, Integer> vertexConvertInt = new HashMap<Vertex, Integer>();
 		Map<Integer, Vertex> intConvertVertex = new HashMap<Integer, Vertex>();
 		int id = 0;
-		for (Map.Entry<String, Vertex> v1 : G.getVertexes().entrySet()) {
-			Vertex node1 = v1.getValue();
-			intConvertVertex.put(id, node1 );
-			vertexConvertInt.put(node1, id++);
+		for (Map.Entry<String, Vertex> v : G.getVertexes().entrySet()) {
+			Vertex node = v.getValue();
+			intConvertVertex.put(id, node);
+			vertexConvertInt.put(node, id++);
 		}
-		
+
 		for (Map.Entry<String, Vertex> v1 : G.getVertexes().entrySet()) {
 			Vertex node1 = v1.getValue();
-			
+
 			for (Map.Entry<String, Vertex> v2 : G.getVertexes().entrySet()) {
 				{
 					Vertex node2 = v2.getValue();
 					if (!node1.equals(node2)) {
-						if (!node1.getNextV().isEmpty() 
-								&& !node1.getPreV().isEmpty() 
-								&& cmpVertex(node1, node2)) {
-							unionSetUtil.mergeParent(parent,
-									vertexConvertInt.get(node1), 
-									vertexConvertInt.get(node2));
+						if (!node1.getNextV().isEmpty() && !node1.getPreV().isEmpty() && cmpVertex(node1, node2)) {
+							unionSetUtil.mergeParent(parent, vertexConvertInt.get(node1), vertexConvertInt.get(node2));
 						}
 					}
 				}
 			}
 		}
-		unionSetUtil.updateParent(parent); 
-		
+		unionSetUtil.updateParent(parent);
+
 		Set<Integer> eq = new HashSet<Integer>();
-		
-		for(int i = 0; i < parent.length; i++)
-		{
-			int p = unionSetUtil.getParent(parent, i); 
-			if(!eq.contains(p))
+
+		for (int i = 0; i < parent.length; i++) {
+			int p = unionSetUtil.getParent(parent, i);
+			if (!eq.contains(p))
 				eq.add(p);
-			else
-			{
-				mergeConcurrentNode(G, 
-						intConvertVertex.get(i)
-						);
+			else {
+				mergeConcurrentNode(G, intConvertVertex.get(i));
 			}
 		}
 		return G;
 	}
+	
+	 
 
-	public  Graph simplifyExposure(Graph G)
-	{
+	public Graph simplifyExposure(Graph G) {
 		ArrayList<Vertex> surfaces = new ArrayList<Vertex>();
+		
 		unionSetUtil unionSetUtil = new unionSetUtil();
 		// for bi-convert between string and int for id
 		Map<Vertex, Integer> vertexConvertInt = new HashMap<Vertex, Integer>();
@@ -167,15 +195,14 @@ public class simplifier {
 		int id = 0;
 		for (Map.Entry<String, Vertex> v1 : G.getVertexes().entrySet()) {
 			Vertex node1 = v1.getValue();
-			if(node1.getType() == 0)
-			{
+			if (node1.getType() == 0) {
 				surfaces.add(node1);
-				intConvertVertex.put(id, node1 );
+				intConvertVertex.put(id, node1);
 				vertexConvertInt.put(node1, id++);
 			}
-			
+
 		}
-		
+
 		int parent[] = new int[surfaces.size()];
 		unionSetUtil.initParent(parent);
 
@@ -186,42 +213,32 @@ public class simplifier {
 				}
 			}
 		}
-		
 
 		unionSetUtil.updateParent(parent);
-		
+
 		Map<Integer, Integer> eq = new HashMap<Integer, Integer>();
-		
-		
-		for(int i = 0; i < parent.length; i++)
-		{
+
+		for (int i = 0; i < parent.length; i++) {
 			int p = unionSetUtil.getParent(parent, i);
 			int level = intConvertVertex.get(i).getItself().getLevel();
-			if(eq.containsKey(p))
-			{
-				if( level < eq.get(p))
-				{
+			if (eq.containsKey(p)) {
+				if (level < eq.get(p)) {
 					eq.remove(p);
 					eq.put(p, level);
 				}
-			}else
-			{
+			} else {
 				eq.put(p, level);
 			}
 		}
-		
-		for(int i = 0; i < parent.length; i++)
-		{
+
+		for (int i = 0; i < parent.length; i++) {
 			int p = unionSetUtil.getParent(parent, i);
 			int level = intConvertVertex.get(i).getItself().getLevel();
-			
-			if(eq.get(p) < level)
-			{
-				mergeExposureNode(G, 
-						intConvertVertex.get(i)
-						);
+
+			if (eq.get(p) < level) {
+				mergeExposureNode(G, intConvertVertex.get(i));
 			}
-		}		
+		}
 		return G;
 	}
 

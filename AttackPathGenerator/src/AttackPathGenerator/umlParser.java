@@ -63,9 +63,11 @@ public class umlParser {
 	// parse component diagram
 	public void processNode(Namespace p, int level) {
 
-		// get all vertexes
-//		out(p.toString());
+		// get all vertexes 
+//		System.out.printf("level: %d name: %s\n", level, p.toString());
+ 
 		for (NamedElement i : p.getMembers()) {
+//			System.out.printf("level: %d name: %s\n", level, i.toString());
 
 			if (i instanceof Component || i instanceof Interface || i instanceof Package || i instanceof Model
 					|| i instanceof org.eclipse.uml2.uml.Node || i instanceof Device
@@ -84,8 +86,7 @@ public class umlParser {
 	}
 
 	public void processEdge(Namespace p) {
-
-//		processCommunicationPath(p.)
+ 
 		// get all edge
 
 		for (NamedElement i : p.getMembers()) {
@@ -192,6 +193,8 @@ public class umlParser {
 			G.addEdge(sourceID, destID);
 		}
 	}
+	
+//	public void process
 
 	public void processGeneralization(String sourceID, EList<Generalization> generalizations) {
 		for (Generalization i : generalizations) {

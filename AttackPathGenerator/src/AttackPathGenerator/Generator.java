@@ -75,6 +75,7 @@ public class Generator {
 
 		// simplify graph;
 //		G.showInfo();
+//		G.showDetailInfo();
 		simplifier  simplifier = new simplifier();
 		G = simplifier.simplify(G);
 //		G.showInfo();
@@ -83,7 +84,7 @@ public class Generator {
 //		G.showDetailInfo();
 		AttackPath paths = new AttackPath();
 		paths.genPath(G);
-		paths.showInfo();
+//		paths.showInfo();
 
 	}
 
