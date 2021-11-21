@@ -39,7 +39,7 @@ public class Vertex {
 完成了一个简化版的dfs
 
 
-### TODOlist
+### Complishlist
 #### 1 连通图生成
 ##### 1.1 组合关系的连接没加，子组件和父组件，组件和端口
 已经加了，通过层次关系建立联系
@@ -47,6 +47,9 @@ public class Vertex {
 getMembers可以获取导入的元素，并不用另外处理
 #### 2 串联关系合并
 合并了单输入的节点，除了资产
+
+### TODOlist
+简化和启发式算法，30个点就有一百多万条。
 
 
 

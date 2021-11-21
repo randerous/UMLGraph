@@ -12,6 +12,6 @@
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="E:/google_download/fastjson-1.2.78.jar"/>
+	<classpathentry kind="lib" path="D:/桌面/华为/proj/UMLGraph/UMLGraph/fastjson-1.2.78.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

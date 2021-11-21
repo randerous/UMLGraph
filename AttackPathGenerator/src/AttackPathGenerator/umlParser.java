@@ -90,6 +90,7 @@ public class umlParser {
 		// get all edge
 
 		for (NamedElement i : p.getMembers()) {
+//			System.out.println(i.toString());
 			if (i instanceof Component) {
 				Component instance = (Component) i;
 				if (instance.getMembers().size() > 0) {
@@ -116,6 +117,7 @@ public class umlParser {
 				if (instance.getMembers().size() > 0) {
 					processEdge(instance);
 				}
+				
 				processDependency(instance.getClientDependencies());
 			}
 
@@ -178,19 +180,31 @@ public class umlParser {
 
 	public void processConnector(EList<Connector> connectors) {
 		for (Connector i : connectors) {
-			String sourceID = getId(i.getEnds().get(0).getRole().toString());
-			String destID = getId(i.getEnds().get(1).getRole().toString());
-			G.addEdge(sourceID, destID);
-			G.addEdge(destID, sourceID);
+			if(i.getEnds().size() > 1)
+			{
+				String sourceID = getId(i.getEnds().get(0).getRole().toString());
+				String destID = getId(i.getEnds().get(1).getRole().toString());
+				G.addEdge(sourceID, destID);
+				G.addEdge(destID, sourceID);
+			}
+			
 		}
 	}
+	
+	static int nums;
 
 	// parse connections in Component diagram
 	public void processDependency(EList<Dependency> dependencies) {
 		for (Dependency i : dependencies) {
-			String sourceID = getId(i.getClients().get(0).toString());
-			String destID = getId(i.getSuppliers().get(0).toString());
-			G.addEdge(sourceID, destID);
+//			System.out.println(nums++);
+//			System.out.println(i.toString());
+			if(!i.getClients().isEmpty() && !i.getSuppliers().isEmpty())
+			{
+				String sourceID = getId(i.getClients().get(0).toString());
+				String destID = getId(i.getSuppliers().get(0).toString());
+				G.addEdge(sourceID, destID);
+			}
+			
 		}
 	}
 	
@@ -206,28 +220,40 @@ public class umlParser {
 
 	public void processAssociation(EList<Association> associations) {
 		for (Association i : associations) {
-			String sourceID = getId(i.getMembers().get(0).toString());
-			String destID = getId(i.getMembers().get(1).toString());
-			G.addEdge(sourceID, destID);
-			G.addEdge(destID, sourceID);
+			if(i.getMembers().size() > 1)
+			{
+				String sourceID = getId(i.getMembers().get(0).toString());
+				String destID = getId(i.getMembers().get(1).toString());
+				G.addEdge(sourceID, destID);
+				G.addEdge(destID, sourceID);
+			}
+			
 		}
 	}
 
 	public void processCommunicationPath(EList<CommunicationPath> communicationPaths) {
 		for (CommunicationPath i : communicationPaths) {
-			String sourceID = getId(i.getEndTypes().get(0).toString());
-			String destID = getId(i.getEndTypes().get(1).toString());
-			G.addEdge(sourceID, destID);
-			G.addEdge(destID, sourceID);
+			if(i.getEndTypes().size() > 1)
+			{
+				String sourceID = getId(i.getEndTypes().get(0).toString());
+				String destID = getId(i.getEndTypes().get(1).toString());
+				G.addEdge(sourceID, destID);
+				G.addEdge(destID, sourceID);
+			}
+			
 		}
 	}
 
 	public void processDeployment(String sourceID, EList<Deployment> deployments) {
 		for (Deployment i : deployments) {
-			String destID = getId(i.getTargets().get(0).toString());
-//			out(i.getTargets().get(0).toString());
-			G.addEdge(sourceID, destID);
-			G.addEdge(destID, sourceID);
+			if(!i.getTargets().isEmpty())
+			{
+				String destID = getId(i.getTargets().get(0).toString());
+//				out(i.getTargets().get(0).toString());
+				G.addEdge(sourceID, destID);
+				G.addEdge(destID, sourceID);
+			}
+			
 		}
 	}
 
@@ -235,7 +261,7 @@ public class umlParser {
 	public void createNode(EList<Comment> comments, String id, String name, int level) {
 		Node node;
 		if (!comments.isEmpty()) {
-			System.out.println(comments.toString());
+//			System.out.println(comments.toString());
 			String info = comments.get(0).getBody();
 //			out(info);
 			JSONObject obj = JSON.parseObject(info);

@@ -72,7 +72,7 @@ public class Generator {
 		Graph G;
 		umlParser umlParser = new umlParser();
 //		G = umlParser.genGraph("../test/test.uml");
-		G = umlParser.genGraph("E:\\UML models\\UML models.uml");
+		G = umlParser.genGraph("D:\\×ÀÃæ\\»ªÎª\\proj\\org.eclipse.uml2.examples.gettingstarted\\UML models.uml");
 
 		// simplify graph;
 //		G.showInfo();
@@ -85,7 +85,7 @@ public class Generator {
 //		G.showDetailInfo();
 		AttackPath paths = new AttackPath();
 		paths.genPath(G);
-//		paths.showInfo();
+		paths.showInfo();
 
 	}
 
