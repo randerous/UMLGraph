@@ -71,7 +71,8 @@ public class Generator {
 		// generator graph
 		Graph G;
 		umlParser umlParser = new umlParser();
-		G = umlParser.genGraph("../test/test.uml");
+//		G = umlParser.genGraph("../test/test.uml");
+		G = umlParser.genGraph("E:\\UML models\\UML models.uml");
 
 		// simplify graph;
 //		G.showInfo();

@@ -234,16 +234,17 @@ public class umlParser {
 	// parse comments to create Node
 	public void createNode(EList<Comment> comments, String id, String name, int level) {
 		Node node;
-		if (comments.size() > 0) {
+		if (!comments.isEmpty()) {
+			System.out.println(comments.toString());
 			String info = comments.get(0).getBody();
 //			out(info);
 			JSONObject obj = JSON.parseObject(info);
 
 			// Create Node
-			if (info.contains("exposure")) {
+			if (info != null && info.contains("exposure")) {
 				node = new Surface(id, name, level);
 				((Surface) node).setPort(name);
-			} else if (info.contains("value")) {
+			} else if (info != null && info.contains("value")) {
 //				out(info); 
 				int value = obj.getIntValue("value");
 				node = new Asset(id, name, level);
@@ -253,7 +254,7 @@ public class umlParser {
 			}
 
 			// add vulnerability info
-			if (info.contains("vulnerabilities")) {
+			if (info != null && info.contains("vulnerabilities")) {
 //				System.out.println(obj.getJSONArray("vulnerabilities").size());	
 				for (Object j : obj.getJSONArray("vulnerabilities")) {
 					if (j instanceof JSONObject) {
