@@ -14,6 +14,18 @@ ATM实例的UML图
 ### AttackPathGenerator
 连通图生成代码，图相关数据定义在/src/AttackPathGenerator/中
 
+## 新增类成员提取接口
+
+## 数据结构修改
+邻接表存储图，新增了前驱节点信息
+```
+public class Vertex {
+    int type; // 0: surface, 1: Node, 2: Asset
+    Node itself;// keep current Node info
+    Set<Vertex> next_vertexes;
+    Set<Vertex> pre_vertexes;
+    
+```
 ## 三个算法
 
 ### 提取
@@ -31,8 +43,7 @@ ATM实例的UML图
 #### 1 连通图生成
 ##### 1.1 组合关系的连接没加，子组件和父组件，组件和端口
 ##### 1.2 包导入和包合并没加
-#### 2 暴露面合并
-##### 并查集算法有bug，parent数组在方法中是引用传递，最后需要统一更新。
-##### 连接关系，考虑通用的节点组合并算法，应该加所有输入和输出。
+#### 2 串联关系合并
+
 
 
