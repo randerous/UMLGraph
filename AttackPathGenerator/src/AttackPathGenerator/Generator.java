@@ -72,9 +72,9 @@ public class Generator {
 		global_id = 0;
 		G = new Graph();
 		 
-//		URI uri = URI.createFileURI("C:/Users/randerous/Desktop/华为/UMLGraph/test/test.uml");
+		URI uri = URI.createFileURI("C:/Users/randerous/Desktop/华为/UMLGraph/test/test.uml");
 //		URI uri = URI.createFileURI("D:/桌面/a3.uml");
-		URI uri = URI.createFileURI("D:/桌面/华为/proj/UMLGraph/UMLGraph/test/test.uml");
+//		URI uri = URI.createFileURI("D:/桌面/华为/proj/UMLGraph/UMLGraph/test/test.uml");
 		Package p = parseUML(uri);
 		
 		
