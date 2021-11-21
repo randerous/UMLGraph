@@ -22,6 +22,11 @@ public class Graph {
 		vertexes.put( v.itself.id, v);
 	}
 	
+	public void rmElem(Vertex v)
+	{
+		vertexes.remove( v.itself.id, v);
+	}
+	
 	public void showInfo()
 	{
 		System.out.printf("Vertex nums: %d\n", vertexes.size());
@@ -43,7 +48,7 @@ public class Graph {
 	public void addEdge(String sourceID, String targetID)
 	{
 		if(vertexes.containsKey(sourceID) && vertexes.containsKey(targetID)) {
-			vertexes.get(sourceID).addNode(vertexes.get(targetID));
+			vertexes.get(sourceID).addNextNode(vertexes.get(targetID));
 			vertexes.get(targetID).addPreNode(vertexes.get(sourceID));
 		}
 	}
