@@ -1,6 +1,7 @@
 package AttackPathGenerator;
 
  
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -14,6 +15,20 @@ public class Vertex {
     	this.type = type;
     	next_vertexes = new HashSet<Vertex>();
     	pre_vertexes = new HashSet<Vertex>();
+    }
+    
+    public String getName()
+    {
+    	return itself.getName();
+    }
+    
+    public ArrayList<Vulnerability> getVulnerabilities()
+    {
+    	return itself.getVulnerabilities();
+    }
+    public int getLevel()
+    {
+    	return itself.getLevel();
     }
     
     public int getType()

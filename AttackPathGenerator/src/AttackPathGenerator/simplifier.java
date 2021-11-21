@@ -6,6 +6,9 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+/*
+ * all simplify method implementation.
+ */
 public class simplifier {
 	
 	public  Graph simplify(Graph G) {
