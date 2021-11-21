@@ -41,12 +41,20 @@ public class Vertex {
     	this.itself = n;
     }
     
-    public void addNode(Vertex n) {
+    public void addNextNode(Vertex n) {
     	this.next_vertexes.add(n);
     }
     public void addPreNode(Vertex n)
     {
     	this.pre_vertexes.add(n);
+    }
+    
+    public void rmNextNode(Vertex n) {
+    	this.next_vertexes.remove(n);
+    }
+    public void rmPreNode(Vertex n)
+    {
+    	this.pre_vertexes.remove(n);
     }
     
     public void showDetailInfo() {
