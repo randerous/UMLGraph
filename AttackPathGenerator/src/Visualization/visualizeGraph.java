@@ -36,7 +36,7 @@ public class visualizeGraph {
 		
 		
 		for(Node n:criticalNode) {
-			wr.append(intToString(vertexIndex.get(n.getId()))+" [color=\"red"+"\"];\n");
+			wr.append(intToString(vertexIndex.get(n.getID()))+" [color=\"red"+"\"];\n");
 		}
 		wr.write("}");		
 		wr.close();

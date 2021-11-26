@@ -48,8 +48,8 @@ public class connectAreaNum {
 		{
 			
 //			System.out.printf("%s\n", entry.getValue().getName());
-			Idcon.put(inum,entry.getValue().getId());
-			conId.put(entry.getValue().getId(), inum++);
+			Idcon.put(inum,entry.getValue().getItself().getID());
+			conId.put(entry.getValue().getItself().getID(), inum++);
 		}
 		System.out.println("");
 		for(Map.Entry<String, Vertex> entry: G.vertexes.entrySet())
@@ -58,8 +58,8 @@ public class connectAreaNum {
 			Vertex source = entry.getValue();
 			for(Vertex v: source.next_vertexes)
 			{
-				int pa = getParent( conId.get(source.getId()));
-				int pb = getParent( conId.get(v.getId()));
+				int pa = getParent( conId.get(source.getItself().getID()));
+				int pb = getParent( conId.get(v.getItself().getID()));
 				if(pa != pb)
 				{
 					parent[pb] = pa;
@@ -111,7 +111,7 @@ public class connectAreaNum {
             //得到每一个key
             String key = it.next();
             //通过key获取对应的value
-            String value = G.vertexes.get(key).getId();
+            String value = G.vertexes.get(key).getItself().getID();
             
             areaNumTargetStructure basicNode = new areaNumTargetStructure();
         	basicNode.setId(value);
@@ -165,8 +165,8 @@ public class connectAreaNum {
     		visit.add(present);
     		
     		for(Vertex v : G.vertexes.get(present).next_vertexes) {
-    			if(!visit.contains(v.getId())) {
-    				queue.add(v.getId());
+    			if(!visit.contains(v.getItself().getID())) {
+    				queue.add(v.getItself().getID());
     			}
     		}	
     	}
