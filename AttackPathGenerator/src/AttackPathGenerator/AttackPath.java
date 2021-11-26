@@ -286,7 +286,7 @@ public class AttackPath {
     			out.write("end path\n");
     		}
     		out.close();
-            System.out.println("�ļ������ɹ���");
+            System.out.println("successfully");
         } catch (IOException e) {
         }
 //		int i = 0;

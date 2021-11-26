@@ -95,6 +95,10 @@ public class UMLgenerator {
 		 artifacts = new ArrayList<Artifact>();
 	}
 	
+	public void UMLgenerator()
+	{
+		
+	}
 	/*
 	 * nums: all node nums in umlgraph
 	 * average_edges: average num of edge in graph, set = 2
@@ -115,7 +119,7 @@ public class UMLgenerator {
 		banner("Creating root model package and primitive types.");
 
 		// Create the root package (a model).
-		Model UML2Model = createModel("uml2");
+		Model UML2Model = createModel("uml2"); 
 		
 		createNode(UML2Model, nodes_num);
 		createConnections(edges_num);
@@ -145,7 +149,7 @@ public class UMLgenerator {
 //			System.exit(1);
 //		}
 //		
-		generator(50, 2);
+		generator(100, 2);
 		 
 	}
 	
