@@ -132,7 +132,8 @@ public class simplifier {
 		}
 		for(Vertex node : modifiedV)
 		{
-			mergeSeqNode(G, node);
+			if(node.type == 1)
+				mergeSeqNode(G, node);
 		}
 
 		return G;
@@ -177,7 +178,9 @@ public class simplifier {
 			if (!eq.contains(p))
 				eq.add(p);
 			else {
-				mergeConcurrentNode(G, intConvertVertex.get(i));
+				Vertex v = intConvertVertex.get(i);
+				if(v.getType() == 1)
+					mergeConcurrentNode(G, intConvertVertex.get(i));
 			}
 		}
 		return G;

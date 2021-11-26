@@ -286,7 +286,7 @@ public class AttackPath {
     			out.write("end path\n");
     		}
     		out.close();
-            System.out.println("文件创建成功！");
+            System.out.println("successfully");
         } catch (IOException e) {
         }
 //		int i = 0;

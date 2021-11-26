@@ -75,7 +75,7 @@ public class Generator {
 		Graph G;
 		umlParser umlParser = new umlParser();
 //		G = umlParser.genGraph("../test/test.uml");
-		G = umlParser.genGraph("Example_UML.uml");
+		G = umlParser.genGraph("D:\\×ÀÃæ\\»ªÎª\\proj\\UMLGraph\\UMLGraph\\AttackPathGenerator\\Example_UML.uml");
 
 		// simplify graph;
 //				G.showInfo();
@@ -97,13 +97,15 @@ public class Generator {
 	}
 
 	public static void main(String[] args) throws Exception {
-		UMLgenerator umlgenerator;
-		for(int i = 0; i < 10; i++)
-		{
-			UMLgenerator.generator(100, 2);
-			generator();
-		}
-		System.out.println(averagenums);
+ 
+//		for(int i = 0; i < 10; i++)
+//		{
+//			UMLgenerator.generator(100, 2);
+//			generator();
+//		}
+//		UMLgenerator.generator(50, 2);
+		generator();
+//		System.out.println(averagenums);
 		
 		
 

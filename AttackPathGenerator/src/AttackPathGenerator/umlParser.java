@@ -40,7 +40,7 @@ public class umlParser {
 	public Graph genGraph(String path)
 	{
 		
-		URI uri = URI.createFileURI(path);
+		URI uri = URI.createFileURI(path); 
 		Package p = parseUML(uri);
 		processNode(p, 0);
 		processEdge(p);
