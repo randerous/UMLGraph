@@ -16,7 +16,7 @@ public class setNewGraph {
     public Graph applyControlNode(Graph G, List<Node> I){
         for(int i = 0; i < I.size(); i++){
             String present = I.get(i).getID();
-            G.vertexes.get(present).pre_vertexes.clear();
+//            G.vertexes.get(present).pre_vertexes.clear();
         }
 
         return G;

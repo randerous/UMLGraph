@@ -13,6 +13,7 @@
  */
 package AttackPathGenerator;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -66,33 +67,36 @@ public class Generator {
 //	private static Graph G;
 //	private static int global_id;
 
-	public static void main(String[] args) throws Exception {
-
+	public static void generator() throws IOException {
 		// generator graph
 		Graph G;
 		umlParser umlParser = new umlParser();
-		G = umlParser.genGraph("../test/test.uml");
-//		G = umlParser.genGraph("D:\\×ÀÃæ\\»ªÎª\\proj\\org.eclipse.uml2.examples.gettingstarted\\UML models.uml");
+//		G = umlParser.genGraph("../test/test.uml");
+		G = umlParser.genGraph("Example_UML.uml");
 
 		// simplify graph;
-//		G.showInfo();
-//		G.showDetailInfo();
-		
+//				G.showInfo();
+//				G.showDetailInfo();
+
 		out("---gen graph finished--");
-		simplifier  simplifier = new simplifier();
+		simplifier simplifier = new simplifier();
 		G = simplifier.simplify(G);
 		out("---gen simplified graph finished--");
-//		G.showInfo();
-//		G.showDetailInfo();
+				G.showInfo();
+//				G.showDetailInfo();
 
-//		G.showDetailInfo();
+//				G.showDetailInfo();
 		AttackPath paths = new AttackPath();
 		paths.genPath(G);
 		paths.showInfo();
 
 	}
 
-	
+	public static void main(String[] args) throws Exception {
+
+		generator();
+
+	}
 
 	// tools to simplify system.out, & for debug
 	protected static void out(String format, Object... args) {

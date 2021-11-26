@@ -56,7 +56,7 @@ public class connectAreaNum {
 		{
 //			System.out.printf("%s\n", entry.getValue().getName());
 			Vertex source = entry.getValue();
-			for(Vertex v: source.next_vertexes)
+			for(Vertex v: source.getNextV())
 			{
 				int pa = getParent( conId.get(source.getItself().getID()));
 				int pb = getParent( conId.get(v.getItself().getID()));
@@ -164,7 +164,7 @@ public class connectAreaNum {
     		String present = queue.poll();
     		visit.add(present);
     		
-    		for(Vertex v : G.vertexes.get(present).next_vertexes) {
+    		for(Vertex v : G.vertexes.get(present).getNextV()) {
     			if(!visit.contains(v.getItself().getID())) {
     				queue.add(v.getItself().getID());
     			}

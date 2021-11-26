@@ -13,6 +13,11 @@ public class Graph {
 		vertexes = new HashMap<String, Vertex>();
 	}
 	
+	public Graph(Graph g)
+	{
+		vertexes = new HashMap<String, Vertex>(g.getVertexes());
+	}
+	
 	public Map<String,Vertex> getVertexes()
 	{
 		return this.vertexes;
