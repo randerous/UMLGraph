@@ -13,18 +13,41 @@ public class Graph {
 		vertexes = new HashMap<String, Vertex>();
 	}
 	
+	public Graph(Graph g)
+	{
+		this.vertexes = new HashMap<String, Vertex>(g.getVertexes());
+	}
+	
 	public Map<String,Vertex> getVertexes()
 	{
 		return this.vertexes;
 	}
 	
 	public void addElem(Vertex v) {
-		vertexes.put( v.itself.id, v);
+		vertexes.put(v.itself.id, v);
 	}
 	
 	public void rmElem(Vertex v)
 	{
-		vertexes.remove( v.itself.id, v);
+		vertexes.remove(v.itself.id, v);
+	}
+	
+	public void addTotallyElem(Vertex v)
+	{
+		for(Vertex i : v.getPreV())
+		{
+			i.addNextNode(v);
+		}
+		addElem(v);
+	}
+	
+	public void rmTotallyElem(Vertex v)
+	{
+		for(Vertex i : v.getPreV())
+		{
+			i.rmNextNode(v);
+		}
+		rmElem(v);
 	}
 	
 	public void showInfo()

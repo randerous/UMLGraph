@@ -21,6 +21,13 @@ public class Vertex {
     	pre_vertexes = new HashSet<Vertex>();
     }
     
+    public Vertex(Vertex v) {
+    	this.type = v.type;
+    	this.next_vertexes = new HashSet<Vertex>(v.getNextV());
+    	this.pre_vertexes = new HashSet<Vertex>(v.getPreV());
+    	this.itself = v.itself;
+    }
+    
     public String getName()
     {
     	return itself.getName();

@@ -11,8 +11,8 @@ import AttackPathGenerator.*;
 public class CriticalNodes {
 	    Graph G;
 	    int n;
-	    String[] vertexes;//´æ·Å¸÷½Úµãid
-	    LinkedList<Vertex> Vertexes=new LinkedList();//´ýÑ¡ÔñµÄ½Úµã¼¯£¬³ýÈ¥±©Â¶ÃæºÍ×Ê²ú
+	    String[] vertexes;//ï¿½ï¿½Å¸ï¿½ï¿½Úµï¿½id
+	    LinkedList<Vertex> Vertexes=new LinkedList();//ï¿½ï¿½Ñ¡ï¿½ï¿½Ä½Úµã¼¯ï¿½ï¿½ï¿½ï¿½È¥ï¿½ï¿½Â¶ï¿½ï¿½ï¿½ï¿½Ê²ï¿½
 
 	    public CriticalNodes(Graph g) {
 	        this.G = g;
@@ -23,19 +23,19 @@ public class CriticalNodes {
 	        int i = 0;
 	        for (Map.Entry<String, Vertex> v : G.vertexes.entrySet()) {
 	            this.vertexes[i++] = new String(v.getKey());
-//	            if(v.getValue().getType()==1)//½«´«²¥½Úµã´æÈë´ýÑ¡Ôñ½Úµã¼¯
+//	            if(v.getValue().getType()==1)//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Úµï¿½ï¿½ï¿½ï¿½ï¿½Ñ¡ï¿½ï¿½Úµã¼¯
 	            	Vertexes.add(v.getValue());
 	        }
 	    }
 
 	    public List<Node> getCriticalNodes(){
 	    	/*
-	    	 * ¿¼ÂÇÍ¼ÊÇÒ»¸öÁ¬Í¨Í¼
-	    	 * @return£ºÕë¶ÔÍ¼Ñ¡µÄ¿ØÖÆµã
+	    	 * ï¿½ï¿½ï¿½ï¿½Í¼ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½Í¨Í¼
+	    	 * @returnï¿½ï¿½ï¿½ï¿½ï¿½Í¼Ñ¡ï¿½Ä¿ï¿½ï¿½Æµï¿½
 	    	 */
 	        List<Node> res=new ArrayList();
 	        LinkedList<String> G0=new LinkedList();
-	        //³õÊ¼»¯Í¼
+	        //ï¿½ï¿½Ê¼ï¿½ï¿½Í¼
 //	        for(int i=0;i<n;i++){
 //	        	G0.add(vertexes[i]);
 //	        }
@@ -48,7 +48,7 @@ public class CriticalNodes {
 	        int minD=minV.getNextV().size()+minV.getPreV().size();
 
 	        while(!G0.isEmpty()){
-	            //ÕÒG0ÖÐ¶È×îÐ¡µÄ½Úµã
+	            //ï¿½ï¿½G0ï¿½Ð¶ï¿½ï¿½ï¿½Ð¡ï¿½Ä½Úµï¿½
 	            for(String nodeId:G0){
 	            	Vertex v=G.vertexes.get(nodeId);
 	            	int D=v.getNextV().size()+v.getPreV().size();
@@ -65,7 +65,7 @@ public class CriticalNodes {
 	            	continue;
 	            }
 
-	            //Ëæ»úÑ¡ÔñminDegreeNodeµÄÒ»¸öÁÚ½Ó½Úµã£¬¼ÓÈëres
+	            //ï¿½ï¿½ï¿½Ñ¡ï¿½ï¿½minDegreeNodeï¿½ï¿½Ò»ï¿½ï¿½ï¿½Ú½Ó½Úµã£¬ï¿½ï¿½ï¿½ï¿½res
 	            int rand=(int)Math.random()*minD;
 //	            int i=0;
 	            List<Vertex> adjVertexes=new ArrayList<Vertex>(minV.getPreV());
@@ -80,7 +80,7 @@ public class CriticalNodes {
 	            res.add(controlledNode);
 
 
-	            //É¾È¥ÓëminDegreeNodeÏàÁ¬µÄ½Úµã
+	            //É¾È¥ï¿½ï¿½minDegreeNodeï¿½ï¿½ï¿½ï¿½ï¿½Ä½Úµï¿½
 	            for(Vertex v: adjVertexes){
 	                G0.remove(v.getItself());
 	            }
@@ -90,15 +90,15 @@ public class CriticalNodes {
 
 	    public List<Node> GetTwoNodesInOnePath(ArrayList<ArrayList<Vertex>> pathset){
 	    	/*
-	    	 * @Vertexes:´ýÑ¡ÔñµÄ½Úµã
-	    	 * @pathSet:Â·¾¶¼¯£¬Ã¿ÌõÂ·¾¶µÄ±êÊ¶ÎªindexË÷Òý
-	    	 * @return:¿ØÖÆµã¼¯
+	    	 * @Vertexes:ï¿½ï¿½Ñ¡ï¿½ï¿½Ä½Úµï¿½
+	    	 * @pathSet:Â·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã¿ï¿½ï¿½Â·ï¿½ï¿½ï¿½Ä±ï¿½Ê¶Îªindexï¿½ï¿½ï¿½ï¿½
+	    	 * @return:ï¿½ï¿½ï¿½Æµã¼¯
 	    	 */
-	        List<Integer> pathState=new ArrayList();//pathState[i]==2£¬Ë÷ÒýÎªiµÄÂ·¾¶µ±Ç°µÄ×´Ì¬Îª2£¬¼´ÒÑÔÚ¸ÃÂ·¾¶ÉÏÑ¡ÔñÁËÁ½¸ö½ÚµãÁË
+	        List<Integer> pathState=new ArrayList();//pathState[i]==2ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Îªiï¿½ï¿½Â·ï¿½ï¿½ï¿½ï¿½Ç°ï¿½ï¿½×´Ì¬Îª2ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ú¸ï¿½Â·ï¿½ï¿½ï¿½ï¿½Ñ¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Úµï¿½ï¿½ï¿½
 	        for(int i=0;i<pathset.size();i++)
 	        	pathState.add(0);
 	        ArrayList<Node> res=new ArrayList();
-	        int count=pathset.size();//Â·¾¶Êý
+	        int count=pathset.size();//Â·ï¿½ï¿½ï¿½ï¿½
 
 	        for(Vertex v:Vertexes) {
 	        	v.InitPaths(pathset);
@@ -131,16 +131,16 @@ public class CriticalNodes {
 
 	    public List<Node> GetTwoNodesInOnePath2(ArrayList<ArrayList<Vertex>> pathset){
 	    	/*
-	    	 * ÔÚËã·¨CriticalNodesµÄ»ù´¡ÉÏÕÒ
-	    	 * @Vertexes:´ýÑ¡ÔñµÄ½Úµã
-	    	 * @pathSet:Â·¾¶¼¯£¬Ã¿ÌõÂ·¾¶µÄ±êÊ¶ÎªindexË÷Òý
-	    	 * @return:¿ØÖÆµã¼¯
+	    	 * ï¿½ï¿½ï¿½ã·¨CriticalNodesï¿½Ä»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	    	 * @Vertexes:ï¿½ï¿½Ñ¡ï¿½ï¿½Ä½Úµï¿½
+	    	 * @pathSet:Â·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã¿ï¿½ï¿½Â·ï¿½ï¿½ï¿½Ä±ï¿½Ê¶Îªindexï¿½ï¿½ï¿½ï¿½
+	    	 * @return:ï¿½ï¿½ï¿½Æµã¼¯
 	    	 */
 	    	List<Node> res=getCriticalNodes();
-	    	List<Integer> pathState=new ArrayList();//pathState[i]==2£¬Ë÷ÒýÎªiµÄÂ·¾¶µ±Ç°µÄ×´Ì¬Îª2£¬¼´ÒÑÔÚ¸ÃÂ·¾¶ÉÏÑ¡ÔñÁËÁ½¸ö½ÚµãÁË
+	    	List<Integer> pathState=new ArrayList();//pathState[i]==2ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Îªiï¿½ï¿½Â·ï¿½ï¿½ï¿½ï¿½Ç°ï¿½ï¿½×´Ì¬Îª2ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ú¸ï¿½Â·ï¿½ï¿½ï¿½ï¿½Ñ¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Úµï¿½ï¿½ï¿½
 	        for(int i=0;i<pathset.size();i++)
 	        	pathState.add(0);
-	        int count=pathset.size();//Î´Âú×ãÌõ¼þµÄÂ·¾¶Êý
+	        int count=pathset.size();//Î´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Â·ï¿½ï¿½ï¿½ï¿½
 
 	        for(Vertex v:Vertexes) {
 	        	v.InitPaths(pathset);
@@ -165,7 +165,7 @@ public class CriticalNodes {
 	        	}        	
 	        }
 	        
-	        if(count==0)//ÒÑÂú×ãÌõ¼þ
+	        if(count==0)//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	        	return res;
 	        else {
 	        	while(count!=0) {
