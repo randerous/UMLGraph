@@ -52,7 +52,7 @@ public class AttackPath {
 			path.add(cur);
 			addPath(path);
 //			System.out.println(pathSet.size());
-			if(pathSet.size()%10000 == 0)
+			if(pathSet.size()%1000000 == 0)
 			{
 				System.out.println(pathSet.size());
 			}
@@ -73,7 +73,10 @@ public class AttackPath {
 		path.remove(cur);		
 	}
 	
-	
+	public int getNums()
+	{
+		return pathSet.size();
+	}
 	Boolean dfs1(Set<Vertex> vi, Vertex source ,Vertex dest)
 	{
 		if(source.itself.id == dest.itself.id)
@@ -112,23 +115,38 @@ public class AttackPath {
 		}
 		return false;
 	}
-	private Graph remove_invalidNode(Graph g,  Vertex dest)
+	private ArrayList<Vertex> remove_invalidNode(Graph g,  Vertex dest)
 	{
-		Graph newG = new Graph(g);
+ 
+		
 		Set<Vertex> vi = new HashSet<Vertex>();
 		ArrayList<Vertex> invalid = new ArrayList<Vertex>();
-		for(Map.Entry<String, Vertex> entry: newG.vertexes.entrySet())
+		for(Map.Entry<String, Vertex> entry: g.vertexes.entrySet())
 		{
-			if(!bfs(vi, entry.getValue(), dest))
-				invalid.add(entry.getValue());
+			Vertex v = entry.getValue();
+			if(!bfs(vi, v , dest))
+				invalid.add(v);
 //			System.out.println("over");
 			vi.clear();
 		}
+
+		return invalid;
+	}
+	
+	void delete_node(Graph G,  ArrayList<Vertex> invalid)
+	{
 		for(Vertex v: invalid)
 		{
-			newG.rmElem(v);
+			G.rmTotallyElem(v);
 		}
-		return newG;
+	}
+	
+	void add_node(Graph G,  ArrayList<Vertex> invalid)
+	{
+		for(Vertex v: invalid)
+		{
+			G.addTotallyElem(v);
+		}
 	}
 	
 	private void dfs_nr(Vertex cur, Vertex dest)  
@@ -222,17 +240,20 @@ public class AttackPath {
 				for(Vertex dest: destination)
 				{
 //					System.out.println("--");
-					Graph newG = remove_invalidNode(p, dest);
-					System.out.println("size"+newG.vertexes.size());
-					Vertex s = newG.vertexes.get(cur.itself.id);
-					Vertex d = newG.vertexes.get(dest.itself.id);
+					ArrayList<Vertex> invalid = remove_invalidNode(p, dest);
+					delete_node(p, invalid);
+//					System.out.println("size"+p.vertexes.size());
+					Vertex s = p.vertexes.get(cur.itself.id);
+					Vertex d = p.vertexes.get(dest.itself.id);
+					
 //					dfs_nr(cur, dest); 
 					if(s!= null && d != null)
 					{
-//						dfs(s, d); 
+						dfs(s, d); 
 						visit.clear(); 
 					}
-					
+					add_node(p, invalid);
+//					System.out.println("size"+p.vertexes.size());
 				}
 				
 			} 

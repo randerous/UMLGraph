@@ -54,6 +54,8 @@ import org.eclipse.uml2.uml.Port;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 
+import UMLgenerator.UMLgenerator;
+
 /**
  * A Java program that may be run stand-alone (with the required EMF and UML2
  * bundle JARs on the classpath) to create the example model illustrated in the
@@ -64,6 +66,7 @@ import com.alibaba.fastjson.JSONObject;
 public class Generator {
 
 	public static boolean DEBUG = true;
+	static int averagenums;
 //	private static Graph G;
 //	private static int global_id;
 
@@ -89,12 +92,20 @@ public class Generator {
 		AttackPath paths = new AttackPath();
 		paths.genPath(G);
 		paths.showInfo();
+		averagenums += paths.getNums()/10;
 
 	}
 
 	public static void main(String[] args) throws Exception {
-
-		generator();
+		UMLgenerator umlgenerator;
+		for(int i = 0; i < 10; i++)
+		{
+			UMLgenerator.generator(100, 2);
+			generator();
+		}
+		System.out.println(averagenums);
+		
+		
 
 	}
 
