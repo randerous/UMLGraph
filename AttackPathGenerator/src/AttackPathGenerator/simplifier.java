@@ -14,8 +14,8 @@ import java.util.Set;
 public class simplifier {
 
 	public Graph simplify(Graph G) {
-		G = simplifyConcurrentNode(G);
 		G = simplifySeqNode(G);
+		G = simplifyConcurrentNode(G);  
 		G = simplifyExposure(G);
 		return G;
 	}

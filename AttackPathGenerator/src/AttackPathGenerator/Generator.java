@@ -77,8 +77,11 @@ public class Generator {
 		// simplify graph;
 //		G.showInfo();
 //		G.showDetailInfo();
+		
+		out("---gen graph finished--");
 		simplifier  simplifier = new simplifier();
 		G = simplifier.simplify(G);
+		out("---gen simplified graph finished--");
 //		G.showInfo();
 //		G.showDetailInfo();
 
