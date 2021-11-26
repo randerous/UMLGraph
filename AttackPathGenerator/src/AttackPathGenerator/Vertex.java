@@ -11,6 +11,10 @@ public class Vertex {
     Set<Vertex> next_vertexes;
     Set<Vertex> pre_vertexes;
     
+    //雅妮
+    public int pathNums=0;
+    ArrayList<Integer> paths=null;
+    
     public Vertex(int type) {
     	this.type = type;
     	next_vertexes = new HashSet<Vertex>();
@@ -86,5 +90,24 @@ public class Vertex {
     public void showInfo() {
     	System.out.printf("type: %d\n", type);
     	itself.showNodeInfo(); 
+    }
+    
+    //以下为雅妮加
+    public void InitPaths(ArrayList<ArrayList<Vertex>> pathSet){
+    	if(paths!=null) return ;
+    	paths=new ArrayList<Integer>();
+    	for(int index=0;index<pathSet.size();index++) {
+    		ArrayList<Vertex> path=pathSet.get(index);
+    		for(Vertex v:path)
+    			if(v.itself.id==itself.id) {
+    				paths.add(index);
+    				break;
+    			}
+    	}
+    	pathNums=paths.size();  
+    }
+	
+	public ArrayList<Integer> getPaths(){
+    	return paths;
     }
 }

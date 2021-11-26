@@ -27,9 +27,9 @@ public class Matrix {
         }
         for(Map.Entry<String,Vertex> v:graph.vertexes.entrySet()) {
             int source=vertexesIndex.get(v.getKey());
-            DegreeMatrix[source][source]+=v.getValue().getNext_vertexes().size();
-            for(Vertex each:v.getValue().getNext_vertexes()){
-                int target=vertexesIndex.get(each.getNode().getId());
+            DegreeMatrix[source][source]+=v.getValue().getNextV().size();
+            for(Vertex each:v.getValue().getNextV()){
+                int target=vertexesIndex.get(each.getItself().getID());
                 AdjacentMatrix[source][target]=1;//这里以后可以改成边的权值
                 AdjacentMatrix[target][source]=1;
                 DegreeMatrix[target][target]++;

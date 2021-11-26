@@ -34,7 +34,7 @@ public class AttackPath {
 	
 	private void dfs(Vertex cur, Vertex dest)
 	{
-//		if(pathSet.size() > 1000000) return;
+		if(pathSet.size() > 100000) return;
 //		System.out.println(cur.getName());
 		if(cur.itself.id == dest.itself.id) {
 			path.add(cur);

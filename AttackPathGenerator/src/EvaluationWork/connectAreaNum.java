@@ -14,12 +14,13 @@ import AttackPathGenerator.Graph;
 import AttackPathGenerator.Vertex;
 
 public class connectAreaNum {
-	private int connectNum;
+	public int connectNum;
 	ArrayList<areaNumTargetStructure>  mark;
 	
 	Set<String> visit;
 	
 	int parent[];
+	
     public int getConnectNum() {
         return connectNum;
     }
@@ -29,21 +30,17 @@ public class connectAreaNum {
      * @param G
      */
     public void setConnectNum (Graph G) {
-        int result = 0;
-        
         //标识数组
         int num = G.vertexes.size();
-        mark = new ArrayList();
         
         parent = new int[num];
 		for(int j = 0; j < num; j++)
 			parent[j] = j;
 		
-		
 		int inum = 0;
 		Map<String, Integer> conId = new HashMap<String, Integer>();
 		
-		Map<Integer, String > Idcon = new HashMap<Integer, String> ();
+		Map<Integer, String> Idcon = new HashMap<Integer, String> ();
 		for(Map.Entry<String, Vertex> entry: G.vertexes.entrySet())
 		{
 			
@@ -51,12 +48,12 @@ public class connectAreaNum {
 			Idcon.put(inum,entry.getValue().getItself().getID());
 			conId.put(entry.getValue().getItself().getID(), inum++);
 		}
-		System.out.println("");
+		//System.out.println("");
 		for(Map.Entry<String, Vertex> entry: G.vertexes.entrySet())
 		{
 //			System.out.printf("%s\n", entry.getValue().getName());
 			Vertex source = entry.getValue();
-			for(Vertex v: source.next_vertexes)
+			for(Vertex v: source.getNextV())
 			{
 				int pa = getParent( conId.get(source.getItself().getID()));
 				int pb = getParent( conId.get(v.getItself().getID()));
@@ -64,12 +61,9 @@ public class connectAreaNum {
 				{
 					parent[pb] = pa;
 //					System.out.printf("merge %s %s\n", entry.getValue().getName(), v.getName() );
-				}
-					
+				}	
 			}
 		}
-		
-		
 		
 		Set<Integer> connectNums = new HashSet<Integer>();
 		
@@ -101,30 +95,11 @@ public class connectAreaNum {
 			}
 		}
 		//System.out.printf("liantongyu : %d\n", connectNums.size());
-		
-        
-        //获取Map中的所有key
-        Set<String> keySet = G.vertexes.keySet();
-        //遍历存放所有key的Set集合
-        Iterator<String> it =keySet.iterator();
-        while(it.hasNext()){                         //利用了Iterator迭代器
-            //得到每一个key
-            String key = it.next();
-            //通过key获取对应的value
-            String value = G.vertexes.get(key).getItself().getID();
-            
-            areaNumTargetStructure basicNode = new areaNumTargetStructure();
-        	basicNode.setId(value);
-            basicNode.setTarget(0);
-            mark.add(basicNode);
-        }
-        
-        visit = new HashSet<String>();
 
-        connectNum =  connectNums.size();
+        this.connectNum =  connectNums.size();
     }
     
-	private   int getParent( int index) {
+	private int getParent(int index) {
 		if(index == parent[index])
 			return index;
 		return parent[index] = getParent(parent[index]);
@@ -152,8 +127,7 @@ public class connectAreaNum {
     			break;
     		}
     	}
-    	
-    	
+
     	Queue<String> queue = new ArrayDeque();
     	
     	queue.add(s);
@@ -164,7 +138,7 @@ public class connectAreaNum {
     		String present = queue.poll();
     		visit.add(present);
     		
-    		for(Vertex v : G.vertexes.get(present).next_vertexes) {
+    		for(Vertex v : G.vertexes.get(present).getNextV()) {
     			if(!visit.contains(v.getItself().getID())) {
     				queue.add(v.getItself().getID());
     			}

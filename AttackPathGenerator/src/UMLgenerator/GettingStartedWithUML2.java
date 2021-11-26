@@ -125,7 +125,7 @@ public class GettingStartedWithUML2 {
 		// Save our model to a file in the user-specified output directory
 		
 		URI outputURI = URI.createFileURI(outputDir.getAbsolutePath())
-				.appendSegment("UML models")
+				.appendSegment("UMLmodels")
 				.appendFileExtension(UMLResource.FILE_EXTENSION);
 		
 		banner("Saving the overall UML models to %s.", outputURI.toFileString());
