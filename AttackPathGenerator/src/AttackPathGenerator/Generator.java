@@ -71,8 +71,8 @@ public class Generator {
 		// generator graph
 		Graph G;
 		umlParser umlParser = new umlParser();
-//		G = umlParser.genGraph("../test/test.uml");
-		G = umlParser.genGraph("D:\\桌面\\华为\\proj\\org.eclipse.uml2.examples.gettingstarted\\UML models.uml");
+		G = umlParser.genGraph("../test/test.uml");
+//		G = umlParser.genGraph("D:\\桌面\\华为\\proj\\org.eclipse.uml2.examples.gettingstarted\\UML models.uml");
 
 		// simplify graph;
 //		G.showInfo();
