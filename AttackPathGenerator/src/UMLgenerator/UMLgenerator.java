@@ -145,7 +145,7 @@ public class UMLgenerator {
 //			System.exit(1);
 //		}
 //		
-		generator(100, 2);
+		generator(50, 2);
 		 
 	}
 	

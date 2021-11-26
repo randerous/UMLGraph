@@ -300,7 +300,24 @@ public class AttackPath {
 //		}
 	}
 	
-	
+	public void showInfo2() {
+		if(pathSet.isEmpty()) {
+			System.out.println("No path");
+			return;
+		}
+		int i=0;
+		System.out.printf("path nums: %d\n\n", pathSet.size());
+		for(ArrayList<Vertex> path: pathSet)
+		{	
+			System.out.print(i+":");
+			for(Vertex v:path) {
+				System.out.print(v.getItself().getID()+"->");
+			}
+			System.out.print("\n");
+			i++;
+		}
+		
+	}
 	
 
 }

@@ -23,33 +23,33 @@ public class startOver {
 	
 	public static void main(String[] args) throws Exception {
 		
-		Graph G = new Graph(); //ï¿½æ´¢ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô­Ê¼Í¼
-		Graph handledGraph = new Graph(); //ï¿½æ´¢ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í¼
+		Graph G = new Graph(); //´æ´¢³éÈ¡³öÀ´µÄ×îÔ­Ê¼Í¼
+		Graph handledGraph = new Graph(); //´æ´¢¾­¹ý´¦ÀíµÄÍ¼
 		Graph basicGraph = new Graph();
 		AttackPath paths = new AttackPath();
 		List<Node> criticalNode = new ArrayList();
-		int Max = 10000; //ï¿½ï¿½ï¿½Ô½ï¿½ï¿½Üµï¿½ï¿½ï¿½ï¿½Â·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+		int Max = 10000; //¿ÉÒÔ½ÓÊÜµÄ×î´óÂ·¾¶ÊýÁ¿
 		
-		boolean AttackPathTarget = true; //ï¿½ï¿½Gï¿½ï¿½ï¿½É¹ï¿½ï¿½ï¿½Â·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½NumÐ¡ï¿½ï¿½1wï¿½ï¿½ï¿½ï¿½AttackPathTarget=false.
+		boolean AttackPathTarget = true; //´ÓGÉú³É¹¥»÷Â·¾¶ÊýÁ¿NumÐ¡ÓÚ1w£¬ÔòAttackPathTarget=false.
 		int N = 2;
 		
-		//ï¿½ï¿½ï¿½ï¿½ï¿½ã·¨1ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í¨Í¼G
+		//¹úÌÎËã·¨1£ºÉú³ÉÁ¬Í¨Í¼G
 		umlParser umlParser = new umlParser();
 		simplifier  simplifier = new simplifier();
-		G = umlParser.genGraph("../test/test.uml");	
-//		G = umlParser.genGraph("UMLmodels.uml");	
-		G = simplifier.simplify(G);
+//		G = umlParser.genGraph("../test/test.uml");	
+		G = umlParser.genGraph("Example_UML.uml");	
+//		G = simplifier.simplify(G);
 
 		umlParser umlParser2 = new umlParser();
 		simplifier  simplifier2 = new simplifier();
-		handledGraph = umlParser2.genGraph("../test/test.uml");	
-//		handledGraph = umlParser2.genGraph("UMLmodels.uml");	
-		handledGraph = simplifier2.simplify(handledGraph);
+//		handledGraph = umlParser2.genGraph("../test/test.uml");	
+		handledGraph = umlParser2.genGraph("Example_UML.uml");	
+//		handledGraph = simplifier2.simplify(handledGraph);
 		
 
 		
 		while(AttackPathTarget) {
-			//ï¿½ï¿½ï¿½ï¿½ï¿½ã·¨2ï¿½ï¿½ï¿½ï¿½Gï¿½ï¿½ï¿½É¹ï¿½ï¿½ï¿½Â·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+			//¹úÌÎËã·¨2£º´ÓGÉú³É¹¥»÷Â·¾¶ÊýÁ¿
 			paths.genPath(G);
 			paths.showInfo();
 			
@@ -58,23 +58,23 @@ public class startOver {
 			}
 			
 			if(AttackPathTarget) {
-				//ï¿½ï¿½ï¿½ï¿½ï¿½ã·¨1ï¿½ï¿½ï¿½ï¿½Í¼Gï¿½ï¿½È¡Nï¿½ï¿½ï¿½ï¿½ï¿½Ô¿ï¿½ï¿½Æµï¿½
+				//ÑÅÄÝËã·¨1£º´ÓÍ¼GÌáÈ¡N¸öÈÍÐÔ¿ØÖÆµã
 				CriticalNodes cNode =new CriticalNodes(G);
 				List<Node> NodeS = cNode.getCriticalNodes();
 				
-				//ï¿½ï¿½ï¿½ï¿½Nï¿½ï¿½ï¿½ï¿½ï¿½Ô¿ï¿½ï¿½Æµï¿½ï¿½ï¿½ï¿½List
+				//½«ÕâN¸öÈÍÐÔ¿ØÖÆµã¼ÓÈëList
 				criticalNode.add(NodeS.get(0));
 				criticalNode.add(NodeS.get(1));
 				
 				setNewGraph s = new setNewGraph();
-				//ï¿½ï¿½Í¼Gï¿½ï¿½É¾È¥ï¿½ï¿½Nï¿½ï¿½ï¿½ï¿½ï¿½Ô¿ï¿½ï¿½Æµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ó£ï¿½adjustment
+				//´ÓÍ¼GÖÐÉ¾È¥ÕâN¸öÈÍÐÔ¿ØÖÆµãµÄÈë¶ÈÁ¬½Ó£ºadjustment
 				G = s.applyControlNode(G, criticalNode);
 				
 			}
 		}
 		
-		//ï¿½ï¿½Ê£ï¿½ï¿½ï¿½ï¿½ï¿½Ô¿ï¿½ï¿½Æµã¼¯ï¿½Ï¼ï¿½ï¿½ï¿½list
-		//ï¿½ï¿½ï¿½ï¿½ï¿½ã·¨2ï¿½ï¿½ï¿½ï¿½Gï¿½Í¹ï¿½ï¿½ï¿½Â·ï¿½ï¿½pathsÑ¡ï¿½ï¿½Ê£ï¿½ï¿½ï¿½ï¿½ï¿½Ô¿ï¿½ï¿½Æµã¼¯ï¿½ï¿½
+		//½«Ê£ÓàÈÍÐÔ¿ØÖÆµã¼¯ºÏ¼ÓÈëlist
+		//ÑÅÄÝËã·¨2£º´ÓGºÍ¹¥»÷Â·¾¶pathsÑ¡ÔñÊ£ÓàÈÍÐÔ¿ØÖÆµã¼¯ºÏ
 		CriticalNodes cNodes=new CriticalNodes(G);
 		criticalNode = cNodes.GetTwoNodesInOnePath(paths.pathSet);
 		for(Node node:criticalNode)
@@ -84,41 +84,32 @@ public class startOver {
 		String inputDot="D://input.dot";
 		visualizeGraph.dotGenerator(G,criticalNode,inputDot);
 		
-		//!!!
-//		connectAreaNum name = new connectAreaNum();
-//		name.setConnectNum(basicGraph);
-//		System.out.print(name.getConnectNum());
-		
-		//ï¿½ï¿½ï¿½ï¿½
+		//ÆÀ¹À
 		totalEvaluation evaluator = new totalEvaluation();
 		evaluator.showEvaluationResult(G, paths, criticalNode);
 		
-		//!!!
-//		name.setConnectNum(basicGraph);
-//		System.out.print(name.getConnectNum());
-		
-		//ï¿½ï¿½ï¿½ï¿½Ñ¡ï¿½ï¿½ï¿½ï¿½ï¿½
-        System.out.println("ï¿½ï¿½ï¿½Ç·ï¿½ï¿½ï¿½ï¿½âµ±Ç°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½yï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½n");
+		//½ÓÊÕÑ¡ÔñÒâ¼û
+        System.out.println("ÄúÊÇ·ñÂúÒâµ±Ç°¸ôÀëÓòÊýÁ¿£¿ÈçÂúÒâÇëÊäÈëy£¬·ñÔòÇëÊäÈën");
         char choice = ' ';
         
         choice = (char)System.in.read();
 
-        //ï¿½Å»ï¿½ï¿½ï¿½ï¿½ï¿½
-        if (choice == 'y') { //ï¿½ï¿½ï¿½ï¿½
+        //ÓÅ»¯´¦Àí
+        if (choice == 'y') { //½ÓÊÜ
         	for(int i = 0; i < criticalNode.size(); i++) {
         		System.out.println(criticalNode.get(i).getID());
         	}
         	
         	System.out.println("Over!");
         }
-        else { //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
-            System.out.println("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
-        	int areaNum = 0; //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+        else { //²»½ÓÊÜ
+            System.out.println("ÇëÊäÈë¸ôÀëÓòÊýÁ¿ÉÏÏÞ");
+        	int areaNum = 0; //¸ôÀëÓòÊýÁ¿ÉÏÏÞ
         	
         	Scanner in = new Scanner(System.in);
         	areaNum = in.nextInt();
         	  
-            //É¾ï¿½ï¿½ï¿½ï¿½ï¿½Ôµã£¬ï¿½Ð¶ï¿½ï¿½ï¿½Í¨ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+            //É¾¼õÈÍÐÔµã£¬ÅÐ¶ÏÁ¬Í¨ÓòÊýÁ¿
             connectAreaNum con = new connectAreaNum();
             setNewGraph set = new setNewGraph();
             DeleteOneControlNode oneNode = new DeleteOneControlNode();
@@ -126,25 +117,25 @@ public class startOver {
         	boolean target = true;
             while (target) {
                 /**
-                 * ï¿½Ù¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô¿ï¿½ï¿½Æµï¿½ï¿½ï¿½ï¿½ï¿½m>ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½nï¿½ï¿½Êµï¿½ï¿½ï¿½ï¿½Ò²ï¿½ï¿½>=ï¿½ï¿½
-                 * ï¿½ï¿½mï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½mï¿½Ä¶ï¿½ï¿½ï¿½ï¿½Ð£ï¿½ï¿½ï¿½m-1ï¿½ï¿½Ö±ï¿½ï¿½n
+                 * ¼Ù¶¨×î¼ÑÈÍÐÔ¿ØÖÆµãÊýÁ¿m>×îÉÙÊýÁ¿n£¨Êµ¼ÊÉÏÒ²ÊÇ>=£©
+                 * ´Óm¿ªÊ¼£¬Ëã¸ôÀëÓòÊýÁ¿£¬ËùÓÐmµÄ¶¼²»ÐÐ£¬¾Ím-1£¬Ö±µ½n
                  */
         		umlParser umlParser3 = new umlParser();
         		simplifier  simplifier3 = new simplifier();
-        		basicGraph = umlParser3.genGraph("../test/test.uml");	
-//        		handledGraph = umlParser3.genGraph("UMLmodels.uml");	
-        		basicGraph = simplifier3.simplify(handledGraph);
+//        		basicGraph = umlParser3.genGraph("../test/test.uml");	
+        		handledGraph = umlParser3.genGraph("Example_UML.uml");	
+//        		basicGraph = simplifier3.simplify(handledGraph);
             	
-            	basicGraph = set.applyControlNode(basicGraph, criticalNode); //ï¿½ï¿½ï¿½ÂµÄ¿ï¿½ï¿½Æµã¼¯ï¿½ï¿½Ó¦ï¿½Ãµï¿½Í¼ï¿½ï¿½
+            	basicGraph = set.applyControlNode(basicGraph, criticalNode); //½«ÐÂµÄ¿ØÖÆµã¼¯ºÏÓ¦ÓÃµ½Í¼ÉÏ
             	con.setConnectNum(basicGraph);
             	System.out.print(con.getConnectNum()); //14
             	
-        		con.setConnectNum(basicGraph); //ï¿½ï¿½ï¿½ï¿½Í¼ï¿½ï¿½ï¿½ï¿½Í¨ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
-            	int numsize = con.getConnectNum(); //ï¿½ï¿½È¡ï¿½ï¿½Í¨ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+        		con.setConnectNum(basicGraph); //¼ÆËãÍ¼µÄÁ¬Í¨ÓòÊýÁ¿
+            	int numsize = con.getConnectNum(); //»ñÈ¡Á¬Í¨ÓòÊýÁ¿
         		
-        		if(numsize <= areaNum) { //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð¡ï¿½ï¿½areaNum
+        		if(numsize <= areaNum) { //¸ôÀëÓòÊýÁ¿Ð¡ÓÚareaNum
             		target = false;
-            		System.out.print("ï¿½ïµ½Òªï¿½ï¿½\n");
+            		System.out.print("´ïµ½ÒªÇó\n");
             		for(int i = 0; i < criticalNode.size(); i++) {
                 		System.out.println(criticalNode.get(i).getID());
                 	}
@@ -154,11 +145,11 @@ public class startOver {
             	}
             	
         		if(criticalNode.size() == 0 && numsize > areaNum) {
-            		System.out.print("ï¿½ï²»ï¿½ï¿½Òªï¿½ï¿½");
+            		System.out.print("´ï²»µ½ÒªÇó");
             		break;
             	}
         		
-            	criticalNode = oneNode.delete(G, criticalNode); //ï¿½Ó¿ï¿½ï¿½Æµã¼¯ï¿½ï¿½É¾È¥Ò»ï¿½ï¿½ï¿½ï¿½
+            	criticalNode = oneNode.delete(G, criticalNode); //´Ó¿ØÖÆµã¼¯ºÏÉ¾È¥Ò»¸öµã
             }
         }   
         
