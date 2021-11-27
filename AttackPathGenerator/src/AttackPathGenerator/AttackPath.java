@@ -39,7 +39,7 @@ public class AttackPath {
 	}
 	
 	
-	private void dfs(Vertex cur, Vertex dest)  
+	private void dfs(Vertex cur, Vertex dest, int maxSize)  
 	{
 
 //        out.write(cur.getName()+"\n");
@@ -48,6 +48,8 @@ public class AttackPath {
 //		System.out.println(cur.getName()+" "+cur.getItself().getID());
 //		if(pathSet.size() > 1000000) return;
 //		System.out.println(cur.getName());
+		if(pathSet.size() == maxSize+1)
+			return;
 		if(cur.itself.id == dest.itself.id) {
 			path.add(cur);
 			addPath(path);
@@ -66,7 +68,7 @@ public class AttackPath {
 		{
 			if(!visit.contains(v.itself.id))
 			{
-				dfs(v,dest);
+				dfs(v,dest, maxSize);
 			}
 		}
 		visit.remove(cur.itself.id); 
@@ -210,8 +212,10 @@ public class AttackPath {
 			
 	}
 	
-	public void genPath(Graph p)  
+	public void genPath(Graph p, int maxSize)  
 	{
+		pathSet.clear();
+		path.clear();
 		ArrayList<Vertex> source = new ArrayList<Vertex>();
 		ArrayList<Vertex> destination = new ArrayList<Vertex>();
 		for(Map.Entry<String, Vertex> v : p.vertexes.entrySet())
@@ -249,7 +253,7 @@ public class AttackPath {
 //					dfs_nr(cur, dest); 
 					if(s!= null && d != null)
 					{
-						dfs(s, d); 
+						dfs(s, d, maxSize); 
 						visit.clear(); 
 					}
 					add_node(p, invalid);

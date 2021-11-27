@@ -23,9 +23,9 @@ public class Vertex {
     
     public Vertex(Vertex v) {
     	this.type = v.type;
-    	this.next_vertexes = new HashSet<Vertex>(v.getNextV());
-    	this.pre_vertexes = new HashSet<Vertex>(v.getPreV());
-    	this.itself = v.itself;
+    	this.next_vertexes = new HashSet<Vertex>();
+    	this.pre_vertexes = new HashSet<Vertex>();
+    	this.itself = new Node(v.itself);
     }
     
     public String getName()
@@ -83,6 +83,10 @@ public class Vertex {
     	this.pre_vertexes.remove(n);
     }
     
+    public void rmAllPre()
+    {
+    	this.pre_vertexes.clear();
+    }
     public void showDetailInfo() {
     	System.out.printf("type: %d\n", type);
     	itself.showDetailNodeInfo();

@@ -11,8 +11,8 @@ import AttackPathGenerator.*;
 public class CriticalNodes {
 	    Graph G;
 	    int n;
-	    String[] vertexes;//��Ÿ��ڵ�id
-	    LinkedList<Vertex> Vertexes=new LinkedList();//��ѡ��Ľڵ㼯����ȥ��¶����ʲ�
+	    String[] vertexes;//锟斤拷鸥锟斤拷诘锟絠d
+	    LinkedList<Vertex> Vertexes=new LinkedList();//锟斤拷选锟斤拷慕诘慵拷锟斤拷锟饺ワ拷锟铰讹拷锟斤拷锟绞诧拷
 
 	    public CriticalNodes(Graph g) {
 	        this.G = g;
@@ -23,34 +23,32 @@ public class CriticalNodes {
 	        int i = 0;
 	        for (Map.Entry<String, Vertex> v : G.vertexes.entrySet()) {
 	            this.vertexes[i++] = new String(v.getKey());
-//	            if(v.getValue().getType()==1)//�������ڵ�����ѡ��ڵ㼯
+//	            if(v.getValue().getType()==1)//锟斤拷锟斤拷锟斤拷锟节碉拷锟斤拷锟斤拷选锟斤拷诘慵�
 	            	Vertexes.add(v.getValue());
 	        }
 	    }
 
 	    public List<Node> getCriticalNodes(){
 	    	/*
-	    	 * ����ͼ��һ����ͨͼ
-	    	 * @return�����ͼѡ�Ŀ��Ƶ�
+	    	 * 锟斤拷锟斤拷图锟斤拷一锟斤拷锟斤拷通图
+	    	 * @return锟斤拷锟斤拷锟酵佳★拷目锟斤拷频锟�
 	    	 */
 	        List<Node> res=new ArrayList();
 	        LinkedList<String> G0=new LinkedList();
-	        //��ʼ��ͼ
-//	        for(int i=0;i<n;i++){
-//	        	G0.add(vertexes[i]);
-//	        }
-//	        
+
 	        for(Vertex v:Vertexes) {
 	        	G0.add(v.getItself().getID());
 	        }
 	        String minDegreeNode=G0.get(0);
-	        Vertex minV=G.vertexes.get(minDegreeNode);
+	        Graph newG = new Graph(G);
+	        Vertex minV=newG.vertexes.get(minDegreeNode);
 	        int minD=minV.getNextV().size()+minV.getPreV().size();
 
 	        while(!G0.isEmpty()){
-	            //��G0�ж���С�Ľڵ�
+	            //锟斤拷G0锟叫讹拷锟斤拷小锟侥节碉拷
+	        	minD = Integer.MAX_VALUE;
 	            for(String nodeId:G0){
-	            	Vertex v=G.vertexes.get(nodeId);
+	            	Vertex v=newG.vertexes.get(nodeId);
 	            	int D=v.getNextV().size()+v.getPreV().size();
 	                if(D<minD){
 	                    minDegreeNode=nodeId;
@@ -60,12 +58,15 @@ public class CriticalNodes {
 	            }
 	            
 	            if(minD==0) {
-	            	res.add(minV.getItself());
+//	            	res.add(minV.getItself());
 	            	Vertexes.remove(minV);
+	            	G0.remove(minV.getItself().getID());
+	            	newG.rmNode(minV);
+//	            	System.out.println(G0.size());
 	            	continue;
 	            }
 
-	            //���ѡ��minDegreeNode��һ���ڽӽڵ㣬����res
+	            //锟斤拷锟窖★拷锟絤inDegreeNode锟斤拷一锟斤拷锟节接节点，锟斤拷锟斤拷res
 	            int rand=(int)Math.random()*minD;
 //	            int i=0;
 	            List<Vertex> adjVertexes=new ArrayList<Vertex>(minV.getPreV());
@@ -78,27 +79,37 @@ public class CriticalNodes {
 //	            	i++;
 //	            }
 	            res.add(controlledNode);
+	            G0.remove(controlledNode.getID());
+	            newG.rmNode(newG.getVertexes().get(controlledNode.getID()));
 
-
-	            //ɾȥ��minDegreeNode�����Ľڵ�
+	            //删去锟斤拷minDegreeNode锟斤拷锟斤拷锟侥节碉拷
 	            for(Vertex v: adjVertexes){
-	                G0.remove(v.getItself());
+	                        	
+	            	if(G0.contains(v.getItself().getID()))
+	            	{
+	            		G0.remove(v.getItself().getID());
+	            		newG.rmNode(v);
+	            	}
+	
+	            		
 	            }
+//	            System.out.println("df+"+newG.getVertexes().size());
+//            	System.out.println("df+"+G0.size()+G0.isEmpty());
 	        }
 	        return res;
 	    }
 
 	    public List<Node> GetTwoNodesInOnePath(ArrayList<ArrayList<Vertex>> pathset){
 	    	/*
-	    	 * @Vertexes:��ѡ��Ľڵ�
-	    	 * @pathSet:·������ÿ��·���ı�ʶΪindex����
-	    	 * @return:���Ƶ㼯
+	    	 * @Vertexes:锟斤拷选锟斤拷慕诘锟�
+	    	 * @pathSet:路锟斤拷锟斤拷锟斤拷每锟斤拷路锟斤拷锟侥憋拷识为index锟斤拷锟斤拷
+	    	 * @return:锟斤拷锟狡点集
 	    	 */
-	        List<Integer> pathState=new ArrayList();//pathState[i]==2������Ϊi��·����ǰ��״̬Ϊ2�������ڸ�·����ѡ���������ڵ���
+	        List<Integer> pathState=new ArrayList();//pathState[i]==2锟斤拷锟斤拷锟斤拷为i锟斤拷路锟斤拷锟斤拷前锟斤拷状态为2锟斤拷锟斤拷锟斤拷锟节革拷路锟斤拷锟斤拷选锟斤拷锟斤拷锟斤拷锟斤拷锟节碉拷锟斤拷
 	        for(int i=0;i<pathset.size();i++)
 	        	pathState.add(0);
 	        ArrayList<Node> res=new ArrayList();
-	        int count=pathset.size();//·����
+	        int count=pathset.size();//路锟斤拷锟斤拷
 
 	        for(Vertex v:Vertexes) {
 	        	v.InitPaths(pathset);
@@ -131,16 +142,16 @@ public class CriticalNodes {
 
 	    public List<Node> GetTwoNodesInOnePath2(ArrayList<ArrayList<Vertex>> pathset){
 	    	/*
-	    	 * ���㷨CriticalNodes�Ļ�������
-	    	 * @Vertexes:��ѡ��Ľڵ�
-	    	 * @pathSet:·������ÿ��·���ı�ʶΪindex����
-	    	 * @return:���Ƶ㼯
+	    	 * 锟斤拷锟姐法CriticalNodes锟侥伙拷锟斤拷锟斤拷锟斤拷
+	    	 * @Vertexes:锟斤拷选锟斤拷慕诘锟�
+	    	 * @pathSet:路锟斤拷锟斤拷锟斤拷每锟斤拷路锟斤拷锟侥憋拷识为index锟斤拷锟斤拷
+	    	 * @return:锟斤拷锟狡点集
 	    	 */
 	    	List<Node> res=getCriticalNodes();
-	    	List<Integer> pathState=new ArrayList();//pathState[i]==2������Ϊi��·����ǰ��״̬Ϊ2�������ڸ�·����ѡ���������ڵ���
+	    	List<Integer> pathState=new ArrayList();//pathState[i]==2锟斤拷锟斤拷锟斤拷为i锟斤拷路锟斤拷锟斤拷前锟斤拷状态为2锟斤拷锟斤拷锟斤拷锟节革拷路锟斤拷锟斤拷选锟斤拷锟斤拷锟斤拷锟斤拷锟节碉拷锟斤拷
 	        for(int i=0;i<pathset.size();i++)
 	        	pathState.add(0);
-	        int count=pathset.size();//δ����������·����
+	        int count=pathset.size();//未锟斤拷锟斤拷锟斤拷锟斤拷锟斤拷路锟斤拷锟斤拷
 
 	        for(Vertex v:Vertexes) {
 	        	v.InitPaths(pathset);
@@ -165,7 +176,7 @@ public class CriticalNodes {
 	        	}        	
 	        }
 	        
-	        if(count==0)//����������
+	        if(count==0)//锟斤拷锟斤拷锟斤拷锟斤拷锟斤拷
 	        	return res;
 	        else {
 	        	while(count!=0) {

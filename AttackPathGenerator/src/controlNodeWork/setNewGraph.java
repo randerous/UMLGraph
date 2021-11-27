@@ -8,39 +8,27 @@ import java.util.Set;
 
 import AttackPathGenerator.*;
 
-////�����Կ��Ƶ�ĸ���Ӧ�õ�ͼ��
 public class setNewGraph {
 	/**
-     * ����id������ȸ����ӶϿ����γ��µ�ͼ
+     * 将韧性控制点集合应用到图中
      * @param G
      * @param I
      * @return
      */
     public Graph applyControlNode(Graph G, List<Node> I){
     	
-    	
-    	for(int i = 0; i < I.size(); i++){
+    	for(Node i: I)
+    	{
+//    		if(!G.vertexes.containsKey(i.getID())) continue;
+    		Vertex v = G.vertexes.get(i.getID());
+    		for(Vertex j : v.getPreV())
+    		{
+    			j.rmNextNode(v);
+    		}
     		
-    		String present = I.get(i).getID();
-    		if(!G.vertexes.containsKey(present))continue;
-    		
-            List<String> s = new ArrayList();
-            
-            //
-            for(int j = 0; j < G.getVertexes().get(present).getPreV().size(); j ++) {
-            	
-            }
-
-            
-            for(int j = 0; j < s.size(); j ++) {
-            	if( G.vertexes.get(s.get(j)).getNextV().size() != 0) {
-    				if(G.vertexes.get(s.get(j)).getNextV().contains(present))
-    				G.vertexes.get(s.get(j)).getNextV().remove(present);
-    			}
-            }
-            	
-            G.vertexes.get(present).getNextV().clear();       
-        }
+    		v.rmAllPre();
+    	}
+ 
         return G;
     }
 }

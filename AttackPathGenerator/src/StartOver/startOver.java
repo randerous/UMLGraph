@@ -15,6 +15,7 @@ import AttackPathGenerator.umlParser;
 import CriticalNodesGenerator.CriticalNodes;
 import EvaluationWork.connectAreaNum;
 import EvaluationWork.totalEvaluation;
+import UMLgenerator.UMLgenerator;
 import Visualization.visualizeGraph;
 import adjustmentWork.DeleteOneControlNode;
 import controlNodeWork.setNewGraph;
@@ -23,68 +24,88 @@ public class startOver {
 	
 	public static void main(String[] args) throws Exception {
 		
-		Graph G = new Graph(); //存储抽取出来的最原始图
-		Graph handledGraph = new Graph(); //存储经过处理的图
-		Graph basicGraph = new Graph();
+		Graph G = new Graph(); //存储经过处理的图
+		
 		AttackPath paths = new AttackPath();
 		List<Node> criticalNode = new ArrayList();
-		int Max = 10000; //可以接受的最大路径数量
+		int Max = 1000000; //可以接受的最大路径数量
 		
 		boolean AttackPathTarget = true; //从G生成攻击路径数量Num小于1w，则AttackPathTarget=false.
 		int N = 2;
 		
 		//国涛算法1：生成连通图G
+		//样例生成
+		UMLgenerator.generator(100, 2);
+		
 		umlParser umlParser = new umlParser();
 		simplifier  simplifier = new simplifier();
 //		G = umlParser.genGraph("../test/test.uml");	
 		G = umlParser.genGraph("Example_UML.uml");	
 //		G = simplifier.simplify(G);
-
-		umlParser umlParser2 = new umlParser();
-		simplifier  simplifier2 = new simplifier();
-//		handledGraph = umlParser2.genGraph("../test/test.uml");	
-		handledGraph = umlParser2.genGraph("Example_UML.uml");	
-//		handledGraph = simplifier2.simplify(handledGraph);
 		
-
+		Graph handledGraph = new Graph(G); //存储抽取出来的最原始图
 		
-		while(AttackPathTarget) {
+		CriticalNodes cNode =new CriticalNodes(G);
+		List<Node> NodeS = cNode.getCriticalNodes();
+		
+		int t = 0;
+		while(AttackPathTarget && NodeS.size() > 1) {
 			//国涛算法2：从G生成攻击路径数量
-			paths.genPath(G);
+			paths.genPath(G, Max);
 			paths.showInfo();
-			
-			if(paths.pathSet.size() < Max) {
+//			
+			if(paths.pathSet.size() <= Max) {
 				AttackPathTarget = false;
 			}
 			
+
 			if(AttackPathTarget) {
 				//雅妮算法1：从图G提取N个韧性控制点
-				CriticalNodes cNode =new CriticalNodes(G);
-				List<Node> NodeS = cNode.getCriticalNodes();
+				
 				
 				//将这N个韧性控制点加入List
-				criticalNode.add(NodeS.get(0));
-				criticalNode.add(NodeS.get(1));
+				if(NodeS.size() > 1)
+				{
+					criticalNode.add(NodeS.get(0));
+					criticalNode.add(NodeS.get(1));
+					NodeS.remove(0);
+					NodeS.remove(0);
+					System.out.println(NodeS.get(0).getName());
+					System.out.println(NodeS.get(1).getName());
+				}
+				
+				
 				
 				setNewGraph s = new setNewGraph();
 				//从图G中删去这N个韧性控制点的入度连接：adjustment
 				G = s.applyControlNode(G, criticalNode);
 				
+				t++;
 			}
 		}
 		
 		//将剩余韧性控制点集合加入list
 		//雅妮算法2：从G和攻击路径paths选择剩余韧性控制点集合
 		CriticalNodes cNodes=new CriticalNodes(G);
-		criticalNode = cNodes.GetTwoNodesInOnePath(paths.pathSet);
+		List<Node> criticalNodeS = cNodes.GetTwoNodesInOnePath(paths.pathSet);
+		
+		for(Node n : criticalNodeS) {
+			criticalNode.add(n);
+		}
+		
+		System.out.print("\n一共简化了" + t + "次，生成了" + 2*t + "个初始韧性控制点，");
+		System.out.print("后续韧性控制点数量为"+criticalNodeS.size() + "个，共" + criticalNode.size() + "个韧性控制点\n");
+		System.out.println("生成的韧性控制点如下：");
+		
 		for(Node node:criticalNode)
 			System.out.println(node.getID());
-		
+		System.out.println();
 //		visualize graph
 		String inputDot="D://input.dot";
 		visualizeGraph.dotGenerator(G,criticalNode,inputDot);
 		
 		//评估
+		
 		totalEvaluation evaluator = new totalEvaluation();
 		evaluator.showEvaluationResult(G, paths, criticalNode);
 		
@@ -120,36 +141,33 @@ public class startOver {
                  * 假定最佳韧性控制点数量m>最少数量n（实际上也是>=）
                  * 从m开始，算隔离域数量，所有m的都不行，就m-1，直到n
                  */
-        		umlParser umlParser3 = new umlParser();
-        		simplifier  simplifier3 = new simplifier();
-//        		basicGraph = umlParser3.genGraph("../test/test.uml");	
-        		handledGraph = umlParser3.genGraph("Example_UML.uml");	
-//        		basicGraph = simplifier3.simplify(handledGraph);
+        		Graph basicGraph = new Graph(handledGraph);
             	
             	basicGraph = set.applyControlNode(basicGraph, criticalNode); //将新的控制点集合应用到图上
             	con.setConnectNum(basicGraph);
-            	System.out.print(con.getConnectNum()); //14
+//            	System.out.print(con.getConnectNum()); 
             	
         		con.setConnectNum(basicGraph); //计算图的连通域数量
             	int numsize = con.getConnectNum(); //获取连通域数量
         		
         		if(numsize <= areaNum) { //隔离域数量小于areaNum
             		target = false;
-            		System.out.print("达到要求\n");
+            		System.out.print("以下控制点集合达到要求：\n");
             		for(int i = 0; i < criticalNode.size(); i++) {
                 		System.out.println(criticalNode.get(i).getID());
                 	}
                 	
-                	System.out.println("Over!");
+                	System.out.println("共"+ criticalNode.size() + "个\nOver!");
                 	break;
             	}
             	
         		if(criticalNode.size() == 0 && numsize > areaNum) {
-            		System.out.print("达不到要求");
+            		System.out.print("无法达到要求..\nOver!");
             		break;
             	}
         		
-            	criticalNode = oneNode.delete(G, criticalNode); //从控制点集合删去一个点
+//            	criticalNode = oneNode.delete(G, criticalNode, paths); //从控制点集合删去一个点
+        		criticalNode = oneNode.delete(G, criticalNode); //从控制点集合删去一个点
             }
         }   
         

@@ -38,11 +38,12 @@ public class totalEvaluation {
         int coArNu = con.getConnectNum();
         //加入韧性点后的连通域数量
 		setNewGraph set = new setNewGraph();
-		Graph G2 = set.applyControlNode(G, I);
-		con.setConnectNum(G2);
+		G = set.applyControlNode(G, I);
+		con.setConnectNum(G);
 		int coArNuNext = con.getConnectNum();
 
-        System.out.println("连通图总节点数：" + nodeNum + "\n"
+        System.out.println("各属性如下：\n"
+        		+ "连通图总节点数：" + nodeNum + "\n"
                 + "暴露面数量：" + suNu + "\n"
                 + "攻击路径数量" + atPaNu + "\n"
                 + "韧性控制点数量" + coNoNu + "\n"
