@@ -140,14 +140,14 @@ public class CriticalNodes {
 
 	    }	    
 
-	    public List<Node> GetTwoNodesInOnePath2(ArrayList<ArrayList<Vertex>> pathset){
+	    public List<Node> GetTwoNodesInOnePath2(ArrayList<ArrayList<Vertex>> pathset,List<Node> PriCriticalNode){
 	    	/*
 	    	 * 锟斤拷锟姐法CriticalNodes锟侥伙拷锟斤拷锟斤拷锟斤拷
 	    	 * @Vertexes:锟斤拷选锟斤拷慕诘锟�
 	    	 * @pathSet:路锟斤拷锟斤拷锟斤拷每锟斤拷路锟斤拷锟侥憋拷识为index锟斤拷锟斤拷
 	    	 * @return:锟斤拷锟狡点集
 	    	 */
-	    	List<Node> res=getCriticalNodes();
+	    	List<Node> res=new ArrayList<Node>();
 	    	List<Integer> pathState=new ArrayList();//pathState[i]==2锟斤拷锟斤拷锟斤拷为i锟斤拷路锟斤拷锟斤拷前锟斤拷状态为2锟斤拷锟斤拷锟斤拷锟节革拷路锟斤拷锟斤拷选锟斤拷锟斤拷锟斤拷锟斤拷锟节碉拷锟斤拷
 	        for(int i=0;i<pathset.size();i++)
 	        	pathState.add(0);
@@ -157,7 +157,7 @@ public class CriticalNodes {
 	        	v.InitPaths(pathset);
 	        }
 	    	
-	        for(Node n:res) {
+	        for(Node n:PriCriticalNode) {
 	        	Vertex v=G.vertexes.get(n.getID());
 	        	Vertexes.remove(v);
 	        	for(int path:v.getPaths()) {

@@ -45,6 +45,7 @@ public class startOver {
 		
 		Graph handledGraph = new Graph(G); //存储抽取出来的最原始图
 		
+		//雅妮算法1：从图G提取N个韧性控制点
 		CriticalNodes cNode =new CriticalNodes(G);
 		List<Node> NodeS = cNode.getCriticalNodes();
 		
@@ -59,10 +60,7 @@ public class startOver {
 			}
 			
 
-			if(AttackPathTarget) {
-				//雅妮算法1：从图G提取N个韧性控制点
-				
-				
+			if(AttackPathTarget) {	
 				//将这N个韧性控制点加入List
 				if(NodeS.size() > 1)
 				{
@@ -86,10 +84,11 @@ public class startOver {
 		
 		//将剩余韧性控制点集合加入list
 		//雅妮算法2：从G和攻击路径paths选择剩余韧性控制点集合
-		CriticalNodes cNodes=new CriticalNodes(G);
-		List<Node> criticalNodeS = cNodes.GetTwoNodesInOnePath(paths.pathSet);
+//		CriticalNodes cNodes=new CriticalNodes(G);
+//		List<Node> criticalNodeS = cNodes.GetTwoNodesInOnePath(paths.pathSet);
+		List<Node> criticalNodeS = cNode.GetTwoNodesInOnePath2(paths.pathSet,criticalNode);
 		
-		for(Node n : criticalNodeS) {
+		for(Node n : criticalNodeS) {  
 			criticalNode.add(n);
 		}
 		
