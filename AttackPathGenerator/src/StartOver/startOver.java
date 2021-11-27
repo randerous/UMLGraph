@@ -68,8 +68,8 @@ public class startOver {
 					criticalNode.add(NodeS.get(1));
 					NodeS.remove(0);
 					NodeS.remove(0);
-					System.out.println(NodeS.get(0).getName());
-					System.out.println(NodeS.get(1).getName());
+					System.out.println("critical node selected: "+NodeS.get(0).getName());
+					System.out.println("critical node selected: "+NodeS.get(1).getName());
 				}
 				
 				
