@@ -1,111 +1,111 @@
-//package CriticalNodesGenerator;
-//
-//
-//import AttackPathGenerator.*;
-//import java.lang.Math;
-//import java.math.BigInteger;
-//import java.util.*;
-//
-//public class Matrix {
-//    Graph graph;
-////    int n=graph.vertexes.size();//×Ü½áµãÊý
-//    int n;
-//    int m;//½Úµã×éÖÐ½Úµã¸öÊý
-//    double[][] AdjacentMatrix =new double[n][n];//ÁÚ½Ó¾ØÕó¶¨ÒåºÍÎÞÏòÍ¼Ò»Ñù
-//    double[][] DegreeMatrix=new double[n][n];//Èë¶È+³ö¶È
-//    double[][] Laplacian=new double[n][n];
-//    Map<String,Integer> vertexesIndex=new HashMap(n);//index¶ÔÓ¦nodeµÄid
-//
-//    public  Matrix(Graph graph,int m){
-//        this.graph=graph;
-//        this.n=graph.vertexes.size();
-//        this.m=m;
-//
-//        int i=0;
-//        for(Map.Entry<String,Vertex> v:graph.vertexes.entrySet()){
-//            vertexesIndex.put(new String(v.getKey()),i++);
-//        }
-//        for(Map.Entry<String,Vertex> v:graph.vertexes.entrySet()) {
-//            int source=vertexesIndex.get(v.getKey());
-//            DegreeMatrix[source][source]+=v.getValue().getNext_vertexes().size();
-//            for(Vertex each:v.getValue().getNext_vertexes()){
-//                int target=vertexesIndex.get(each.getNode().getId());
-//                AdjacentMatrix[source][target]=1;//ÕâÀïÒÔºó¿ÉÒÔ¸Ä³É±ßµÄÈ¨Öµ
-//                AdjacentMatrix[target][source]=1;
-//                DegreeMatrix[target][target]++;
-//            }
-//        }
-//    }
-//
-//    public  Matrix(double[][] adjM,double[][] DegM,int n,int m){
-//        this.AdjacentMatrix=adjM;
-//        this.DegreeMatrix=DegM;
-//        this.n=n;
-//        this.m=m;
-//    }
-//
-//    public  Matrix(double[][] lap,int n,int m){
-//        this.Laplacian=lap;
-//        this.n=n;
-//        this.m=m;
-//    }
-//
-//
-//
-//    public void GetLaplacian(){
-//        for(int i=0;i<n;i++)
-//            for(int j=0;j<n;j++)
-//                this.Laplacian[i][j]=this.DegreeMatrix[i][j]-this.AdjacentMatrix[i][j];
-//    }
-//
-//
-//    public List<Integer> getCriticalNodesForce(int m, List<Double> MinEigenvalues){
-//        /*
-//        @m:Ñ¡Ôñm¸ö½Úµã×÷Îª¹Ø¼ü½Úµã×é£¨ÓÐºÜ¶àÖÖÑ¡·¨£¬ÐèÒªÑ¡³ö×îÐ¡ÌØÕ÷Öµ×î´óµÄÄÇ×é£©
-//        @MinEigenvalues: ËùÓÐ×éµÄ×îÐ¡ÌØÕ÷Öµ£¬ËäÈ»ÎÒÒ²²»ÖªµÀ·µ»ØÕâ¸öÓÐÊ²Ã´ÓÃ
-//        @return:¾ßÓÐ×î´óµÄ×îÐ¡ÌØÕ÷ÖµµÄ½Úµã×é
-//         */
-//        List<List<Integer>> combinations=Comb.combine(n,m);
-//        int size=combinations.size();
-//        System.out.println("size="+size);
-////        List<Double>MinEigenvalues=new ArrayList<>(size);
-//
-//        List<Integer> res=null;
-//        double max=0;
-//        for(int i=0;i<size;i++){
-//            /*
-//            1. »ñÈ¡matrix
-//            2. Ñ­»·»ñÈ¡ÌØÕ÷Öµ
-//             */
-//            List<Integer> combi=combinations.get(i);
-//            System.out.println("µÚ"+i+"¸ö");
-//            double[][] subMatrix=new double[n-m][n-m];
-//            double[] EigVal=new double[n-m];
-//            for(int j=1,x=0;j<=n && x<n-m;j++){
-//                //É¾µôµÚjÐÐ
-//                if(combi.contains(j)) continue;
-//                for(int k=1,y=0;k<=n && y<n-m;k++){
-//                    //É¾µôµÚkÁÐ
-//                    if(combi.contains(k)) continue;
-//                    subMatrix[x][y++]=Laplacian[j-1][k-1];
-//                }
-//                x++;
-//            }
-//
-//            Jacobi.Find_Eigen(n-m,subMatrix,EigVal);
-//            double minEign=EigVal[0];
-//            for(int j=1;j<n-m;j++)
-//                if(EigVal[j]<minEign) minEign=EigVal[j];
-//            MinEigenvalues.add(minEign);
-//            if(max<minEign) {
-//                max = minEign;
-//                res=combi;
-//            }
-//        }
-//
-//        return res;
-//    }
-//
-//
-//
-//}
+package CriticalNodesGenerator;
+
+
+import AttackPathGenerator.*;
+import java.lang.Math;
+import java.math.BigInteger;
+import java.util.*;
+
+public class Matrix {
+    Graph graph;
+//    int n=graph.vertexes.size();//ï¿½Ü½ï¿½ï¿½ï¿½ï¿½
+    int n;
+    int m;//ï¿½Úµï¿½ï¿½ï¿½ï¿½Ð½Úµï¿½ï¿½ï¿½ï¿½
+    double[][] AdjacentMatrix =new double[n][n];//ï¿½Ú½Ó¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í¼Ò»ï¿½ï¿½
+    double[][] DegreeMatrix=new double[n][n];//ï¿½ï¿½ï¿½+ï¿½ï¿½ï¿½ï¿½
+    double[][] Laplacian=new double[n][n];
+    Map<String,Integer> vertexesIndex=new HashMap(n);//indexï¿½ï¿½Ó¦nodeï¿½ï¿½id
+
+    public  Matrix(Graph graph,int m){
+        this.graph=graph;
+        this.n=graph.vertexes.size();
+        this.m=m;
+
+        int i=0;
+        for(Map.Entry<String,Vertex> v:graph.vertexes.entrySet()){
+            vertexesIndex.put(new String(v.getKey()),i++);
+        }
+        for(Map.Entry<String,Vertex> v:graph.vertexes.entrySet()) {
+            int source=vertexesIndex.get(v.getKey());
+            DegreeMatrix[source][source]+=v.getValue().getNextV().size();
+            for(Vertex each:v.getValue().getNextV()){
+                int target=vertexesIndex.get(each.getItself().getID());
+                AdjacentMatrix[source][target]=1;//ï¿½ï¿½ï¿½ï¿½ï¿½Ôºï¿½ï¿½ï¿½Ô¸Ä³É±ßµï¿½È¨Öµ
+                AdjacentMatrix[target][source]=1;
+                DegreeMatrix[target][target]++;
+            }
+        }
+    }
+
+    public  Matrix(double[][] adjM,double[][] DegM,int n,int m){
+        this.AdjacentMatrix=adjM;
+        this.DegreeMatrix=DegM;
+        this.n=n;
+        this.m=m;
+    }
+
+    public  Matrix(double[][] lap,int n,int m){
+        this.Laplacian=lap;
+        this.n=n;
+        this.m=m;
+    }
+
+
+
+    public void GetLaplacian(){
+        for(int i=0;i<n;i++)
+            for(int j=0;j<n;j++)
+                this.Laplacian[i][j]=this.DegreeMatrix[i][j]-this.AdjacentMatrix[i][j];
+    }
+
+
+    public List<Integer> getCriticalNodesForce(int m, List<Double> MinEigenvalues){
+        /*
+        @m:Ñ¡ï¿½ï¿½mï¿½ï¿½ï¿½Úµï¿½ï¿½ï¿½Îªï¿½Ø¼ï¿½ï¿½Úµï¿½ï¿½é£¨ï¿½ÐºÜ¶ï¿½ï¿½ï¿½Ñ¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÒªÑ¡ï¿½ï¿½ï¿½ï¿½Ð¡ï¿½ï¿½ï¿½ï¿½Öµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½é£©
+        @MinEigenvalues: ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð¡ï¿½ï¿½ï¿½ï¿½Öµï¿½ï¿½ï¿½ï¿½È»ï¿½ï¿½Ò²ï¿½ï¿½Öªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê²Ã´ï¿½ï¿½
+        @return:ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð¡ï¿½ï¿½ï¿½ï¿½Öµï¿½Ä½Úµï¿½ï¿½ï¿½
+         */
+        List<List<Integer>> combinations=Comb.combine(n,m);
+        int size=combinations.size();
+        System.out.println("size="+size);
+//        List<Double>MinEigenvalues=new ArrayList<>(size);
+
+        List<Integer> res=null;
+        double max=0;
+        for(int i=0;i<size;i++){
+            /*
+            1. ï¿½ï¿½È¡matrix
+            2. Ñ­ï¿½ï¿½ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½Öµ
+             */
+            List<Integer> combi=combinations.get(i);
+            System.out.println("ï¿½ï¿½"+i+"ï¿½ï¿½");
+            double[][] subMatrix=new double[n-m][n-m];
+            double[] EigVal=new double[n-m];
+            for(int j=1,x=0;j<=n && x<n-m;j++){
+                //É¾ï¿½ï¿½ï¿½ï¿½jï¿½ï¿½
+                if(combi.contains(j)) continue;
+                for(int k=1,y=0;k<=n && y<n-m;k++){
+                    //É¾ï¿½ï¿½ï¿½ï¿½kï¿½ï¿½
+                    if(combi.contains(k)) continue;
+                    subMatrix[x][y++]=Laplacian[j-1][k-1];
+                }
+                x++;
+            }
+
+            Jacobi.Find_Eigen(n-m,subMatrix,EigVal);
+            double minEign=EigVal[0];
+            for(int j=1;j<n-m;j++)
+                if(EigVal[j]<minEign) minEign=EigVal[j];
+            MinEigenvalues.add(minEign);
+            if(max<minEign) {
+                max = minEign;
+                res=combi;
+            }
+        }
+
+        return res;
+    }
+
+
+
+}

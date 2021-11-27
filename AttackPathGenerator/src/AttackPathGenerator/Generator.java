@@ -90,7 +90,7 @@ public class Generator {
 
 //				G.showDetailInfo();
 		AttackPath paths = new AttackPath();
-		paths.genPath(G);
+		paths.genPath(G, 100);
 		paths.showInfo();
 		averagenums += paths.getNums()/10;
 

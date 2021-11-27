@@ -1,25 +1,34 @@
 package controlNodeWork;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import AttackPathGenerator.*;
 
-////½«ÈÍĞÔ¿ØÖÆµãµÄ¸ôÀëÓ¦ÓÃµ½Í¼ÖĞ
 public class setNewGraph {
 	/**
-     * ¸ù¾İid£¬½«Èë¶È¸÷Á¬½Ó¶Ï¿ª£¬ĞÎ³ÉĞÂµÄÍ¼
+     * å°†éŸ§æ€§æ§åˆ¶ç‚¹é›†åˆåº”ç”¨åˆ°å›¾ä¸­
      * @param G
      * @param I
      * @return
      */
     public Graph applyControlNode(Graph G, List<Node> I){
-        for(int i = 0; i < I.size(); i++){
-            String present = I.get(i).getID();
-//            G.vertexes.get(present).pre_vertexes.clear();
-        }
-
+    	
+    	for(Node i: I)
+    	{
+//    		if(!G.vertexes.containsKey(i.getID())) continue;
+    		Vertex v = G.vertexes.get(i.getID());
+    		for(Vertex j : v.getPreV())
+    		{
+    			j.rmNextNode(v);
+    		}
+    		
+    		v.rmAllPre();
+    	}
+ 
         return G;
     }
-
 }

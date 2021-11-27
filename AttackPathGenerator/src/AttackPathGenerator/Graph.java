@@ -15,7 +15,22 @@ public class Graph {
 	
 	public Graph(Graph g)
 	{
-		this.vertexes = new HashMap<String, Vertex>(g.getVertexes());
+		this.vertexes = new HashMap<String, Vertex>();
+		for(Map.Entry<String, Vertex> entry: g.vertexes.entrySet())
+		{
+			Vertex temp = entry.getValue();
+			Vertex v = new Vertex(temp);
+			addElem(v);
+		}
+		
+		for(Map.Entry<String, Vertex> entry: g.vertexes.entrySet())
+		{
+			Vertex temp = entry.getValue(); 
+			for(Vertex i: temp.getNextV())
+			{
+				addEdge(temp.getItself().getID(), i.getItself().getID());
+			}
+		}
 	}
 	
 	public Map<String,Vertex> getVertexes()
@@ -46,6 +61,19 @@ public class Graph {
 		for(Vertex i : v.getPreV())
 		{
 			i.rmNextNode(v);
+		}
+		rmElem(v);
+	}
+	
+	public void rmNode(Vertex v)
+	{
+		for(Vertex i : v.getPreV())
+		{
+			i.rmNextNode(v);
+		}
+		for(Vertex i : v.getNextV())
+		{
+			i.rmPreNode(v);
 		}
 		rmElem(v);
 	}

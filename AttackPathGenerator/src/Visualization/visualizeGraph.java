@@ -25,13 +25,13 @@ public class visualizeGraph {
 		for (Map.Entry<String, Vertex> v : g.vertexes.entrySet()) {
 			 String source=v.getKey();
 			 String sourceIndex=intToString(vertexIndex.get(source));
-//			 Set<Vertex> nexts=g.vertexes.get(source).getNext_vertexes();
+			 Set<Vertex> nexts=g.vertexes.get(source).getNextV();
 			 wr.append(sourceIndex+" [label=\""+source+"\"];\n");
-//			 for(Vertex each:nexts) {
-//				 String target=each.getNode().getId();
-//				 String targetIndex=intToString(vertexIndex.get(target));
-//				 wr.append(sourceIndex+"->"+targetIndex+";\n");
-//			 }           
+			 for(Vertex each:nexts) {
+				 String target=each.getItself().getID();
+				 String targetIndex=intToString(vertexIndex.get(target));
+				 wr.append(sourceIndex+"->"+targetIndex+";\n");
+			 }           
 		 }
 		
 		
