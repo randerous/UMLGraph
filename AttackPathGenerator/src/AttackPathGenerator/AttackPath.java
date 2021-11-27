@@ -11,6 +11,7 @@ import java.util.Queue;
 import java.util.Set;
 import java.util.Stack;
 
+import UMLgenerator.UMLgenerator;
 public class AttackPath {
 	public ArrayList <ArrayList<Vertex>> pathSet;
 	Stack<Vertex> path;
@@ -54,7 +55,7 @@ public class AttackPath {
 			path.add(cur);
 			addPath(path);
 //			System.out.println(pathSet.size());
-			if(pathSet.size()%1000000 == 0)
+			if(UMLgenerator.DEBUG && pathSet.size()%1000000 == 0)
 			{
 				System.out.println(pathSet.size());
 			}
@@ -151,66 +152,72 @@ public class AttackPath {
 		}
 	}
 	
-	private void dfs_nr(Vertex cur, Vertex dest)  
-	{
-		 
-		Stack<Set<Vertex>> next = new Stack<Set<Vertex>>();
-		path.push(cur);
-		
-		Set<Vertex> t = new HashSet<Vertex>(cur.getNextV());
-		next.push(t);
-		while(!path.empty())
-		{
-			if(next.peek().isEmpty())
-			{
-//				System.out.println("empty");
-				visit.remove(path.peek().itself.id);
-				path.pop();
-				next.pop();
-				continue;
-			}
-			Set<Vertex> tmp = next.pop(); 
-			Vertex v = null; 
-			for(Vertex i: tmp)
-			{
-				v = i;
-				break;
-			}
-			tmp.remove(v); 
-			next.push(tmp);
-			
-//			System.out.println(v.getName());
-			if(v.itself.id == dest.itself.id) {
-				path.push(v);
-				addPath(path);
-//				System.out.println(pathSet.size());
-				if(pathSet.size()%10000 == 0)
-				{
-					System.out.println(pathSet.size());
-				}
-				path.pop(); 
-				continue;
-			}
-			visit.add(v.itself.id);
-			path.push(v);
-			
-			tmp = new HashSet<Vertex>();
-			for(Vertex i: v.getNextV())
-			{
-				if(!visit.contains(i.itself.id))
-				{
-					tmp.add(i);
-//					System.out.println(i.getName());
-				}
-					
-			}
-			next.push(tmp);
-			
-//			visit.remove(v.itself.id);
-//			path.pop();
-		}
-			
-	}
+//	private void dfs_nr(Vertex cur, Vertex dest)  
+//	{
+//		 
+//		Stack<Set<Vertex>> next = new Stack<Set<Vertex>>();
+//		path.push(cur);
+//		
+//		Set<Vertex> t = new HashSet<Vertex>(cur.getNextV());
+//		next.push(t);
+//		while(!path.empty())
+//		{
+//			if(next.peek().isEmpty())
+//			{
+////				System.out.println("empty");
+//				visit.remove(path.peek().itself.id);
+//				path.pop();
+//				next.pop();
+//				continue;
+//			}
+//			Set<Vertex> tmp = next.pop(); 
+//			Vertex v = null; 
+//			for(Vertex i: tmp)
+//			{
+//				v = i;
+//				break;
+//			}
+//			tmp.remove(v); 
+//			next.push(tmp);
+//			
+////			System.out.println(v.getName());
+//			if(v.itself.id == dest.itself.id) {
+//				path.push(v);
+//				addPath(path);
+////				System.out.println(pathSet.size());
+//				if(pathSet.size()%10000 == 0)
+//				{
+//					System.out.println(pathSet.size());
+//				}
+//				path.pop(); 
+//				continue;
+//			}
+//			visit.add(v.itself.id);
+//			path.push(v);
+//			
+//			tmp = new HashSet<Vertex>();
+//			for(Vertex i: v.getNextV())
+//			{
+//				if(!visit.contains(i.itself.id))
+//				{
+//					tmp.add(i);
+////					System.out.println(i.getName());
+//				}
+//					
+//			}
+//			next.push(tmp);
+//			
+////			visit.remove(v.itself.id);
+////			path.pop();
+//		}
+//			
+//	}
+	/*
+	 * generator all path from nodes belongs exposure to nodes belongs asset
+	 * (1)minimal graph, delete nodes that can't reach target asset
+	 * (2)dfs
+	 * (3)restore graph
+	 */
 	
 	public void genPath(Graph p, int maxSize)  
 	{
@@ -234,8 +241,8 @@ public class AttackPath {
 				
 		}
 		
-		System.out.println("source"+  source.size());
-		System.out.println("dest"+  destination.size());
+		System.out.println("exposure"+  source.size());
+		System.out.println("asset"+  destination.size());
 		
 		if(!source.isEmpty() && !destination.isEmpty())
 		{
@@ -274,25 +281,29 @@ public class AttackPath {
 		
 		System.out.printf("path nums: %d\n\n", pathSet.size());
 		
-		try {
-            BufferedWriter out = new BufferedWriter(new FileWriter("path.txt"));
-            out.write("path nums:"+pathSet.size()+"\n");
-            
-            
-    		int i = 0;
-    		for(ArrayList<Vertex> path: pathSet)
-    		{
-    			out.write("path: " + i + "\n");
-    			i++;
-    			for(Vertex v: path) {
-    				out.write(v.getName());
-    			}
-    			out.write("end path\n");
-    		}
-    		out.close();
-            System.out.println("successfully");
-        } catch (IOException e) {
-        }
+		boolean is_write = false;
+		if(is_write) {
+			try {
+	            BufferedWriter out = new BufferedWriter(new FileWriter("path.txt"));
+	            out.write("path nums:"+pathSet.size()+"\n");
+	            
+	            
+	    		int i = 0;
+	    		for(ArrayList<Vertex> path: pathSet)
+	    		{
+	    			out.write("path: " + i + "\n");
+	    			i++;
+	    			for(Vertex v: path) {
+	    				out.write(v.getName());
+	    			}
+	    			out.write("end path\n");
+	    		}
+	    		out.close();
+	            System.out.println("successfully");
+	        } catch (IOException e) {
+	        }
+		}
+		
 //		int i = 0;
 //		for(ArrayList<Vertex> path: pathSet)
 //		{

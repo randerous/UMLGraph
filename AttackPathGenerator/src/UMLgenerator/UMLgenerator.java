@@ -68,7 +68,7 @@ import org.eclipse.uml2.uml.resources.util.UMLResourcesUtil;
  */
 public class UMLgenerator {
 
-	public static boolean DEBUG = true;
+	public static boolean DEBUG = false;
 
 	private static File outputDir;
 	private static int  nodes_num;
@@ -116,7 +116,7 @@ public class UMLgenerator {
 		edges_num = (int) ((int) nodes_num * average_edges);
 		init();
 
-		banner("Creating root model package and primitive types.");
+//		banner("Creating root model package and primitive types.");
 
 		// Create the root package (a model).
 		Model UML2Model = createModel("uml2"); 
@@ -130,7 +130,7 @@ public class UMLgenerator {
 				.appendSegment("Example_UML")
 				.appendFileExtension(UMLResource.FILE_EXTENSION);
 		
-		banner("Saving the overall UML models to %s.", outputURI.toFileString()); 
+		banner("Example uml created, saved to %s.", outputURI.toFileString()); 
 		save(UML2Model, outputURI);
 		 
 	}
