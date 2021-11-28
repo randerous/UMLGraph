@@ -12,6 +12,6 @@
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/Administrator/Documents/GitHub/papyrusworkspace/UMLGraph/fastjson-1.2.78.jar"/>
+	<classpathentry kind="lib" path="C:/Users/randerous/Desktop/华为/UMLGraph/fastjson-1.2.78.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
