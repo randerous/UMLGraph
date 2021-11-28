@@ -14,9 +14,20 @@ import java.util.Set;
 public class simplifier {
 
 	public Graph simplify(Graph G) {
-		G = simplifySeqNode(G);
-		G = simplifyConcurrentNode(G);  
 		G = simplifyExposure(G);
+		
+		
+		int preSize = G.getVertexes().size();
+		int size = 0;
+		while(size < preSize)
+		{
+			preSize = G.getVertexes().size();
+			G = simplifySeqNode(G);
+			G = simplifyConcurrentNode(G);  
+			size = G.getVertexes().size();
+		}
+		
+		
 		return G;
 	}
 
@@ -25,9 +36,7 @@ public class simplifier {
 	 */
 
 	public void mergeSeqNode(Graph G, Vertex v) {
-		// can't merge asset
-		if (v.getType() == 2)
-			return;
+
 
 		for (Vertex pre : v.getPreV()) {
 			pre.rmNextNode(v);
@@ -68,7 +77,53 @@ public class simplifier {
 	 * mergeNode for exposure
 	 */
 	public void mergeExposureNode(Graph G, Vertex v) {
-		mergeSeqNode(G, v);
+		//find another exposure to union
+		Vertex exposure = null;
+		boolean is_pre = false;
+		for (Vertex pre : v.getPreV()) {
+			if(pre.getType() == 0) {
+				exposure = pre;
+				is_pre = true;
+				break;
+			}
+		}
+		if(!is_pre)
+		{
+			for (Vertex next : v.getNextV()) {
+				if(next.getType() == 0) {
+					exposure = next;
+					break;
+				}
+			}
+		}
+		
+		if(is_pre)
+		{
+			for (Vertex pre : v.getPreV()) {
+				pre.rmNextNode(v);
+				if(!pre.getItself().getID().equals(exposure.getItself().getID()))
+					exposure.addPreNode(pre);
+			}
+			
+			for (Vertex next : v.getNextV()) {
+				next.rmNextNode(v);
+				exposure.addNextNode(next);
+			}
+			G.rmElem(v);
+		}else
+		{
+			for (Vertex pre : v.getPreV()) {
+				pre.rmNextNode(v);
+				exposure.addPreNode(pre);
+			}
+			
+			for (Vertex next : v.getNextV()) {
+				next.rmNextNode(v);
+				if(!next.getItself().getID().equals(exposure.getItself().getID()))
+					exposure.addNextNode(next);
+			}
+			G.rmElem(v);
+		}
 	}
 	
 	/*
@@ -218,7 +273,8 @@ public class simplifier {
 		}
 
 		unionSetUtil.updateParent(parent);
-
+		
+		//record min level for a group of exposure
 		Map<Integer, Integer> eq = new HashMap<Integer, Integer>();
 
 		for (int i = 0; i < parent.length; i++) {

@@ -8,6 +8,8 @@
 教程见 https://wiki.eclipse.org/MDT/UML2/Getting_Started_with_UML2
 #### 4 需要导入一个额外的jar包用于识别JSON
 fastjson-1.2.78.jar，右键项目AttackPathGenerator->properties->Java Build Path ->Libraries->Add External JARS
+#### 5 安装win10上的graphviz用于展示图
+勾选添加到环境路径，stable_windows_10_cmake_Release_x64_graphviz-install-2.49.3-win64
 
 ## 项目结构
 ### test

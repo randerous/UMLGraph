@@ -101,8 +101,9 @@ public class startOver {
 		System.out.println();
 //		visualize graph
 		String inputDot="D://input.dot";
-		visualizeGraph.dotGenerator(G,criticalNode,inputDot);
-		
+//		visualizeGraph.dotGenerator(G,criticalNode,inputDot);
+		String[] cmd= {"dot","-Tsvg",inputDot,"-o","out.svg"};
+		visualizeGraph.dotGenerator(G,criticalNode,inputDot,cmd);
 		//ÆÀ¹À
 		
 		totalEvaluation evaluator = new totalEvaluation();
