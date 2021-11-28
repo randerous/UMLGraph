@@ -16,10 +16,8 @@ fastjson-1.2.78.jar，右键项目AttackPathGenerator->properties->Java Build Pa
 ATM实例的UML图
 
 ### AttackPathGenerator
-连通图生成代码，路径生成代码
-#### 新增类成员提取接口
-
-#### 数据结构修改
+连通图生成代码，路径生成代码，新增了类成员提取接口
+数据结构修改
 邻接表存储图，新增了前驱节点信息
 ```
 public class Vertex {
