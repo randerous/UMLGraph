@@ -16,8 +16,17 @@ public class simplifier {
 	public Graph simplify(Graph G) {
 		G = simplifyExposure(G);
 		
-		G = simplifySeqNode(G);
-		G = simplifyConcurrentNode(G);  
+		
+		int preSize = G.getVertexes().size();
+		int size = 0;
+		while(size < preSize)
+		{
+			preSize = G.getVertexes().size();
+			G = simplifySeqNode(G);
+			G = simplifyConcurrentNode(G);  
+			size = G.getVertexes().size();
+		}
+		
 		
 		return G;
 	}
