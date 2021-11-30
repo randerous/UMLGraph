@@ -1,4 +1,5 @@
 path.txt
 .classpath
-.svg
+*.svg
 Example_UML.uml
+*.log
