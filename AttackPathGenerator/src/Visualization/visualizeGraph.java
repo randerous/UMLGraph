@@ -27,6 +27,8 @@ public class visualizeGraph {
     			 String source=v.getKey();
     			 String sourceIndex=intToString(vertexIndex.get(source));
     			 Set<Vertex> nexts=g.vertexes.get(source).getNextV();
+    			 
+    			 source = v.getValue().getName();
     			 int type=v.getValue().getType();
     			 if(type==0)
     				 wr.append(sourceIndex+" [label=\""+source+"\",shape=\"doublecircle\"];\n");

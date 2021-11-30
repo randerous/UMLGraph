@@ -1,5 +1,8 @@
 package AttackPathGenerator;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.common.util.URI;
@@ -30,12 +33,25 @@ import org.eclipse.uml2.uml.resources.util.UMLResourcesUtil;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 
+import Visualization.visualizeGraph;
+
 public class umlParser {
 	public Graph G;
 	public umlParser()
 	{
 		G = new Graph();
 	}
+	
+	public void graphTest() throws Exception
+	{
+//		visualize graph
+		String inputDot="D://input.dot";
+//		visualizeGraph.dotGenerator(G,criticalNode,inputDot);
+		String[] cmd= {"dot","-Tsvg",inputDot,"-o","out.svg"};
+		List<Node> tmpList = new ArrayList<Node>() ;
+		visualizeGraph.dotGenerator(G,tmpList,inputDot,cmd);
+	}
+
 	
 	public Graph genGraph(String path)
 	{
@@ -220,10 +236,22 @@ public class umlParser {
 
 	public void processAssociation(EList<Association> associations) {
 		for (Association i : associations) {
-			if(i.getMembers().size() > 1)
+			if(i.getEndTypes().size() > 1)
 			{
-				String sourceID = getId(i.getMembers().get(0).toString());
-				String destID = getId(i.getMembers().get(1).toString());
+				
+				String sourceID = getId(i.getEndTypes().get(0).toString());
+				String destID = getId(i.getEndTypes().get(1).toString());
+
+//				if(!G.vertexes.containsKey(sourceID) )
+//				{
+//					System.out.println("no source ass1: "+i.getMembers().get(0).getName());
+//					System.out.println("ass2: "+i.getMembers().get(1).getName());
+//				}
+//				if(!G.vertexes.containsKey(destID) )
+//				{
+//					System.out.println("no dest ass1: "+i.getMembers().get(0).getName());
+//					System.out.println("ass2: "+i.getMembers().get(1).getName());
+//				}
 				G.addEdge(sourceID, destID);
 				G.addEdge(destID, sourceID);
 			}

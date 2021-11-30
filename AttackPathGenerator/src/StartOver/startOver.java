@@ -41,7 +41,9 @@ public class startOver {
 		simplifier  simplifier = new simplifier();
 //		G = umlParser.genGraph("../test/test.uml");	
 		G = umlParser.genGraph("Example_UML.uml");	
-//		G = simplifier.simplify(G);
+		System.out.println(G.getVertexes().size());
+		G = simplifier.simplify(G);
+		System.out.println(G.getVertexes().size());
 		
 		Graph handledGraph = new Graph(G); //存储抽取出来的最原始图
 		
