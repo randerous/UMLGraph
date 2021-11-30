@@ -40,10 +40,10 @@ public class startOver {
 		umlParser umlParser = new umlParser();
 		simplifier  simplifier = new simplifier();
 //		G = umlParser.genGraph("../test/test.uml");	
+		
 		G = umlParser.genGraph("Example_UML.uml");	
-		System.out.println(G.getVertexes().size());
-		G = simplifier.simplify(G);
-		System.out.println(G.getVertexes().size());
+		
+		G = simplifier.simplify(G); 
 		
 		Graph handledGraph = new Graph(G); //存储抽取出来的最原始图
 		
@@ -54,8 +54,11 @@ public class startOver {
 		int t = 0;
 		while(AttackPathTarget && NodeS.size() > 1) {
 			//国涛算法2：从G生成攻击路径数量
+			umlParser.graphTest();
 			paths.genPath(G, Max);
+			umlParser.graphTest();
 			paths.showInfo();
+			
 //			
 			if(paths.pathSet.size() <= Max) {
 				AttackPathTarget = false;
@@ -109,7 +112,7 @@ public class startOver {
 		//评估
 		
 		totalEvaluation evaluator = new totalEvaluation();
-		evaluator.showEvaluationResult(G, paths, criticalNode);
+		evaluator.showEvaluationResult(handledGraph, paths, criticalNode);
 		
 		//接收选择意见
         System.out.println("您是否满意当前隔离域数量？如满意请输入y，否则请输入n");

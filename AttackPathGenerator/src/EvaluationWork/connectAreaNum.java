@@ -37,13 +37,13 @@ public class connectAreaNum {
 		for(int j = 0; j < num; j++)
 			parent[j] = j;
 		
+		
 		int inum = 0;
 		Map<String, Integer> conId = new HashMap<String, Integer>();
 		
 		Map<Integer, String> Idcon = new HashMap<Integer, String> ();
 		for(Map.Entry<String, Vertex> entry: G.vertexes.entrySet())
 		{
-			
 //			System.out.printf("%s\n", entry.getValue().getName());
 			Idcon.put(inum,entry.getValue().getItself().getID());
 			conId.put(entry.getValue().getItself().getID(), inum++);
@@ -81,19 +81,19 @@ public class connectAreaNum {
 //			System.out.printf("parent : %d\n", parent[i]);
 		}
 		//查看并查集中的元素
-		for(Integer i: connectNums)
-		{
-			//System.out.printf("%d\n", i);
-			for(int j = 0; j < num; j++)
-			{
-				if(parent[j] == i)
-				{
-					String id = Idcon.get(j);
-					String name = G.vertexes.get(id).getName();
-					//System.out.printf("%s\n", name);
-				}
-			}
-		}
+//		for(Integer i: connectNums)
+//		{
+//			//System.out.printf("%d\n", i);
+//			for(int j = 0; j < num; j++)
+//			{
+//				if(parent[j] == i)
+//				{
+//					String id = Idcon.get(j);
+//					String name = G.vertexes.get(id).getName();
+//					//System.out.printf("%s\n", name);
+//				}
+//			}
+//		}
 		//System.out.printf("liantongyu : %d\n", connectNums.size());
 
         this.connectNum =  connectNums.size();

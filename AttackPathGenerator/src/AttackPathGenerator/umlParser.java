@@ -37,6 +37,7 @@ import Visualization.visualizeGraph;
 
 public class umlParser {
 	public Graph G;
+	public static int it;
 	public umlParser()
 	{
 		G = new Graph();
@@ -47,7 +48,7 @@ public class umlParser {
 //		visualize graph
 		String inputDot="D://input.dot";
 //		visualizeGraph.dotGenerator(G,criticalNode,inputDot);
-		String[] cmd= {"dot","-Tsvg",inputDot,"-o","out.svg"};
+		String[] cmd= {"dot","-Tsvg",inputDot,"-o","out" + it++ + ".svg"};
 		List<Node> tmpList = new ArrayList<Node>() ;
 		visualizeGraph.dotGenerator(G,tmpList,inputDot,cmd);
 	}
