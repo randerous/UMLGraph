@@ -61,6 +61,7 @@ import org.eclipse.uml2.uml.UMLPackage;
 import org.eclipse.uml2.uml.resource.UMLResource;
 import org.eclipse.uml2.uml.resources.util.UMLResourcesUtil;
 
+import AttackPathGenerator.Graph;
 import AttackPathGenerator.umlParser;
 import Visualization.visualizeGraph;
 
@@ -114,8 +115,8 @@ public class UMLgenerator {
 		generator(100, 2);
 		umlParser parser = new umlParser();
 //		
-		parser.genGraph("Example_UML.uml");
-		parser.graphTest();
+		Graph G = parser.genGraph("Example_UML.uml");
+		parser.graphTest(G);
 
 	}
 
