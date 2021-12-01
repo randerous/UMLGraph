@@ -3,7 +3,9 @@ package AttackPathGenerator;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.Map;
+import java.util.Queue;
 import java.util.Set;
 
 /*
@@ -12,8 +14,74 @@ import java.util.Set;
  * asset shouldn't be merge
  */
 public class simplifier {
+	public Set<Vertex> invalid;//store nodes that won't get to target
+	
+	public  simplifier()
+	{
+		invalid = new HashSet<Vertex>();
+	}
+	
+	Boolean bfs(Set<Vertex> vi, Vertex source ,Vertex dest)
+	{
+		if(source.itself.id == dest.itself.id)
+			return true;
+		vi.add(source);
+		Queue<Vertex> q = new LinkedList<Vertex>();
+		q.add(source);
+		while(!q.isEmpty())
+		{
+			Vertex v = q.poll();
+			for(Vertex i: v.getNextV())
+			{
+				if(!vi.contains(i))
+				{
+					if(i.itself.id == dest.itself.id)
+						return true;
+					vi.add(i);
+					q.add(i);
+				}
+			}
+		}
+		return false;
+	}
+	
+	void delete_node(Graph G)
+	{
+		for(Vertex v: invalid)
+		{
+			G.rmTotallyElem(v);
+		}
+	}
+	
+	void restore_invalid_node(Graph G)
+	{
+		for(Vertex v: invalid)
+		{
+			G.addTotallyElem(v);
+		}
+	}
+	
+	public void remove_invalidNode(Graph g,  Vertex dest)
+	{
+		invalid.clear();		
+		Set<Vertex> vi = new HashSet<Vertex>();
+		
+		for(Map.Entry<String, Vertex> entry: g.vertexes.entrySet())
+		{
+			Vertex v = entry.getValue();
+			if(!bfs(vi, v , dest))
+				invalid.add(v);
+//			System.out.println("over");
+			vi.clear();
+		}
+		
+		delete_node(g);
+		
+	}
 
 	public Graph simplify(Graph G) {
+		invalid = new HashSet<Vertex>();
+		
 		G = simplifyExposure(G);
 		
 		
