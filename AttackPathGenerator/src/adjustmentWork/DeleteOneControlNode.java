@@ -80,7 +80,7 @@ public class DeleteOneControlNode {
 	 * @param presentList
 	 * @return
 	 */
-	public List<Node> delete(Graph G, List<Node> presentList){ //需要加入路径的概念
+	public List<Node> delete(Graph G, List<Node> presentList, List<Node> basicList){ //需要加入路径的概念
 		DeleteSize = 0;
 		one = 0;
 		
@@ -101,7 +101,7 @@ public class DeleteOneControlNode {
 			c.setConnectNum(g);
 			num = c.getConnectNum();
 
-			one = i;
+			if(!basicList.contains(presentList.get(one))) one = i;
 		}
 		
 		presentList.remove(presentList.get(one));

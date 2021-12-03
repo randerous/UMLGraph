@@ -31,25 +31,25 @@ public class totalEvaluation {
         //韧性控制点与连通图总结点数的比值
         float propotion = coNoNu/no;
 
-        //连通域数量
+        //隔离域数量
         connectAreaNum con = new connectAreaNum();
-        //初始连通域数量
+        //初始隔离域数量
         con.setConnectNum(G);
         int coArNu = con.getConnectNum();
-        //加入韧性点后的连通域数量
+        //加入韧性点后的隔离域数量
 		setNewGraph set = new setNewGraph();
 		G = set.applyControlNode(G, I);
 		con.setConnectNum(G);
 		int coArNuNext = con.getConnectNum();
 
         System.out.println("各属性如下：\n"
-        		+ "连通图总节点数：" + nodeNum + "\n"
+        		+ "简化后的连通图总节点数：" + nodeNum + "\n"
                 + "暴露面数量：" + suNu + "\n"
-                + "攻击路径数量" + atPaNu + "\n"
-                + "韧性控制点数量" + coNoNu + "\n"
-                + "韧性控制点与连通图总结点数的比值" + propotion + "\n"
-                + "初始连通域数量" + coArNu + "\n"
-                + "加入韧性点后的连通域数量" + coArNuNext + "\n"
+                + "未被阻断前的攻击路径数量：" + atPaNu + "\n"
+                + "设定的韧性控制点数量：" + coNoNu + "\n"
+                + "韧性控制点与连通图总结点数的比值：" + propotion + "\n"
+                + "无韧性控制点前系统的隔离域数量：" + coArNu + "\n"
+                + "加入韧性控制点后系统的隔离域数量：" + coArNuNext + "\n"
         );
     }
 }
