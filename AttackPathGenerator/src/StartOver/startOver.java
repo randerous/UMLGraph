@@ -27,7 +27,8 @@ public class startOver {
 		Graph G = new Graph(); //存储经过处理的图
 		
 		AttackPath paths = new AttackPath();
-		List<Node> criticalNode = new ArrayList();
+		List<Node> criticalNode = new ArrayList(); //存放所有的韧性控制点
+		List<Node> basicNode = new ArrayList(); //存放在化简过程（第一阶段）里选出的韧性控制点
 		int Max = 1000000; //可以接受的最大路径数量
 		
 		boolean AttackPathTarget = true; //从G生成攻击路径数量Num小于1w，则AttackPathTarget=false.
@@ -39,13 +40,12 @@ public class startOver {
 		
 		umlParser umlParser = new umlParser();
 		simplifier  simplifier = new simplifier();
-//		G = umlParser.genGraph("../test/test.uml");	
 		
 		G = umlParser.genGraph("Example_UML.uml");	
 		
-		G = simplifier.simplify(G); 
+		G = simplifier.simplify(G); //图G是可能会变化的
 		
-		Graph handledGraph = new Graph(G); //存储抽取出来的最原始图
+		Graph handledGraph = new Graph(G); //存储抽取出来的最原始图,图handledGraph始终不会变化
 		
 		//雅妮算法1：从图G提取N个韧性控制点
 		CriticalNodes cNode =new CriticalNodes(G);
@@ -58,12 +58,10 @@ public class startOver {
 			paths.genPath(G, Max);
 			umlParser.graphTest();
 			paths.showInfo();
-			
-//			
+				
 			if(paths.pathSet.size() <= Max) {
 				AttackPathTarget = false;
-			}
-			
+			}	
 
 			if(AttackPathTarget) {	
 				//将这N个韧性控制点加入List
@@ -71,13 +69,13 @@ public class startOver {
 				{
 					criticalNode.add(NodeS.get(0));
 					criticalNode.add(NodeS.get(1));
+					basicNode.add(NodeS.get(0));
+					basicNode.add(NodeS.get(1));
 					NodeS.remove(0);
 					NodeS.remove(0);
 					System.out.println("critical node selected: "+NodeS.get(0).getName());
 					System.out.println("critical node selected: "+NodeS.get(1).getName());
 				}
-				
-				
 				
 				setNewGraph s = new setNewGraph();
 				//从图G中删去这N个韧性控制点的入度连接：adjustment
@@ -152,8 +150,8 @@ public class startOver {
             	con.setConnectNum(basicGraph);
 //            	System.out.print(con.getConnectNum()); 
             	
-        		con.setConnectNum(basicGraph); //计算图的连通域数量
-            	int numsize = con.getConnectNum(); //获取连通域数量
+        		con.setConnectNum(basicGraph); //计算图的隔离域数量
+            	int numsize = con.getConnectNum(); //获取隔离域数量
         		
         		if(numsize <= areaNum) { //隔离域数量小于areaNum
             		target = false;
@@ -166,13 +164,13 @@ public class startOver {
                 	break;
             	}
             	
-        		if(criticalNode.size() == 0 && numsize > areaNum) {
+        		if(criticalNode.size() == basicNode.size() && numsize > areaNum) {
             		System.out.print("无法达到要求..\nOver!");
             		break;
             	}
         		
 //            	criticalNode = oneNode.delete(G, criticalNode, paths); //从控制点集合删去一个点
-        		criticalNode = oneNode.delete(G, criticalNode); //从控制点集合删去一个点
+        		criticalNode = oneNode.delete(G, criticalNode, basicNode); //从控制点集合删去一个点
             }
         }   
         
