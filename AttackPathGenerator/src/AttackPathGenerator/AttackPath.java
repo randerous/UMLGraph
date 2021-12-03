@@ -189,8 +189,8 @@ public class AttackPath {
 				
 		}
 		
-		System.out.println("exposure"+  source.size());
-		System.out.println("asset"+  destination.size());
+		System.out.println("exposure nums : "+  source.size());
+		System.out.println("asset nums : "+  destination.size());
 		
 		
 		simplifier simplifier = new simplifier();
@@ -225,19 +225,16 @@ public class AttackPath {
 				
 			} 
 		}
+		
+//		if(pathSet.size() < maxSize)
+//		{
+//			writeIntoFile();
+//		}
 	}
 	
-	public void showInfo()
+	void writeIntoFile()
 	{
-		if(pathSet.isEmpty()) {
-			System.out.println("No path");
-			return;
-		}
-		
-		
-		System.out.printf("path nums: %d\n\n", pathSet.size());
-		
-		boolean is_write = false;
+		boolean is_write = true;
 		if(is_write) {
 			try {
 	            BufferedWriter out = new BufferedWriter(new FileWriter("path.txt"));
@@ -259,6 +256,19 @@ public class AttackPath {
 	        } catch (IOException e) {
 	        }
 		}
+	}
+	
+	public void showInfo()
+	{
+		if(pathSet.isEmpty()) {
+			System.out.println("No path");
+			return;
+		}
+		
+		
+		System.out.printf("path nums: %d\n\n", pathSet.size());
+		
+		
 		
 //		int i = 0;
 //		for(ArrayList<Vertex> path: pathSet)

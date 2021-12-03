@@ -62,6 +62,7 @@ import org.eclipse.uml2.uml.resource.UMLResource;
 import org.eclipse.uml2.uml.resources.util.UMLResourcesUtil;
 
 import AttackPathGenerator.Graph;
+import AttackPathGenerator.simplifier;
 import AttackPathGenerator.umlParser;
 import Visualization.visualizeGraph;
 
@@ -111,12 +112,28 @@ public class UMLgenerator {
 	 * @param the program arguments, which must consist of a single filesystem path
 	 */
 	public static void main(String[] args) throws Exception {
-
-		generator(100, 2);
-		umlParser parser = new umlParser();
-//		
-		Graph G = parser.genGraph("Example_UML.uml");
-		parser.graphTest(G);
+		
+		int sum = 0;
+		int j = 1000;
+		while(j > 0 )
+		{
+			j--;
+			generator(100, 2);
+			umlParser parser = new umlParser();
+//			
+			Graph G = parser.genGraph("Example_UML.uml");
+//			parser.graphTest(G);
+			simplifier simplifier = new simplifier();
+			int size = G.getVertexes().size();
+			System.out.println("initial  size : "+ size);
+			simplifier.simplify(G);
+			size = G.getVertexes().size();
+			System.out.println("simplified  size : "+ size);
+//			parser.graphTest(G);
+			sum += size;
+		}
+		System.out.println(sum);
+		
 
 	}
 
