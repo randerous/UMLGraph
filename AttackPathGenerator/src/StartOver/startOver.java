@@ -54,9 +54,7 @@ public class startOver {
 		int t = 0;
 		while(AttackPathTarget && NodeS.size() > 1) {
 			//国涛算法2：从G生成攻击路径数量
-			umlParser.graphTest();
-			paths.genPath(G, Max);
-			umlParser.graphTest();
+			paths.genPath(G, Max); 
 			paths.showInfo();
 				
 			if(paths.pathSet.size() <= Max) {

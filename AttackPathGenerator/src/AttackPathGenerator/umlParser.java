@@ -36,14 +36,14 @@ import com.alibaba.fastjson.JSONObject;
 import Visualization.visualizeGraph;
 
 public class umlParser {
-	public Graph G;
+	
 	public static int it;
 	public umlParser()
 	{
-		G = new Graph();
+		
 	}
 	
-	public void graphTest() throws Exception
+	public void graphTest(Graph G ) throws Exception
 	{
 //		visualize graph
 		String inputDot="D://input.dot";
@@ -56,11 +56,12 @@ public class umlParser {
 	
 	public Graph genGraph(String path)
 	{
-		
+		Graph G;
+		G = new Graph();
 		URI uri = URI.createFileURI(path); 
 		Package p = parseUML(uri);
-		processNode(p, 0);
-		processEdge(p);
+		processNode(G, p, 0);
+		processEdge(G, p);
 		
 		return G;
 	}
@@ -78,7 +79,7 @@ public class umlParser {
 	}
 
 	// parse component diagram
-	public void processNode(Namespace p, int level) {
+	public void processNode(Graph G, Namespace p, int level) {
 
 		// get all vertexes 
 //		System.out.printf("level: %d name: %s\n", level, p.toString());
@@ -89,20 +90,20 @@ public class umlParser {
 			if (i instanceof Component || i instanceof Interface || i instanceof Package || i instanceof Model
 					|| i instanceof org.eclipse.uml2.uml.Node || i instanceof Device
 					|| i instanceof ExecutionEnvironment || i instanceof Artifact || i instanceof Port) {
-				createNode(i.getOwnedComments(), getId(i.toString()), i.getName(), level);
+				createNode(G, i.getOwnedComments(), getId(i.toString()), i.getName(), level);
 				if (level > 0) {
 					G.addEdge(getId(p.toString()), getId(i.toString()));
 					G.addEdge(getId(i.toString()), getId(p.toString()));
 				}
 				if (i instanceof Namespace && ((Namespace) i).getMembers().size() > 0) {
-					processNode(((Namespace) i), level + 1);
+					processNode(G, ((Namespace) i), level + 1);
 				}
 			}
 
 		}
 	}
 
-	public void processEdge(Namespace p) {
+	public void processEdge(Graph G, Namespace p) {
  
 		// get all edge
 
@@ -111,91 +112,91 @@ public class umlParser {
 			if (i instanceof Component) {
 				Component instance = (Component) i;
 				if (instance.getMembers().size() > 0) {
-					processEdge(instance);
+					processEdge(G, instance);
 				}
-				processConnector(instance.getOwnedConnectors());
-				processDependency(instance.getClientDependencies());
-				processGeneralization(getId(instance.toString()), instance.getGeneralizations());
-				processAssociation(instance.getAssociations());
+				processConnector(G, instance.getOwnedConnectors());
+				processDependency(G, instance.getClientDependencies());
+				processGeneralization(G, getId(instance.toString()), instance.getGeneralizations());
+				processAssociation(G, instance.getAssociations());
 			}
 
 			if (i instanceof Interface) {
 				Interface instance = (Interface) i;
 				if (instance.getMembers().size() > 0) {
-					processEdge(instance);
+					processEdge(G, instance);
 				}
-				processDependency(instance.getClientDependencies());
-				processGeneralization(getId(instance.toString()), instance.getGeneralizations());
-				processAssociation(instance.getAssociations());
+				processDependency(G, instance.getClientDependencies());
+				processGeneralization(G, getId(instance.toString()), instance.getGeneralizations());
+				processAssociation(G, instance.getAssociations());
 			}
 
 			if (i instanceof Package) {
 				Package instance = (Package) i;
 				if (instance.getMembers().size() > 0) {
-					processEdge(instance);
+					processEdge(G, instance);
 				}
 				
-				processDependency(instance.getClientDependencies());
+				processDependency(G, instance.getClientDependencies());
 			}
 
 			if (i instanceof Model) {
 				Model instance = (Model) i;
 				if (instance.getMembers().size() > 0) {
-					processEdge(instance);
+					processEdge(G, instance);
 				}
-				processDependency(instance.getClientDependencies());
+				processDependency(G, instance.getClientDependencies());
 			}
 
 			if (i instanceof org.eclipse.uml2.uml.Node) {
 				org.eclipse.uml2.uml.Node instance = (org.eclipse.uml2.uml.Node) i;
 				if (instance.getMembers().size() > 0) {
-					processEdge(instance);
+					processEdge(G, instance);
 				}
-				processDependency(instance.getClientDependencies());
-				processGeneralization(getId(instance.toString()), instance.getGeneralizations());
-				processAssociation(instance.getAssociations());
-				processCommunicationPath(instance.getCommunicationPaths());
-				processDeployment(getId(instance.toString()), instance.getDeployments());
+				processDependency(G, instance.getClientDependencies());
+				processGeneralization(G, getId(instance.toString()), instance.getGeneralizations());
+				processAssociation(G, instance.getAssociations());
+				processCommunicationPath(G, instance.getCommunicationPaths());
+				processDeployment(G, getId(instance.toString()), instance.getDeployments());
 			}
 
 			if (i instanceof Device) {
 				Device instance = (Device) i;
 				if (instance.getMembers().size() > 0) {
-					processEdge(instance);
+					processEdge(G, instance);
 				}
-				processDependency(instance.getClientDependencies());
-				processGeneralization(getId(instance.toString()), instance.getGeneralizations());
-				processAssociation(instance.getAssociations());
-				processCommunicationPath(instance.getCommunicationPaths());
-				processDeployment(getId(instance.toString()), instance.getDeployments());
+				processDependency(G, instance.getClientDependencies());
+				processGeneralization(G, getId(instance.toString()), instance.getGeneralizations());
+				processAssociation(G, instance.getAssociations());
+				processCommunicationPath(G, instance.getCommunicationPaths());
+				processDeployment(G, getId(instance.toString()), instance.getDeployments());
 			}
 
 			if (i instanceof ExecutionEnvironment) {
 				ExecutionEnvironment instance = (ExecutionEnvironment) i;
 				if (instance.getMembers().size() > 0) {
-					processEdge(instance);
+					processEdge(G, instance);
 				}
-				processDependency(instance.getClientDependencies());
-				processGeneralization(getId(instance.toString()), instance.getGeneralizations());
-				processAssociation(instance.getAssociations());
-				processCommunicationPath(instance.getCommunicationPaths());
-				processDeployment(getId(instance.toString()), instance.getDeployments());
+				processDependency(G, instance.getClientDependencies());
+				processGeneralization(G, getId(instance.toString()), instance.getGeneralizations());
+				processAssociation(G, instance.getAssociations());
+				processCommunicationPath(G, instance.getCommunicationPaths());
+				processDeployment(G, getId(instance.toString()), instance.getDeployments());
 			}
 
 			if (i instanceof Artifact) {
 				Artifact instance = (Artifact) i;
 				if (instance.getMembers().size() > 0) {
-					processEdge(instance);
+					processEdge(G, instance);
 				}
-				processDependency(instance.getClientDependencies());
-				processGeneralization(getId(instance.toString()), instance.getGeneralizations());
-				processAssociation(instance.getAssociations());
+				processDependency(G, instance.getClientDependencies());
+				processGeneralization(G, getId(instance.toString()), instance.getGeneralizations());
+				processAssociation(G, instance.getAssociations());
 			}
 		}
 
 	}
 
-	public void processConnector(EList<Connector> connectors) {
+	public void processConnector(Graph G,  EList<Connector> connectors) {
 		for (Connector i : connectors) {
 			if(i.getEnds().size() > 1)
 			{
@@ -211,7 +212,7 @@ public class umlParser {
 	static int nums;
 
 	// parse connections in Component diagram
-	public void processDependency(EList<Dependency> dependencies) {
+	public void processDependency(Graph G, EList<Dependency> dependencies) {
 		for (Dependency i : dependencies) {
 //			System.out.println(nums++);
 //			System.out.println(i.toString());
@@ -227,7 +228,7 @@ public class umlParser {
 	
 //	public void process
 
-	public void processGeneralization(String sourceID, EList<Generalization> generalizations) {
+	public void processGeneralization(Graph G, String sourceID, EList<Generalization> generalizations) {
 		for (Generalization i : generalizations) {
 			String destID = getId(i.getGeneral().toString());
 			G.addEdge(sourceID, destID);
@@ -235,7 +236,7 @@ public class umlParser {
 		}
 	}
 
-	public void processAssociation(EList<Association> associations) {
+	public void processAssociation(Graph G, EList<Association> associations) {
 		for (Association i : associations) {
 			if(i.getEndTypes().size() > 1)
 			{
@@ -260,7 +261,7 @@ public class umlParser {
 		}
 	}
 
-	public void processCommunicationPath(EList<CommunicationPath> communicationPaths) {
+	public void processCommunicationPath(Graph G, EList<CommunicationPath> communicationPaths) {
 		for (CommunicationPath i : communicationPaths) {
 			if(i.getEndTypes().size() > 1)
 			{
@@ -273,7 +274,7 @@ public class umlParser {
 		}
 	}
 
-	public void processDeployment(String sourceID, EList<Deployment> deployments) {
+	public void processDeployment(Graph G, String sourceID, EList<Deployment> deployments) {
 		for (Deployment i : deployments) {
 			if(!i.getTargets().isEmpty())
 			{
@@ -287,7 +288,7 @@ public class umlParser {
 	}
 
 	// parse comments to create Node
-	public void createNode(EList<Comment> comments, String id, String name, int level) {
+	public void createNode(Graph G, EList<Comment> comments, String id, String name, int level) {
 		Node node;
 		if (!comments.isEmpty()) {
 //			System.out.println(comments.toString());

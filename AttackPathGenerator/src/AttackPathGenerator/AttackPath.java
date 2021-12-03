@@ -15,8 +15,8 @@ import UMLgenerator.UMLgenerator;
 public class AttackPath {
 	public ArrayList <ArrayList<Vertex>> pathSet;
 	Stack<Vertex> path;
-	public Set<String> visit;
-	public Set<String> invalid;//store nodes that won't get to target
+	Set<String> visit;
+	
  
 	
 	public AttackPath()
@@ -24,7 +24,7 @@ public class AttackPath {
 		pathSet = new ArrayList<ArrayList<Vertex>>();
 		path = new Stack<Vertex>();
 		visit = new HashSet<String>();
-		invalid = new HashSet<String>();
+
 		 
 		 
 				
@@ -95,62 +95,10 @@ public class AttackPath {
 		return false;
 	}
 	
-	Boolean bfs(Set<Vertex> vi, Vertex source ,Vertex dest)
-	{
-		if(source.itself.id == dest.itself.id)
-			return true;
-		vi.add(source);
-		Queue<Vertex> q = new LinkedList<Vertex>();
-		q.add(source);
-		while(!q.isEmpty())
-		{
-			Vertex v = q.poll();
-			for(Vertex i: v.getNextV())
-			{
-				if(!vi.contains(i))
-				{
-					if(i.itself.id == dest.itself.id)
-						return true;
-					vi.add(i);
-					q.add(i);
-				}
-			}
-		}
-		return false;
-	}
-	private ArrayList<Vertex> remove_invalidNode(Graph g,  Vertex dest)
-	{
- 
-		
-		Set<Vertex> vi = new HashSet<Vertex>();
-		ArrayList<Vertex> invalid = new ArrayList<Vertex>();
-		for(Map.Entry<String, Vertex> entry: g.vertexes.entrySet())
-		{
-			Vertex v = entry.getValue();
-			if(!bfs(vi, v , dest))
-				invalid.add(v);
-//			System.out.println("over");
-			vi.clear();
-		}
+	
+	
+	
 
-		return invalid;
-	}
-	
-	void delete_node(Graph G,  ArrayList<Vertex> invalid)
-	{
-		for(Vertex v: invalid)
-		{
-			G.rmTotallyElem(v);
-		}
-	}
-	
-	void add_node(Graph G,  ArrayList<Vertex> invalid)
-	{
-		for(Vertex v: invalid)
-		{
-			G.addTotallyElem(v);
-		}
-	}
 	
 //	private void dfs_nr(Vertex cur, Vertex dest)  
 //	{
@@ -244,6 +192,8 @@ public class AttackPath {
 		System.out.println("exposure"+  source.size());
 		System.out.println("asset"+  destination.size());
 		
+		
+		simplifier simplifier = new simplifier();
 		if(!source.isEmpty() && !destination.isEmpty())
 		{
 			for(Vertex cur: source)
@@ -251,20 +201,18 @@ public class AttackPath {
 				for(Vertex dest: destination)
 				{
 //					System.out.println("--");
-					ArrayList<Vertex> invalid = remove_invalidNode(p, dest);
-					delete_node(p, invalid);
-//					System.out.println("size"+p.vertexes.size());
+					simplifier.remove_invalidNode(p, dest);
 					Vertex s = p.vertexes.get(cur.itself.id);
 					Vertex d = p.vertexes.get(dest.itself.id);
 					
-//					dfs_nr(cur, dest); 
+ 
 					if(s!= null && d != null)
 					{
 						dfs(s, d, maxSize); 
 						visit.clear(); 
 					}
-					add_node(p, invalid);
-//					System.out.println("size"+p.vertexes.size());
+					simplifier.restore_invalid_node(p);
+					
 				}
 				
 			} 
