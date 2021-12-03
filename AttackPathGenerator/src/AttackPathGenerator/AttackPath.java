@@ -201,6 +201,14 @@ public class AttackPath {
 				for(Vertex dest: destination)
 				{
 //					System.out.println("--");
+					//if can't reach, o(n+v), continue
+					Set<Vertex> vi = new HashSet<Vertex>();
+					if(!simplifier.bfs(vi, cur, dest))
+					{
+//						System.out.print("can't reach");
+						continue;
+					}
+					
 					simplifier.remove_invalidNode(p, dest);
 					Vertex s = p.vertexes.get(cur.itself.id);
 					Vertex d = p.vertexes.get(dest.itself.id);

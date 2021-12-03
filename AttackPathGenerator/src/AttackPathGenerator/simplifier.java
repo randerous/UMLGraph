@@ -21,7 +21,7 @@ public class simplifier {
 		invalid = new HashSet<Vertex>();
 	}
 	
-	Boolean bfs(Set<Vertex> vi, Vertex source ,Vertex dest)
+	public Boolean bfs(Set<Vertex> vi, Vertex source ,Vertex dest)
 	{
 		if(source.itself.id == dest.itself.id)
 			return true;
