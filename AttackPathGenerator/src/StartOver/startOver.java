@@ -98,7 +98,8 @@ public class startOver {
 		System.out.println("生成的韧性控制点如下：");
 		
 		for(Node node:criticalNode)
-			System.out.println(node.getID());
+//			System.out.println(node.getID());
+			System.out.println(node.getName());
 		System.out.println();
 //		visualize graph
 		String inputDot="D://input.dot";
@@ -119,7 +120,8 @@ public class startOver {
         //优化处理
         if (choice == 'y') { //接受
         	for(int i = 0; i < criticalNode.size(); i++) {
-        		System.out.println(criticalNode.get(i).getID());
+//        		System.out.println(criticalNode.get(i).getID());
+        		System.out.println(criticalNode.get(i).getName());
         	}
         	
         	System.out.println("Over!");
