@@ -33,9 +33,9 @@ public class startOver {
 		
 		boolean AttackPathTarget = true; //从G生成攻击路径数量Num小于1w，则AttackPathTarget=false.
 		int N = 2;
-		System.out.println("请输入每条依赖路径上需要的韧性控制点数量：");
-		Scanner in = new Scanner(System.in);
-    	int num = in.nextInt();
+//		System.out.println("请输入每条依赖路径上需要的韧性控制点数量：");
+//		Scanner in = new Scanner(System.in);
+//    	int num = in.nextInt();
 		
 		
 		//国涛算法1：生成连通图G
@@ -63,6 +63,7 @@ public class startOver {
 				
 			if(paths.pathSet.size() <= Max) {
 				AttackPathTarget = false;
+				paths.writeIntoFile();
 			}	
 
 			if(AttackPathTarget) {	
@@ -91,7 +92,7 @@ public class startOver {
 		//雅妮算法2：从G和攻击路径paths选择剩余韧性控制点集合
 //		CriticalNodes cNodes=new CriticalNodes(G);
 //		List<Node> criticalNodeS = cNodes.GetTwoNodesInOnePath(paths.pathSet);
-		List<Node> criticalNodeS = cNode.GetTwoNodesInOnePath2(paths.pathSet,criticalNode,num);
+		List<Node> criticalNodeS = cNode.GetTwoNodesInOnePath2(paths.pathSet,criticalNode,1);
 		
 		for(Node n : criticalNodeS) {  
 			criticalNode.add(n);
@@ -134,7 +135,7 @@ public class startOver {
             System.out.println("请输入隔离域数量上限");
         	int areaNum = 0; //隔离域数量上限
         	
-//        	Scanner in = new Scanner(System.in);
+        	Scanner in = new Scanner(System.in);
         	areaNum = in.nextInt();
         	  
             //删减韧性点，判断连通域数量

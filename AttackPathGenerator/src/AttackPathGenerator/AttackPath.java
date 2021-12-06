@@ -232,7 +232,7 @@ public class AttackPath {
 //		}
 	}
 	
-	void writeIntoFile()
+	public void writeIntoFile()
 	{
 		boolean is_write = true;
 		if(is_write) {
@@ -252,7 +252,7 @@ public class AttackPath {
 	    			out.write("end path\n");
 	    		}
 	    		out.close();
-	            System.out.println("successfully");
+//	            System.out.println("successfully");
 	        } catch (IOException e) {
 	        }
 		}
