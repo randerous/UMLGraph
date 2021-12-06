@@ -47,6 +47,7 @@ public class totalEvaluation {
                 + "暴露面数量：" + suNu + "\n"
                 + "未被阻断前的攻击路径数量：" + atPaNu + "\n"
                 + "设定的韧性控制点数量：" + coNoNu + "\n"
+                + "被阻断后的攻击路径数量：" + 0 + "\n"
                 + "韧性控制点与连通图总结点数的比值：" + propotion + "\n"
                 + "无韧性控制点前系统的隔离域数量：" + coArNu + "\n"
                 + "加入韧性控制点后系统的隔离域数量：" + coArNuNext + "\n"

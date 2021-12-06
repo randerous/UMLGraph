@@ -33,6 +33,8 @@ public class startOver {
 		
 		boolean AttackPathTarget = true; //从G生成攻击路径数量Num小于1w，则AttackPathTarget=false.
 		int N = 2;
+		System.out.println("请输入每条依赖路径上需要的韧性控制点数量：");
+		int num=(int)System.in.read();
 		
 		//国涛算法1：生成连通图G
 		//样例生成
@@ -87,7 +89,7 @@ public class startOver {
 		//雅妮算法2：从G和攻击路径paths选择剩余韧性控制点集合
 //		CriticalNodes cNodes=new CriticalNodes(G);
 //		List<Node> criticalNodeS = cNodes.GetTwoNodesInOnePath(paths.pathSet);
-		List<Node> criticalNodeS = cNode.GetTwoNodesInOnePath2(paths.pathSet,criticalNode);
+		List<Node> criticalNodeS = cNode.GetTwoNodesInOnePath2(paths.pathSet,criticalNode,num);
 		
 		for(Node n : criticalNodeS) {  
 			criticalNode.add(n);
