@@ -99,7 +99,7 @@ public class CriticalNodes {
 	        return res;
 	    }
 
-	    public List<Node> GetTwoNodesInOnePath(ArrayList<ArrayList<Vertex>> pathset){
+	    public List<Node> GetTwoNodesInOnePath(ArrayList<ArrayList<Vertex>> pathset,int num){
 	    	/*
 	    	 * @Vertexes:锟斤拷选锟斤拷慕诘锟�
 	    	 * @pathSet:路锟斤拷锟斤拷锟斤拷每锟斤拷路锟斤拷锟侥憋拷识为index锟斤拷锟斤拷
@@ -124,10 +124,10 @@ public class CriticalNodes {
 	            ArrayList<Integer> myPaths=p.getPaths();
 	            for(int each:myPaths){
 	                int k=pathState.get(each);
-	                if(k==2) continue;
+	                if(k==num) continue;
 	                k++;
 	                pathState.set(each,k); 
-	                if(k==2) {
+	                if(k==num) {
 	                   count--;
 	                   for(Vertex v:pathset.get(each)){
 	                       v.pathNums--;
@@ -140,7 +140,7 @@ public class CriticalNodes {
 
 	    }	    
 
-	    public List<Node> GetTwoNodesInOnePath2(ArrayList<ArrayList<Vertex>> pathset,List<Node> PriCriticalNode){
+	    public List<Node> GetTwoNodesInOnePath2(ArrayList<ArrayList<Vertex>> pathset,List<Node> PriCriticalNode,int num){
 	    	/*
 	    	 * 锟斤拷锟姐法CriticalNodes锟侥伙拷锟斤拷锟斤拷锟斤拷
 	    	 * @Vertexes:锟斤拷选锟斤拷慕诘锟�
@@ -162,11 +162,11 @@ public class CriticalNodes {
 	        	Vertexes.remove(v);
 	        	for(int path:v.getPaths()) {
 	        		int k=pathState.get(path);
-	        		if(k==2) continue;
+	        		if(k==num) continue;
 	        		else {
 	        			k++;
 	        			pathState.set(path, k);
-	        			if(k==2) {
+	        			if(k==num) {
 	        				count--;
 	        				for(Vertex vv:pathset.get(path)){
 	 	                       vv.pathNums--;
@@ -188,10 +188,10 @@ public class CriticalNodes {
 		            ArrayList<Integer> myPaths=p.getPaths();
 		            for(int each:myPaths){
 		                int k=pathState.get(each);
-		                if(k==2) continue;
+		                if(k==num) continue;
 		                k++;
 		                pathState.set(each,k); 
-		                if(k==2) {
+		                if(k==num) {
 		                   count--;
 		                   for(Vertex v:pathset.get(each)){
 		                       v.pathNums--;
